@@ -37,7 +37,7 @@ Execution continuity is mandatory.
 
 READ:
 
-INDEX.md
+agent-core/INDEX.md
 
 Follow the defined boot sequence exactly.
 
