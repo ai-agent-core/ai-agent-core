@@ -1,0 +1,35 @@
+version: 1
+
+agent_behavior:
+
+  guessing: forbidden
+  hallucination: forbidden
+  hidden_assumptions: forbidden
+
+  escalation_required_when_uncertain: true
+  request_clarification_if_ambiguous: true
+
+reasoning:
+
+  prefer_architecture_over_speed: true
+  prefer_safety_over_convenience: true
+  prefer_clarity_over_cleverness: true
+  prefer_simplicity_over_speculation: true
+
+decision_constraints:
+
+  violate_layers: forbidden
+  weaken_domain_boundaries: forbidden
+  introduce_hidden_coupling: forbidden
+  bypass_governance: forbidden
+
+execution_model:
+
+  think_before_acting: mandatory
+  follow_boot_sequence: mandatory
+  surface_tradeoffs: mandatory
+  avoid_local_optimization: mandatory
+
+prime_directive:
+
+  protect_architecture: absolute

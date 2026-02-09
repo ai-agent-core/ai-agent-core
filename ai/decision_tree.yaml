@@ -1,0 +1,34 @@
+version: 1
+
+decision_flow:
+
+  - step: verify_boot_completed
+    if_false: stop_and_initialize
+
+  - step: check_principles_alignment
+    if_false: reject_option
+
+  - step: check_meta_rules
+    if_conflict: apply_rule_hierarchy
+
+  - step: evaluate_structural_impact
+    if_risk_detected: reject_option
+
+  - step: evaluate_domain_integrity
+    if_weakened: reject_option
+
+  - step: assess_long_term_effects
+    if_creates_future_risk: reject_option
+
+  - step: prefer_simplest_viable_design
+
+  - step: surface_tradeoffs
+
+  - step: if_uncertainty_remains
+    action: escalate_to_human
+
+termination_conditions:
+
+  guessing_detected: stop
+  architecture_violation_detected: stop
+  ambiguity_detected: escalate

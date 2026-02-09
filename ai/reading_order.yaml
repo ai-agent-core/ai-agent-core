@@ -1,0 +1,58 @@
+version: 1
+
+boot_sequence:
+
+  - layer: ai_control
+    priority: absolute
+    files:
+      - rules/AI_BEHAVIOR_RULES.md
+      - ai/machine_rules.yaml
+      - ai/decision_tree.yaml
+
+  - layer: principles
+    priority: foundational
+    files:
+      - principles/ENGINEERING_PRINCIPLES.md
+      - principles/ARCHITECTURE_PRINCIPLES.md
+      - principles/DESIGN_PHILOSOPHY.md
+
+  - layer: governance
+    priority: constitutional
+    files:
+      - rules/META_RULES.md
+
+  - layer: shared_language
+    priority: mandatory
+    files:
+      - glossary/GLOSSARY.md
+
+  - layer: structure
+    priority: non_negotiable
+    files:
+      - rules/PROJECT_STRUCTURE_RULES.md
+      - rules/GENERATOR_RULES.md
+
+  - layer: boundaries
+    priority: critical
+    files:
+      - rules/LAYER_DEPENDENCY_RULES.md
+      - rules/MAPPER_RULES.md
+
+  - layer: decisions
+    priority: mandatory
+    files:
+      - rules/DECISION_RULES.md
+
+  - layer: implementation
+    priority: disciplined
+    files:
+      - rules/NAMING_RULES.md
+      - rules/CODING_RULES.md
+      - rules/ERROR_HANDLING_RULES.md
+      - rules/TESTING_RULES.md
+
+enforcement:
+
+  skip_layers_forbidden: true
+  improvisation_forbidden: true
+  architecture_precedes_implementation: true
