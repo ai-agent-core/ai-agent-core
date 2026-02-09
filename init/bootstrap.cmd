@@ -1,16 +1,33 @@
 @echo off
 setlocal enabledelayedexpansion
 
+REM ------------------------------------
+REM Resolve Paths
+REM ------------------------------------
+
 set SCRIPT_DIR=%~dp0
 set CORE_ROOT=%SCRIPT_DIR%..
-set TEMPLATE_DIR=%CORE_ROOT%\template
+set SCAFFOLD_DIR=%SCRIPT_DIR%scaffold
 set TARGET_DIR=%cd%
 set CORE_JSON=%CORE_ROOT%\agent-core.json
+
+REM ------------------------------------
+REM Validate
+REM ------------------------------------
 
 if not exist "%CORE_JSON%" (
   echo agent-core.json not found. Aborting.
   exit /b 1
 )
+
+if not exist "%SCAFFOLD_DIR%" (
+  echo scaffold directory not found. Aborting.
+  exit /b 1
+)
+
+REM ------------------------------------
+REM Read JSON (no dependencies)
+REM ------------------------------------
 
 for /f "tokens=2 delims=:," %%a in ('findstr /i "version" "%CORE_JSON%"') do (
     set VERSION=%%~a
@@ -40,6 +57,10 @@ echo %DESCRIPTION%
 echo Schema version: %SCHEMA_VERSION%
 echo.
 
+REM ------------------------------------
+REM Prevent Overwrite
+REM ------------------------------------
+
 if exist "%TARGET_DIR%\AGENTS.md" (
   echo Error: AGENTS.md already exists. Aborting.
   exit /b 1
@@ -50,12 +71,25 @@ if exist "%TARGET_DIR%\CLAUDE.md" (
   exit /b 1
 )
 
+if exist "%TARGET_DIR%\agent-input" (
+  echo Error: agent-input already exists. Aborting.
+  exit /b 1
+)
+
 if exist "%TARGET_DIR%\agent-spec" (
   echo Error: agent-spec already exists. Aborting.
   exit /b 1
 )
 
-xcopy "%TEMPLATE_DIR%\*" "%TARGET_DIR%\" /E /I /H >nul
+REM ------------------------------------
+REM Copy Scaffold (include hidden)
+REM ------------------------------------
+
+xcopy "%SCAFFOLD_DIR%\*" "%TARGET_DIR%\" /E /I /H >nul
+
+REM ------------------------------------
+REM Stamp Generated Files
+REM ------------------------------------
 
 echo.>> "%TARGET_DIR%\AGENTS.md"
 echo --- >> "%TARGET_DIR%\AGENTS.md"
