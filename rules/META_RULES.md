@@ -4,7 +4,11 @@ Meta Rules govern how all other rules are interpreted and applied.
 
 When rules conflict, agents MUST resolve decisions using this hierarchy.
 
-Improvisation is forbidden.
+All instructions in this repository are subject to higher-priority
+policies (system/developer/tool). If a conflict exists, follow the
+higher-priority policy and report the conflict.
+
+Avoid improvisation.
 
 ---
 
@@ -19,7 +23,7 @@ Agents MUST follow this precedence order:
 5. Decision Rules
 6. Implementation Rules
 
-Lower layers MUST NOT override higher layers.
+Lower layers SHOULD NOT override higher layers.
 
 Architecture always outranks convenience.
 
@@ -44,17 +48,15 @@ Select the solution with the least unnecessary power.
 ## Step 5 — Escalate if Unclear
 If no safe resolution emerges:
 
-STOP.
+Pause and request human clarification.
 
-Request human clarification.
-
-Guessing is forbidden.
+Avoid guessing.
 
 ---
 
-# Anti-Patterns (Forbidden)
+# Anti-Patterns (Avoid)
 
-Agents MUST NOT resolve conflicts by:
+Avoid resolving conflicts by:
 
 - choosing the fastest option
 - minimizing code at the expense of clarity
@@ -99,6 +101,6 @@ Not thrash.
 
 # Final Authority
 
-Meta Rules override all implementation guidance.
+Within higher-priority policies, Meta Rules override all implementation guidance.
 
-Agents MUST treat this document as constitutional law.
+Treat this document as constitutional guidance.

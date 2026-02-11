@@ -52,7 +52,7 @@ Responsible for:
 - schema-derived objects
 - database representations
 
-This module MUST NOT contain domain logic.
+This module SHOULD NOT contain domain logic.
 
 These are persistence models, NOT domain entities.
 
@@ -81,7 +81,7 @@ Responsible for:
 
 Generation MUST be deterministic and reproducible.
 
-Manual patching of generated artifacts is FORBIDDEN.
+Avoid manual patching of generated artifacts.
 
 ---
 
@@ -96,7 +96,7 @@ When an existing project already provides:
 
 Agents MUST prefer those mechanisms.
 
-Reinventing infrastructure is FORBIDDEN unless explicitly justified.
+Avoid reinventing infrastructure unless explicitly justified.
 
 Consistency across the ecosystem is more valuable than local optimization.
 
@@ -104,7 +104,7 @@ Consistency across the ecosystem is more valuable than local optimization.
 
 # Avoid Structural Drift
 
-Projects MUST NOT invent custom layouts without strong justification.
+Projects SHOULD NOT invent custom layouts without strong justification.
 
 Structural consistency enables:
 

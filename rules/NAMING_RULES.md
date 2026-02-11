@@ -28,12 +28,12 @@ Clarity always wins.
 
 All names MUST align with the domain language.
 
-Agents MUST NOT invent synonyms.
+Avoid inventing synonyms.
 
 Example:
 
 If the domain says `Order`,
-DO NOT introduce:
+Avoid introducing:
 
 - Purchase
 - Request
@@ -225,9 +225,9 @@ Specificity improves readability.
 
 # Avoid Technical Leakage
 
-Domain names MUST NOT expose technical concerns.
+Domain names SHOULD NOT expose technical concerns.
 
-Forbidden examples:
+Examples to avoid:
 
 - OrderDTO inside domain
 - PaymentEntity inside domain

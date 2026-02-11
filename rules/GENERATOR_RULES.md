@@ -2,7 +2,7 @@
 
 Generators are responsible for enforcing architectural consistency across projects.
 
-Generators MUST NOT be treated as convenience tools.
+Generators SHOULD NOT be treated as convenience tools.
 
 They are structural enforcement mechanisms.
 
@@ -19,7 +19,7 @@ Generators MUST produce code that conforms to:
 
 Generated code MUST be architecturally safe by default.
 
-Unsafe generation is forbidden.
+Avoid unsafe generation.
 
 ---
 
@@ -29,7 +29,7 @@ Generation MUST be deterministic.
 
 The same inputs MUST always produce the same outputs.
 
-Non-deterministic generation is forbidden.
+Avoid non-deterministic generation.
 
 Reproducibility is mandatory.
 
@@ -39,7 +39,7 @@ Reproducibility is mandatory.
 
 When persistence is involved, generators MUST use the database schema as the source of truth.
 
-Manual structural divergence is forbidden.
+Avoid manual structural divergence.
 
 The schema defines the structure.
 Generators reflect it.
@@ -48,14 +48,14 @@ Generators reflect it.
 
 # No Manual Editing of Generated Code
 
-Generated artifacts MUST NOT be manually modified.
+Generated artifacts SHOULD NOT be manually modified.
 
 If customization is required:
 
 → modify the generator  
 → extend safely via composition
 
-Never patch generated files.
+Avoid patching generated files.
 
 ---
 
@@ -63,7 +63,7 @@ Never patch generated files.
 
 Projects MUST remain safe to regenerate at any time.
 
-Generation MUST NOT destroy:
+Generation SHOULD NOT destroy:
 
 - domain logic
 - custom application code
@@ -85,7 +85,7 @@ Generators remove it.
 
 # Protect the Domain
 
-Generators MUST NOT:
+Generators SHOULD NOT:
 
 - generate domain behavior
 - embed business logic
@@ -113,7 +113,7 @@ Consistency across projects is more valuable than novelty.
 
 Generators MUST remain focused on structure.
 
-They MUST NOT evolve into:
+They SHOULD NOT evolve into:
 
 - workflow engines
 - decision systems

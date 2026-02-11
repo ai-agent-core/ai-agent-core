@@ -2,7 +2,7 @@
 
 Mappers are responsible only for translating between domain models and persistence models.
 
-They MUST NOT contain business logic.
+They SHOULD NOT contain business logic.
 
 ---
 
@@ -17,9 +17,9 @@ Nothing more.
 
 ---
 
-# Forbidden Behavior
+# Behavior to Avoid
 
-Mappers MUST NOT:
+Avoid:
 
 - enforce business rules
 - validate domain invariants
@@ -35,9 +35,9 @@ If logic is required, it belongs in the domain.
 
 Mapping MUST preserve domain purity.
 
-Persistence concerns MUST NOT leak into domain models.
+Persistence concerns SHOULD NOT leak into domain models.
 
-Examples of forbidden leakage:
+Examples to avoid:
 
 - ORM annotations
 - lazy-loading dependencies
@@ -58,15 +58,15 @@ Readable mapping is preferred over clever mapping.
 # Fail Fast
 
 If a persistence model cannot be safely mapped to a domain model,
-the mapper MUST fail immediately.
+the mapper SHOULD fail immediately.
 
-Silent corruption is forbidden.
+Avoid silent corruption.
 
 ---
 
 # No Partial Aggregates
 
-Mappers MUST NOT create incomplete domain aggregates.
+Mappers SHOULD NOT create incomplete domain aggregates.
 
 Either construct a valid aggregate,
 or fail.

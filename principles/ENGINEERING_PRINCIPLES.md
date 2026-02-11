@@ -100,7 +100,7 @@ Agents SHOULD prefer designs that enable:
 
 # Fail Loudly
 
-Silent failure is forbidden.
+Avoid silent failure.
 
 Errors MUST be:
 
@@ -135,7 +135,7 @@ Agents MUST consider:
 - operational cost
 - cognitive load
 
-Short-term speed must not create long-term fragility.
+Short-term speed should not create long-term fragility.
 
 ---
 

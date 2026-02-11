@@ -109,12 +109,12 @@ Make behavior explicit.
 
 # Fail Fast
 
-Agents MUST NOT hide errors.
+Avoid hiding errors.
 
 Validate early.
 Throw early.
 
-Silent failure is forbidden.
+Avoid silent failure.
 
 ---
 
@@ -200,7 +200,7 @@ Deep hierarchies increase rigidity.
 
 # Keep Constructors Simple
 
-Constructors MUST NOT contain business logic.
+Constructors SHOULD NOT contain business logic.
 
 They should only establish valid state.
 

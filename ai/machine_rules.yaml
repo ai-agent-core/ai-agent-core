@@ -2,12 +2,14 @@ version: 1
 
 agent_behavior:
 
-  guessing: forbidden
-  hallucination: forbidden
-  hidden_assumptions: forbidden
+  guessing: avoid
+  hallucination: avoid
+  hidden_assumptions: avoid
 
   escalation_required_when_uncertain: true
   request_clarification_if_ambiguous: true
+  policy_precedence:
+    higher_priority_policies_override: true
 
 reasoning:
 
@@ -18,10 +20,10 @@ reasoning:
 
 decision_constraints:
 
-  violate_layers: forbidden
-  weaken_domain_boundaries: forbidden
-  introduce_hidden_coupling: forbidden
-  bypass_governance: forbidden
+  violate_layers: avoid
+  weaken_domain_boundaries: avoid
+  introduce_hidden_coupling: avoid
+  bypass_governance: avoid
 
 execution_model:
 

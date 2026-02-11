@@ -92,7 +92,7 @@ Implements technical concerns such as:
 
 Infrastructure MAY depend on Domain interfaces.
 
-NEVER the opposite.
+Avoid the opposite.
 
 ---
 
@@ -108,7 +108,7 @@ Domain defines:
 
 Infrastructure implements it.
 
-FORBIDDEN:
+Avoid:
 
 Domain referencing implementation classes.
 
@@ -118,9 +118,9 @@ Dependency inversion is REQUIRED.
 
 # No Layer Skipping
 
-Agents MUST NOT bypass layers.
+Agents SHOULD NOT bypass layers.
 
-FORBIDDEN:
+Avoid:
 
 Presentation → Domain  
 Presentation → Infrastructure  
@@ -152,7 +152,7 @@ Repetition is safer than coupling.
 
 # Cross-Layer Utilities
 
-Shared utilities MUST NOT introduce reverse dependencies.
+Shared utilities SHOULD NOT introduce reverse dependencies.
 
 If a utility requires infrastructure,
 it does NOT belong in domain.
@@ -165,9 +165,9 @@ Move outward, not inward.
 
 # Circular Dependency Ban
 
-Circular dependencies are strictly FORBIDDEN.
+Avoid circular dependencies.
 
-Agents MUST restructure code immediately if a cycle appears.
+Agents SHOULD restructure code promptly if a cycle appears.
 
 A cycle indicates a broken boundary.
 

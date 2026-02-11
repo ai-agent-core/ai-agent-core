@@ -4,10 +4,13 @@ Violating architecture causes more damage than delivering late.
 
 Agent Core is the operating system for engineering decisions.
 
-Agents MUST complete this boot sequence before reasoning,
-designing, or generating code.
+All instructions in this repository are subject to higher-priority
+policies (system/developer/tool). If a conflict exists, follow the
+higher-priority policy and report the conflict.
 
-Improvisation is forbidden.
+Agents MUST complete this boot sequence before making changes.
+
+Avoid improvisation.
 
 Architecture ALWAYS precedes implementation.
 
@@ -26,7 +29,7 @@ Agents MUST initialize in the following order:
 6. Decisions
 7. Implementation
 
-Skipping layers is forbidden.
+Do not skip layers.
 
 Lower layers MUST NEVER override higher layers.
 
@@ -176,10 +179,9 @@ Purpose:
 
 When no safe path is obvious:
 
-STOP.  
-Request clarification.
+Pause and request clarification.
 
-Guessing is forbidden.
+Avoid guessing.
 
 ---
 
@@ -212,7 +214,7 @@ Never the reverse.
 
 If any guidance conflicts with architecture:
 
-FOLLOW THE ARCHITECTURE.
+Follow the architecture unless a higher-priority policy requires otherwise.
 
 Short-term velocity MUST NEVER override
 long-term structural integrity.
@@ -223,9 +225,7 @@ long-term structural integrity.
 
 If no safe decision emerges:
 
-STOP.
-
-Ask for human clarification.
+Pause and ask for human clarification.
 
 Do not guess.  
 Do not improvise.

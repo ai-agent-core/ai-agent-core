@@ -1,11 +1,10 @@
 # AGENT ENTRYPOINT
 
-Agent Core governs all agent behavior in this repository.
+Agent Core governs agent behavior in this repository.
 
-Agents MUST NOT begin reasoning, designing,
-or generating code until initialization is complete.
+Before making any changes, complete initialization.
 
-Improvisation is forbidden.
+Avoid improvisation; follow the defined process.
 
 ---
 
@@ -15,7 +14,7 @@ Agents MUST perform the following steps in order:
 
 ## 1. Check Execution Continuity (FIRST)
 
-Before any analysis, read:
+Before any changes, read:
 
 agent-spec/WORK_STATE.md
 
@@ -23,11 +22,11 @@ If the file exists:
 
 - Treat it as the authoritative execution state
 - Resume from the recorded next step
-- Do NOT re-analyze the project unnecessarily
+- Avoid unnecessary re-analysis
 
 If the file does not exist:
 
-Create it before performing meaningful work.
+- Create it before performing meaningful work
 
 Execution continuity is mandatory.
 
@@ -41,20 +40,21 @@ agent-core/INDEX.md
 
 Follow the defined boot sequence exactly.
 
-Skipping layers is forbidden.
-
 Architecture MUST always precede implementation.
 
 ---
 
 # ENFORCEMENT RULE
 
-If any local instruction conflicts with Agent Core:
+If any local instruction conflicts with higher-priority policies
+(system/developer/tool), follow the higher-priority policy and
+report the conflict.
+
+Within those bounds:
 
 👉 Agent Core takes precedence.
 
-Short-term convenience MUST NEVER override
-architectural integrity.
+Short-term convenience MUST NEVER override architectural integrity.
 
 ---
 

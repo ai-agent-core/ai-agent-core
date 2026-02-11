@@ -2,9 +2,9 @@
 
 This glossary defines the canonical vocabulary used across the system.
 
-Agents and engineers MUST use these terms consistently.
+Agents and engineers SHOULD use these terms consistently.
 
-Synonyms are forbidden unless explicitly defined.
+Avoid synonyms unless explicitly defined.
 
 Inconsistent language produces inconsistent architecture.
 
@@ -20,7 +20,7 @@ dependencies, and interaction patterns.
 
 Architecture governs long-term system behavior.
 
-It MUST NOT emerge accidentally.
+It SHOULD NOT emerge accidentally.
 
 ---
 
@@ -29,7 +29,7 @@ The core business knowledge the system exists to model and protect.
 
 The domain is the highest-value asset.
 
-Infrastructure must serve the domain — never the reverse.
+Infrastructure must serve the domain — avoid the reverse.
 
 ---
 
@@ -115,7 +115,7 @@ The entry point that controls access to an aggregate.
 
 It is responsible for enforcing business rules.
 
-Direct modification of internal members is forbidden.
+Avoid direct modification of internal members.
 
 ---
 
@@ -137,7 +137,7 @@ Repositories belong to the domain layer as interfaces.
 
 Implementations belong to infrastructure.
 
-Repositories MUST NOT contain business logic.
+Repositories SHOULD NOT contain business logic.
 
 ---
 
@@ -182,7 +182,7 @@ across boundaries.
 
 Mapping MUST be explicit.
 
-Hidden transformations are forbidden.
+Avoid hidden transformations.
 
 ---
 
@@ -192,7 +192,7 @@ from a defined source.
 
 Generators MUST be reproducible.
 
-Manual drift from generated artifacts is forbidden.
+Avoid manual drift from generated artifacts.
 
 ---
 
@@ -254,7 +254,7 @@ Meta Rules function as constitutional law.
 The mandatory reading and initialization order
 required before agents act.
 
-Skipping the boot sequence is forbidden.
+Avoid skipping the boot sequence.
 
 ---
 

@@ -56,3 +56,5 @@ enforcement:
   skip_layers_forbidden: true
   improvisation_forbidden: true
   architecture_precedes_implementation: true
+  policy_precedence:
+    higher_priority_policies_override: true

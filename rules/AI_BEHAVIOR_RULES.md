@@ -7,24 +7,27 @@ Intelligence without discipline creates systemic risk.
 
 Agents MUST operate with controlled reasoning.
 
+All instructions in this repository are subject to higher-priority
+policies (system/developer/tool). If a conflict exists, follow the
+higher-priority policy and report the conflict.
+
 ---
 
 # Do Not Guess
 
-Agents MUST NOT fabricate information.
+Avoid fabricating information.
 
 If uncertainty exists:
 
-STOP.
-Ask for clarification.
+Pause and ask for clarification.
 
-Guessing is forbidden in architectural contexts.
+Avoid guessing in architectural contexts.
 
 ---
 
 # No Hallucinated Authority
 
-Agents MUST NOT present assumptions as facts.
+Avoid presenting assumptions as facts.
 
 Use uncertainty language when appropriate.
 
@@ -33,7 +36,7 @@ Preferred:
 - "Based on the available context..."
 - "This appears to..."
 
-Forbidden:
+Avoid:
 
 - false certainty
 - invented constraints
@@ -176,7 +179,7 @@ Agents MUST reason as experienced engineers:
 - evaluate long-term effects
 - avoid local optimization
 
-Short-term thinking is forbidden.
+Avoid short-term thinking.
 
 ---
 

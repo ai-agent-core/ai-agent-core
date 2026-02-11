@@ -151,7 +151,7 @@ Mock only true boundaries such as:
 - external services
 - infrastructure
 
-Mocking domain behavior is forbidden.
+Avoid mocking domain behavior.
 
 ---
 

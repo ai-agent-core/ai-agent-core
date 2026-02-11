@@ -79,13 +79,13 @@ Expected outcomes driven by business rules.
 ## Technical failures
 Unexpected infrastructure or system problems.
 
-These MUST NOT be conflated.
+These SHOULD NOT be conflated.
 
 ---
 
 # Do Not Leak Infrastructure Errors
 
-Infrastructure exceptions MUST NOT cross into the domain.
+Infrastructure exceptions SHOULD NOT cross into the domain.
 
 Translate them at the boundary.
 

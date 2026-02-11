@@ -76,9 +76,9 @@ The domain is not.
 
 # Boundaries Over Convenience
 
-Agents MUST NOT cross boundaries for convenience.
+Avoid crossing boundaries for convenience.
 
-Examples of forbidden behavior:
+Examples to avoid:
 
 - controllers calling repositories directly
 - domain objects accessing databases
@@ -98,14 +98,14 @@ Agents SHOULD favor:
 - contract-driven design
 - replaceable components
 
-Hidden coupling is forbidden.
+Avoid hidden coupling.
 
 ---
 
 # Prefer Cohesion, Reject Coupling
 
 High cohesion within components is REQUIRED.  
-Tight coupling between components is FORBIDDEN.
+Avoid tight coupling between components.
 
 Agents MUST group behavior with the data it belongs to.
 
@@ -131,7 +131,7 @@ Rigid systems fail under change.
 
 Use proven patterns.
 
-Agents MUST NOT introduce experimental architecture unless explicitly requested.
+Avoid introducing experimental architecture unless explicitly requested.
 
 Boring architecture scales.
 Novel architecture breaks.
@@ -140,7 +140,7 @@ Novel architecture breaks.
 
 # Separate Business Logic From Technology
 
-Business rules MUST NOT depend on frameworks, databases, or delivery mechanisms.
+Business rules SHOULD NOT depend on frameworks, databases, or delivery mechanisms.
 
 The system should remain understandable even if technologies change.
 
