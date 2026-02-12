@@ -20,8 +20,10 @@ If connected:
 
 - Create or identify a GitHub Issue linked to the current branch
 - Treat that branch-linked Issue as the authoritative execution state
+- If local continuity is already being tracked in `agent-spec/WORK_STATE.md`, migrate that context into the branch-linked Issue when the Issue exists
 - Review existing Issue context before starting work
-- Post progress and decisions back to the Issue while working
+- Use the Issue so anyone can quickly recover context and resume work after interruptions
+- Append to the Issue whenever new facts, progress, decisions, or constraints are discovered while working
 
 If not connected:
 
