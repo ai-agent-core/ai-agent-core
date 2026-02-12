@@ -25,9 +25,33 @@ If connected:
 - Use the Issue so anyone can quickly recover context and resume work after interruptions
 - Append to the Issue whenever new facts, progress, decisions, or constraints are discovered while working
 
+### `agent-works` Continuity Protocol (MANDATORY)
+
+- Create `agent-works/` at project root.
+- For each work unit, create a folder under `agent-works/` with an English snake_case title.
+- Inside that folder, create a management text file named `<YYYYMMDD_HHMMSS>.txt`.
+- Store all related artifacts (patches, reports, tool outputs, logs) in the same folder using:
+  - `<YYYYMMDD_HHMMSS>_001.<ext>`
+  - `<YYYYMMDD_HHMMSS>_002.<ext>`
+  - Continue incrementing as needed.
+- After local files are created, run `gh` flow:
+  - If a linked Issue already exists, append a comment with the latest context and artifact dump references.
+  - If no linked Issue exists, create one and record the work-unit context.
+- If Issue creation or comment posting fails (including no `gh` connection or rate limits):
+  - Continue tracking only in local `agent-works/<work_unit>/`.
+  - Keep creating new timestamped `.txt` records and numbered artifacts with the same naming rules.
+  - Retry Issue sync later in oldest-first order (oldest unresolved work-unit first).
+- When Issue sync succeeds, create `.issue` in that work-unit folder and store the Issue identifier (for example `#123` or full URL).
+- All files inside `agent-works/` are commit targets.
+- To close work:
+  - Create `.closed` in the work-unit folder first.
+  - Then close the linked GitHub Issue.
+  - Only after close succeeds, delete the work-unit folder.
+
 If not connected:
 
 - Fall back to local continuity tracking in `agent-spec/WORK_STATE.md`
+- Also apply the same `agent-works` protocol locally until GitHub connectivity is restored.
 
 Execution continuity is mandatory.
 
