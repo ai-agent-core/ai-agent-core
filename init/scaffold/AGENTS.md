@@ -14,19 +14,18 @@ Agents MUST perform the following steps in order:
 
 ## 1. Check Execution Continuity (FIRST)
 
-Before any changes, read:
+Before any changes, verify whether this repository is connected to GitHub (`gh`).
 
-agent-spec/WORK_STATE.md
+If connected:
 
-If the file exists:
+- Create or identify a GitHub Issue linked to the current branch
+- Treat that branch-linked Issue as the authoritative execution state
+- Review existing Issue context before starting work
+- Post progress and decisions back to the Issue while working
 
-- Treat it as the authoritative execution state
-- Resume from the recorded next step
-- Avoid unnecessary re-analysis
+If not connected:
 
-If the file does not exist:
-
-- Create it before performing meaningful work
+- Fall back to local continuity tracking in `agent-spec/WORK_STATE.md`
 
 Execution continuity is mandatory.
 
@@ -62,11 +61,16 @@ Short-term convenience MUST NEVER override architectural integrity.
 
 If a safe decision cannot be determined:
 
-STOP.
+STOP and request human clarification.
 
-Request human clarification.
+If task scope or requirements are ambiguous, clarification is mandatory.
 
-Do not guess.  
+When clarification is received:
+
+- Reflect the confirmed information in the branch-linked GitHub Issue
+- Resume only after the Issue context is updated
+
+Do not guess.
 Do not improvise.
 
 Surfacing uncertainty is a sign of disciplined engineering.
