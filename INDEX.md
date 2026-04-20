@@ -67,6 +67,7 @@ READ:
 - principles/ENGINEERING_PRINCIPLES.md
 - principles/ARCHITECTURE_PRINCIPLES.md
 - principles/DESIGN_PHILOSOPHY.md
+- principles/FRONTEND_DESIGN_PHILOSOPHY.md
 
 Purpose:
 
@@ -128,6 +129,10 @@ predictable, and operationally stable.
 READ:
 
 - rules/PROJECT_STRUCTURE_RULES.md
+- rules/PACKAGE_LAYOUT_COMMON_RULES.md
+- rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+- rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
+- rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
 - rules/GENERATOR_RULES.md
 
 Purpose:
@@ -197,6 +202,7 @@ READ:
 - rules/CODING_RULES.md
 - rules/ERROR_HANDLING_RULES.md
 - rules/TESTING_RULES.md
+- rules/FRONTEND_DESIGN_RULES.md
 
 Purpose:
 

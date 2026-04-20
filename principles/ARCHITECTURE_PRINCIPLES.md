@@ -40,6 +40,31 @@ Layer mixing is FORBIDDEN.
 
 ---
 
+# Domain-Driven Package Structure
+
+Packages MUST be organized around the domain — not around technical roles.
+
+Top-level structure MUST reflect bounded contexts and aggregates.
+
+FORBIDDEN default layouts:
+
+- flat `controllers/`, `services/`, `dtos/`, `repositories/` at the root
+- packages named only after technical concerns
+- domain concepts scattered across unrelated technical folders
+
+REQUIRED pattern:
+
+- bounded context at the top
+- aggregate or cohesive concept below it
+- technical layering exists only within each domain package
+
+The domain shape MUST be visible from the package tree alone.
+
+If an outsider cannot infer the business from the folder structure,
+the structure is wrong.
+
+---
+
 # Dependency Direction Is Sacred
 
 Dependencies MUST flow inward.
@@ -71,6 +96,55 @@ Agents MUST ensure the domain:
 
 Frameworks are replaceable.
 The domain is not.
+
+---
+
+# Right-Size the Aggregation Unit
+
+DDD is a tool, not an ideology.
+
+Over-applied DDD fragments business reality into unrelated pieces
+and creates more damage than it prevents.
+
+Aggregate and responsibility boundaries MUST reflect
+actual business invariants —
+never theoretical decomposition for its own sake.
+
+## Agree the unit with the instructor
+
+Agents MUST NOT decide aggregation granularity unilaterally.
+
+Before separating responsibilities, agents MUST:
+
+1. identify what the business treats as a single unit of work
+2. confirm that unit explicitly with the instructor
+3. separate only along the confirmed boundary
+
+If the instructor cannot articulate the unit,
+stop and resolve the ambiguity before coding.
+
+## Bias toward fewer, larger aggregates
+
+When in doubt, err toward a single larger aggregate.
+
+Split only when a concrete invariant demands it.
+
+Symptoms of over-separation (CRITICAL):
+
+- a single business action cascades across many repositories
+- cross-aggregate transactions become routine
+- terms treated as "one thing" by the business are fragmented across models
+- changes to one concept require synchronized edits in multiple packages
+
+Symptoms of under-separation:
+
+- invariants from unrelated concerns collide inside one aggregate
+- unrelated business rules share state
+- the aggregate grows unbounded
+
+Both are failures — but over-separation is the more common AI default.
+
+Resist it.
 
 ---
 
