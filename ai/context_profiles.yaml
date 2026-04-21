@@ -101,6 +101,7 @@ contributions:
     - agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
     - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
     - agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - agent-core/rules/FRONTEND_DEMO_MODE_RULES.md
 
   # Topic contributions
 
@@ -209,6 +210,7 @@ fallback:
     - agent-core/rules/ERROR_HANDLING_RULES.md
     - agent-core/rules/TESTING_RULES.md
     - agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - agent-core/rules/FRONTEND_DEMO_MODE_RULES.md
     - agent-core/rules/PROJECT_STRUCTURE_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md

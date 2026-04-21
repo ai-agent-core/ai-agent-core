@@ -227,6 +227,7 @@ READ:
 - rules/ERROR_HANDLING_RULES.md
 - rules/TESTING_RULES.md
 - rules/FRONTEND_DESIGN_RULES.md
+- rules/FRONTEND_DEMO_MODE_RULES.md
 
 Purpose:
 
