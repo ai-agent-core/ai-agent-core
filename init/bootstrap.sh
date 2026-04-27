@@ -62,7 +62,7 @@ fail_if_exists () {
 fail_if_exists "AGENTS.md"
 fail_if_exists "CLAUDE.md"
 fail_if_exists "agent-input"
-fail_if_exists "agent-spec"
+fail_if_exists "tasks"
 
 ########################################
 # Copy Scaffold (dotfile-safe)

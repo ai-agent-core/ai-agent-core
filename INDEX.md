@@ -27,7 +27,8 @@ Agents MUST initialize in the following order:
 4. Structure
 5. Boundaries
 6. Decisions
-7. Implementation
+7. Execution Discipline
+8. Implementation
 
 Do not skip layers.
 
@@ -185,7 +186,30 @@ Avoid guessing.
 
 ---
 
-# 7. IMPLEMENTATION (DISCIPLINED EXECUTION)
+# 7. EXECUTION DISCIPLINE (OPERATIONAL)
+
+Defines how agents plan, track, and verify work day-to-day.
+
+READ:
+
+- rules/WORKFLOW_RULES.md
+- rules/TASK_MANAGEMENT_RULES.md
+
+Purpose:
+
+- enforce explicit planning before non-trivial work
+- make execution state resumable across sessions
+- close the loop between corrections and durable learnings
+
+Workflow Rules govern HOW agents act.
+Task Management Rules govern HOW agents track work
+across `tasks/todo.md`, `tasks/lessons.md`, and the branch-linked GitHub Issue.
+
+Undisciplined execution silently undoes good architecture.
+
+---
+
+# 8. IMPLEMENTATION (DISCIPLINED EXECUTION)
 
 Defines how code is written,
 how failures are handled,

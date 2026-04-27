@@ -76,8 +76,8 @@ if exist "%TARGET_DIR%\agent-input" (
   exit /b 1
 )
 
-if exist "%TARGET_DIR%\agent-spec" (
-  echo Error: agent-spec already exists. Aborting.
+if exist "%TARGET_DIR%\tasks" (
+  echo Error: tasks already exists. Aborting.
   exit /b 1
 )
 

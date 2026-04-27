@@ -43,6 +43,12 @@ boot_sequence:
     files:
       - rules/DECISION_RULES.md
 
+  - layer: execution_discipline
+    priority: operational
+    files:
+      - rules/WORKFLOW_RULES.md
+      - rules/TASK_MANAGEMENT_RULES.md
+
   - layer: implementation
     priority: disciplined
     files:

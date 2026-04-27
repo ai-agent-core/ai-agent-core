@@ -12,48 +12,53 @@ Avoid improvisation; follow the defined process.
 
 Agents MUST perform the following steps in order:
 
-## 1. Check Execution Continuity (FIRST)
+## 1. Establish Task Surface (FIRST)
 
-Before any changes, verify whether this repository is connected to GitHub (`gh`).
+Before any code change, set up the task tracking surface.
 
-If connected:
+### Local files (always)
 
-- Create or identify a GitHub Issue linked to the current branch
-- Treat that branch-linked Issue as the authoritative execution state
-- If local continuity is already being tracked in `agent-spec/WORK_STATE.md`, migrate that context into the branch-linked Issue when the Issue exists
-- Review existing Issue context before starting work
-- Use the Issue so anyone can quickly recover context and resume work after interruptions
-- Append to the Issue whenever new facts, progress, decisions, or constraints are discovered while working
+- Open or create `tasks/todo.md` and write the plan as checkable items
+- Read `tasks/lessons.md` and apply relevant prior learnings
 
-### `agent-works` Continuity Protocol (MANDATORY)
+These two files are the primary local surface for planning,
+progress, and durable learnings.
 
-- Create `agent-works/` at project root.
-- For each work unit, create a folder under `agent-works/` with an English snake_case title.
-- Inside that folder, create a management text file named `<YYYYMMDD_HHMMSS>.txt`.
-- Store all related artifacts (patches, reports, tool outputs, logs) in the same folder using:
-  - `<YYYYMMDD_HHMMSS>_001.<ext>`
-  - `<YYYYMMDD_HHMMSS>_002.<ext>`
-  - Continue incrementing as needed.
-- After local files are created, run `gh` flow:
-  - If a linked Issue already exists, append a comment with the latest context and artifact dump references.
-  - If no linked Issue exists, create one and record the work-unit context.
-- If Issue creation or comment posting fails (including no `gh` connection or rate limits):
-  - Continue tracking only in local `agent-works/<work_unit>/`.
-  - Keep creating new timestamped `.txt` records and numbered artifacts with the same naming rules.
-  - Retry Issue sync later in oldest-first order (oldest unresolved work-unit first).
-- When Issue sync succeeds, create `.issue` in that work-unit folder and store the Issue identifier (for example `#123` or full URL).
-- All files inside `agent-works/` are commit targets.
-- To close work:
-  - Create `.closed` in the work-unit folder first.
-  - Then close the linked GitHub Issue.
-  - Only after close succeeds, delete the work-unit folder.
+### Branch-linked GitHub Issue (when `gh` is available)
 
-If not connected:
+- Identify or create the GitHub Issue linked to the current branch
+- Mirror the initial plan from `tasks/todo.md` into the Issue body
+- Treat the Issue as the cross-session source of truth
+- Append a comment whenever:
+  - a plan item is completed
+  - a decision is made
+  - a constraint or risk surfaces
+  - the plan changes materially
+- On completion, mirror the Review section into the Issue
+- Close the Issue only after work is verified done
 
-- Fall back to local continuity tracking in `agent-spec/WORK_STATE.md`
-- Also apply the same `agent-works` protocol locally until GitHub connectivity is restored.
+### When `gh` is not available
+
+`tasks/todo.md` and `tasks/lessons.md` ARE the authoritative state.
+
+When connectivity returns, sync the current state into a new Issue.
+Do NOT block work on Issue sync.
+
+For full rules, READ:
+
+- agent-core/rules/TASK_MANAGEMENT_RULES.md
 
 Execution continuity is mandatory.
+
+### Migration note
+
+If this repository previously used `agent-spec/WORK_STATE.md`
+or an `agent-works/` artifact tree:
+
+- move the active plan into `tasks/todo.md`
+- move durable learnings into `tasks/lessons.md`
+- move handoff and decision context into the linked Issue
+- delete the legacy files once migration is complete
 
 ---
 
@@ -66,6 +71,26 @@ agent-core/INDEX.md
 Follow the defined boot sequence exactly.
 
 Architecture MUST always precede implementation.
+
+---
+
+# WORKFLOW (SUMMARY)
+
+Day-to-day execution discipline:
+
+- Plan explicitly before non-trivial work; verify the plan with the user
+- Stop and re-plan when execution drifts — do not push through
+- Use subagents liberally (where supported) to keep the main context clean
+- Mark items complete in `tasks/todo.md` as work proceeds
+- Verify behavior before declaring "done"
+  (run tests, check logs, demonstrate the change)
+- After any correction, capture the pattern in `tasks/lessons.md`
+- Find root causes — no quick fixes
+- Touch only what the change requires
+
+For full rules, READ:
+
+- agent-core/rules/WORKFLOW_RULES.md
 
 ---
 
@@ -93,8 +118,9 @@ If task scope or requirements are ambiguous, clarification is mandatory.
 
 When clarification is received:
 
-- Reflect the confirmed information in the branch-linked GitHub Issue
-- Resume only after the Issue context is updated
+- Reflect the confirmed information in `tasks/todo.md`
+- Mirror it to the branch-linked GitHub Issue when connected
+- Resume only after the task surface is updated
 
 Do not guess.
 Do not improvise.

@@ -66,11 +66,13 @@ No improvisation.
 Agents externalize working memory into:
 
 ```
-agent-spec/WORK_STATE.md
+tasks/todo.md      # current plan, progress, review section
+tasks/lessons.md   # durable learnings from corrections and validated approaches
 ```
 
-This allows another agent to resume work instantly when limits,
-sessions, or models change.
+When the repository is connected to GitHub,
+state mirrors into a branch-linked Issue
+so context survives session, model, and agent boundaries.
 
 AI work becomes interruptible — without losing context.
 
@@ -117,7 +119,8 @@ The bootstrap generates:
 
 - `AGENTS.md` — the mandatory execution entrypoint
 - `CLAUDE.md` — redirects compatible agents
-- `agent-spec/WORK_STATE.md` — externalized execution memory
+- `tasks/todo.md` — primary local plan and progress surface
+- `tasks/lessons.md` — durable learnings carried across work units
 
 These files establish the initialization protocol for all agents.
 
@@ -128,7 +131,7 @@ These files establish the initialization protocol for all agents.
 Commit the generated files immediately:
 
 ```bash
-git add AGENTS.md CLAUDE.md agent-spec
+git add AGENTS.md CLAUDE.md tasks
 git commit -m "Install Agent Core"
 ```
 
