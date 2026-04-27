@@ -20,6 +20,8 @@ core:
     - agent-core/principles/DESIGN_PHILOSOPHY.md
     - agent-core/rules/AI_BEHAVIOR_RULES.md
     - agent-core/rules/META_RULES.md
+    - agent-core/rules/WORKFLOW_RULES.md
+    - agent-core/rules/TASK_MANAGEMENT_RULES.md
     - agent-core/glossary/GLOSSARY.md
     - agent-core/ai/context_profiles.yaml
 
@@ -215,6 +217,8 @@ fallback:
     - agent-core/rules/LAYER_DEPENDENCY_RULES.md
     - agent-core/rules/MAPPER_RULES.md
     - agent-core/rules/GENERATOR_RULES.md
+    - agent-core/rules/WORKFLOW_RULES.md
+    - agent-core/rules/TASK_MANAGEMENT_RULES.md
     - agent-core/ai/reading_order.yaml
     - agent-core/ai/machine_rules.yaml
     - agent-core/ai/decision_tree.yaml
