@@ -243,6 +243,28 @@ Small improvements compound over time.
 
 ---
 
+# Debug UI Isolation Rule
+
+Debug UI MUST NOT interfere with production screen behavior.
+
+Implementation requirements:
+
+- Control Debug UI at the outermost layout layer.
+- Render a thin dedicated debug header at the top edge of the screen.
+- Place all debug menus, controls, and buttons inside that debug header.
+- Apply a layout setback for the main content equal to the debug header height.
+- Keep business screens independent from debug-specific component structure.
+
+Prohibited patterns:
+
+- injecting debug controls directly into business page content
+- overlaying debug controls on top of primary interaction areas
+- causing layout shift in business components outside the explicit top setback
+
+This rule exists to preserve deterministic business UI behavior while enabling safe debug tooling.
+
+---
+
 # Core Directive
 
 Write code that a senior engineer would not need to rewrite.

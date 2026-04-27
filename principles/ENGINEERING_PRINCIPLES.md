@@ -98,6 +98,33 @@ Agents SHOULD prefer designs that enable:
 
 ---
 
+# Test-Driven Implementation
+
+Implementation MUST begin with a failing test.
+
+Agents MUST follow the Red → Green → Refactor rhythm:
+
+1. write a failing test that describes the next required behavior
+2. write the minimum code to make it pass
+3. refactor with the test as a safety net
+
+FORBIDDEN:
+
+- writing production code before its test exists
+- writing "tests later" as a separate phase
+- adding tests only to cover coverage metrics
+
+Tests are not validation.
+
+Tests are the specification that drives the code into existence.
+
+When behavior cannot yet be expressed as a test,
+the behavior is not yet understood.
+
+Stop and clarify before implementing.
+
+---
+
 # Fail Loudly
 
 Avoid silent failure.

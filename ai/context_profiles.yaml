@@ -1,0 +1,227 @@
+version: 1
+
+# Context loading routing table.
+#
+# Agents classify the current task by assigning tags across the
+# dimensions below. For every assigned tag, the corresponding
+# contribution list is looked up. The union (deduplicated) of all
+# contribution lists is the set of files to load beyond Core.
+#
+# If no tag can be assigned confidently, the fallback is to load
+# ALL files listed under "fallback.load_all".
+
+core:
+  description: Files that MUST be loaded for every task.
+  files:
+    - AGENTS.md
+    - agent-core/INDEX.md
+    - agent-core/principles/ENGINEERING_PRINCIPLES.md
+    - agent-core/principles/ARCHITECTURE_PRINCIPLES.md
+    - agent-core/principles/DESIGN_PHILOSOPHY.md
+    - agent-core/rules/AI_BEHAVIOR_RULES.md
+    - agent-core/rules/META_RULES.md
+    - agent-core/glossary/GLOSSARY.md
+    - agent-core/ai/context_profiles.yaml
+
+dimensions:
+
+  activity:
+    description: What kind of action the agent is performing.
+    values:
+      - implementation
+      - structure_design
+      - visual_design
+      - bootstrap
+      - review
+
+  stack:
+    description: Which technology surface the work targets. Multiple allowed.
+    values:
+      - backend
+      - functions
+      - frontend
+
+  topic:
+    description: Cross-cutting concerns that may attach to a task. Zero or more.
+    values:
+      - aggregate_boundary
+      - persistence
+      - test_authoring
+      - naming
+      - error_handling
+
+contributions:
+
+  # Activity contributions
+
+  activity.implementation:
+    - agent-core/rules/CODING_RULES.md
+    - agent-core/rules/NAMING_RULES.md
+    - agent-core/rules/ERROR_HANDLING_RULES.md
+    - agent-core/rules/TESTING_RULES.md
+
+  activity.structure_design:
+    - agent-core/rules/PROJECT_STRUCTURE_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - agent-core/rules/GENERATOR_RULES.md
+
+  activity.visual_design:
+    - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
+    - agent-core/rules/FRONTEND_DESIGN_RULES.md
+
+  activity.bootstrap:
+    - agent-core/rules/PROJECT_STRUCTURE_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - agent-core/rules/GENERATOR_RULES.md
+
+  activity.review:
+    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
+
+  # Stack contributions
+
+  stack.backend:
+    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - agent-core/rules/MAPPER_RULES.md
+
+  stack.functions:
+    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md  # functions reuse backend stereotypes
+    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - agent-core/rules/MAPPER_RULES.md
+
+  stack.frontend:
+    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
+    - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
+    - agent-core/rules/FRONTEND_DESIGN_RULES.md
+
+  # Topic contributions
+
+  topic.aggregate_boundary:
+    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - agent-core/rules/MAPPER_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+
+  topic.persistence:
+    - agent-core/rules/MAPPER_RULES.md
+    - agent-core/rules/GENERATOR_RULES.md
+    - agent-core/rules/PROJECT_STRUCTURE_RULES.md
+
+  topic.test_authoring:
+    - agent-core/rules/TESTING_RULES.md
+
+  topic.naming:
+    - agent-core/rules/NAMING_RULES.md
+
+  topic.error_handling:
+    - agent-core/rules/ERROR_HANDLING_RULES.md
+
+# Example task patterns — for agent reference and human audit.
+# These are illustrative, not exhaustive. The union mechanism
+# generalizes beyond this list.
+examples:
+
+  backend_new_usecase:
+    description: Backend で新しい UseCase を実装する
+    tags:
+      activity: implementation
+      stack: [backend]
+
+  backend_new_processor:
+    description: Backend で新しい Processor を実装する
+    tags:
+      activity: implementation
+      stack: [backend]
+
+  backend_new_repository:
+    description: Backend で Repository interface + Impl を追加する
+    tags:
+      activity: implementation
+      stack: [backend]
+      topic: [persistence]
+
+  functions_new_function:
+    description: 新しい Serverless Function を実装する
+    tags:
+      activity: implementation
+      stack: [functions]
+
+  frontend_new_page:
+    description: Frontend で新しい Page を実装する
+    tags:
+      activity: implementation
+      stack: [frontend]
+
+  full_stack_new_feature:
+    description: Backend と Frontend を同時に実装する
+    tags:
+      activity: implementation
+      stack: [backend, frontend]
+
+  aggregate_boundary_discussion:
+    description: Aggregate 境界を指示者と詰める
+    tags:
+      activity: structure_design
+      stack: [backend]
+      topic: [aggregate_boundary]
+
+  landing_page_design:
+    description: LP のデザイン判断を行う
+    tags:
+      activity: visual_design
+      stack: [frontend]
+
+  new_project_bootstrap:
+    description: 新規プロジェクトを初期化する
+    tags:
+      activity: bootstrap
+
+  ui_review_for_ai_tropes:
+    description: UI を AI 臭観点でレビューする
+    tags:
+      activity: review
+      stack: [frontend]
+
+  backend_code_review:
+    description: Backend のコードレビュー
+    tags:
+      activity: review
+      stack: [backend]
+
+fallback:
+  description: |
+    Trigger when task tags cannot be determined, or when the
+    classification itself is ambiguous. Load every file — this is
+    the safe default and matches the original pre-optimization
+    behavior.
+  load_all:
+    - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
+    - agent-core/rules/CODING_RULES.md
+    - agent-core/rules/NAMING_RULES.md
+    - agent-core/rules/ERROR_HANDLING_RULES.md
+    - agent-core/rules/TESTING_RULES.md
+    - agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - agent-core/rules/PROJECT_STRUCTURE_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
+    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - agent-core/rules/MAPPER_RULES.md
+    - agent-core/rules/GENERATOR_RULES.md
+    - agent-core/ai/reading_order.yaml
+    - agent-core/ai/machine_rules.yaml
+    - agent-core/ai/decision_tree.yaml
+
+enforcement:
+  classification_required: true
+  union_required: true
+  dedupe_required: true
+  fallback_on_ambiguity: true
+  unlisted_files_allowed_for_read: true

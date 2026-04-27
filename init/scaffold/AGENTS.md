@@ -64,11 +64,62 @@ or an `agent-works/` artifact tree:
 
 ## 2. Initialize Agent Core
 
-READ:
+Agent Core uses **profile-based context loading** to minimize
+token cost while keeping full governance available.
 
-agent-core/INDEX.md
+### 2a. Always load Core
 
-Follow the defined boot sequence exactly.
+READ, in this order:
+
+- `agent-core/INDEX.md`
+- `agent-core/principles/ENGINEERING_PRINCIPLES.md`
+- `agent-core/principles/ARCHITECTURE_PRINCIPLES.md`
+- `agent-core/principles/DESIGN_PHILOSOPHY.md`
+- `agent-core/rules/AI_BEHAVIOR_RULES.md`
+- `agent-core/rules/META_RULES.md`
+- `agent-core/glossary/GLOSSARY.md`
+- `agent-core/ai/context_profiles.yaml`
+
+These establish governance and the routing table.
+
+### 2b. Classify the task
+
+Assign tags across three dimensions:
+
+- `activity`: one of `implementation`, `structure_design`,
+  `visual_design`, `bootstrap`, `review`
+- `stack`: zero or more of `backend`, `functions`, `frontend`
+- `topic`: zero or more of `aggregate_boundary`, `persistence`,
+  `test_authoring`, `naming`, `error_handling`
+
+When a single instruction spans multiple stacks (for example,
+backend and frontend together), assign all applicable stack tags.
+
+When tagging is uncertain, prefer to **attach additional tags**
+rather than fewer. The loading mechanism deduplicates.
+
+### 2c. Load profile contributions
+
+For every assigned tag, read the files listed under
+`contributions.<tag>` in `context_profiles.yaml`.
+
+Take the **union** of all contribution lists, remove duplicates,
+and load the result.
+
+### 2d. Fallback — load all
+
+If no tag can be assigned with confidence, OR classification
+itself cannot be completed, load every file listed under
+`fallback.load_all`.
+
+Fallback is the **safe default**. Prefer it over skipping
+governance.
+
+### 2e. Dynamic expansion
+
+If scope widens during work (for example, a backend task starts
+touching frontend), assign the additional tag and load only the
+delta files. Full re-initialization is not required.
 
 Architecture MUST always precede implementation.
 
