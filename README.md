@@ -154,6 +154,51 @@ git commit -m "Install Agent Core"
 
 ---
 
+# Upgrading from an older version
+
+When you replace or update `agent-core/` (vendor pull / submodule
+update / clean re-vendor), run the migration script from the host
+project root to:
+
+- relocate user content from legacy locations
+  (`tasks/`, `agent-works/`, `agent-spec/WORK_STATE.md`,
+  `agent-input/`) into `agent-core/generated/`,
+- remove Agent Core-provided shells that have been replaced
+  (e.g. `agent-spec/`),
+- add `agent-core/generated/` to `.gitignore` if missing,
+- report drift in `AGENTS.md` / `CLAUDE.md` against the current
+  scaffold (without overwriting your customisations).
+
+## macOS / Linux
+
+```bash
+./agent-core/init/migration.sh           # dry run, no changes
+./agent-core/init/migration.sh --apply   # perform the migration
+```
+
+## Windows
+
+```bat
+agent-core\init\migration.cmd
+agent-core\init\migration.cmd --apply
+```
+
+Migration is **idempotent** — running it again on a clean tree
+does nothing. All destructive moves go through a timestamped
+backup at `agent-core/generated/migration-backup-<UTC>/` so any
+move can be undone manually.
+
+User content (plans, lessons, working notes) is preserved or
+backed up; Agent Core-provided scaffolding is removed and
+replaced.
+
+`AGENTS.md` and `CLAUDE.md` are **never auto-replaced** — they
+may carry project-specific customisation. The script reports
+drift and points to the new scaffold; you decide whether to
+adopt it.
+
+---
+
 # Optional: enable Claude Code skill auto-discovery
 
 If you want Claude Code to discover Agent Core skills natively in
