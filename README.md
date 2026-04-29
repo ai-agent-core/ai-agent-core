@@ -204,22 +204,42 @@ Browse them in [`skills/`](skills/).
 
 ---
 
-## Default frontend stack
+## Default stacks
 
-For new frontend projects, Agent Core defaults to:
+Agent Core ships two well-trodden paths. Pick at bootstrap and
+record the choice in an ADR — see
+[`STACK_DEFAULTS_RULES.md`](rules/STACK_DEFAULTS_RULES.md).
 
-| Tool          | Role                                                |
-| ------------- | --------------------------------------------------- |
-| **SvelteKit** | filesystem routing, SSR / SSG-capable               |
-| **TypeScript** (strict) | type-safe by default                      |
-| **Tailwind CSS** | utility-first, design tokens in `tailwind.config.ts` |
-| **pnpm**      | package manager + workspaces                        |
+### Default path — Cloudflare (greenfield SaaS / web)
 
-A different stack is a deliberate, written decision (skill `adr`). The
-four-layer architecture (`interfaces / applications / domains /
-architectures`) is framework-agnostic — only the adapter layer changes.
+| Concern         | Default                                                       |
+| --------------- | ------------------------------------------------------------- |
+| Frontend        | **SvelteKit** + `@sveltejs/adapter-cloudflare` + **TypeScript** strict + **Tailwind** + **pnpm** |
+| Backend         | **Cloudflare Workers** + **Hono** + TypeScript, deployed via **Wrangler** |
+| OLTP            | **Cloudflare D1** (graduate to Postgres via Hyperdrive when needed) |
+| Object / KV     | **Cloudflare R2** / **KV**                                    |
+| Queue / Cron / Realtime | **Queues** / **Cron Triggers** / **Durable Objects**  |
+| Email           | **Resend**                                                    |
+| Payment         | **Stripe** (Connect when marketplace)                         |
+| DNS / TLS / WAF | **Cloudflare** (proxied DNS, ACME-managed certs)              |
+| CI / CD         | **GitHub Actions** with OIDC federation to Cloudflare         |
 
-See [`PACKAGE_LAYOUT_FRONTEND_RULES.md`](rules/PACKAGE_LAYOUT_FRONTEND_RULES.md).
+### Large-scale path — Quarkus / JVM
+
+| Concern         | Default                                                       |
+| --------------- | ------------------------------------------------------------- |
+| Backend         | **Quarkus** (Kotlin preferred; Java 21+ acceptable)           |
+| OLTP            | **PostgreSQL** (managed: RDS / Cloud SQL / Aiven / Neon)      |
+| Migrations      | **Flyway**                                                    |
+| Entity gen      | **jeg** (schema → entity reverse generation)                  |
+| Frontend (paired) | Same as the default path (SvelteKit + Tailwind + pnpm)      |
+| IaC             | Terraform / Pulumi against the chosen cloud                   |
+
+Hybrid (Cloudflare frontend + Quarkus backend) is supported.
+
+The four-layer architecture (`interfaces / applications / domains /
+architectures`) is the same on both paths — only the adapter layer
+changes.
 
 ---
 
@@ -324,7 +344,8 @@ By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md).
 `AI coding agents` · `Claude Code` · `AGENTS.md` · `CLAUDE.md` ·
 `Cursor rules` · `Copilot` · `governance` · `DDD` · `TDD` · `Clean
 Architecture` · `agent skills` · `sub-agents` · `prompt engineering` ·
-`SvelteKit` · `pnpm` · `TypeScript`
+`Cloudflare Workers` · `Wrangler` · `Hono` · `D1` · `SvelteKit` · `pnpm` ·
+`TypeScript` · `Resend` · `Stripe` · `Quarkus` · `Flyway`
 
 ---
 

@@ -14,22 +14,47 @@ the higher-priority policy and report the conflict.
 
 ---
 
+# Default infrastructure target
+
+The default infrastructure target is **Cloudflare** — Workers,
+Pages, D1, R2, KV, Queues, Durable Objects, Cron Triggers, plus
+proxied DNS / TLS / WAF managed in the same Cloudflare account.
+For the full list and rationale, see
+`rules/STACK_DEFAULTS_RULES.md`.
+
+A Cloudflare-first stack means most "infra" is declared via
+`wrangler.toml` and `wrangler` commands rather than Terraform.
+That is acceptable — wrangler config IS the IaC for that path.
+
+Pick a different target (AWS / GCP / on-prem / Azure) only when
+a constraint forces it (large-scale Quarkus path, regulatory,
+existing tenant). Record the choice in an ADR.
+
+---
+
 # Infrastructure as Code (Mandatory)
 
 All production infrastructure MUST be declared in code:
 
 - networks, subnets, routes, firewalls,
-- compute (VMs, container clusters, serverless),
-- storage (databases, buckets, queues),
+- compute (VMs, container clusters, serverless, Workers),
+- storage (databases, buckets, queues, KV, R2, D1),
 - identity (IAM roles, service accounts, policies),
 - DNS records,
 - secrets manager bindings (the binding, not the secret value),
 - monitoring resources (alerts, dashboards as code where
   feasible).
 
-Tools: Terraform / OpenTofu, Pulumi, AWS CDK, Bicep, Helm /
-Kustomize for Kubernetes. Pick one stack per environment and use
-it consistently.
+Tooling by target:
+
+- **Cloudflare path**: `wrangler.toml` per app + Terraform /
+  Pulumi for account-level resources (Zone settings, Pages
+  projects, R2 buckets, Access policies). Wrangler is invoked
+  by GitHub Actions via OIDC federation, not from laptops.
+- **AWS / GCP / Azure path**: Terraform / OpenTofu, Pulumi, AWS
+  CDK, Bicep. Helm / Kustomize for Kubernetes resources.
+
+Pick **one** primary stack per environment and use it consistently.
 
 Forbidden:
 

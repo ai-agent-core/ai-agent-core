@@ -35,6 +35,23 @@ Different categories share the same playbook: **expand → migrate
 
 ---
 
+# Default migration tooling
+
+Tooling per path (see `rules/STACK_DEFAULTS_RULES.md`):
+
+- **Cloudflare path** — versioned SQL files under
+  `tools/db/migrations/` (or `packages/db/migrations/`), applied
+  with `wrangler d1 migrations apply <db>`. Forward-only in
+  production.
+- **Quarkus / JVM path** — **Flyway**
+  (`db/migration/V<N>__<name>.sql`). Forward-only in production.
+
+Both paths share the same expand → migrate → contract discipline
+below. Tool choice is settled in an ADR at bootstrap; mixing
+two tools against the same database is forbidden.
+
+---
+
 # Expand → Migrate → Contract (Universal)
 
 Three phases, never compressed:

@@ -38,6 +38,22 @@ Forbidden:
 When in doubt, default to Postgres. It is the boring, capable
 choice.
 
+## Defaults per stack path
+
+See `rules/STACK_DEFAULTS_RULES.md`:
+
+- **Cloudflare path** — **D1** (SQLite class) for small / mid
+  scale. Graduate to **Postgres via Hyperdrive** when D1 stops
+  being adequate (heavy joins, hot writes, large datasets,
+  full-text search).
+- **Quarkus / JVM path** — **Postgres** (managed: RDS / Cloud
+  SQL / Aiven / Neon).
+
+D1 is SQLite under the hood — it inherits SQLite's behaviour
+(no `RIGHT JOIN`, single-writer, limited concurrent writes).
+Treat those as design constraints from day one, not surprises
+discovered later.
+
 ---
 
 # Schema Lives in Migrations

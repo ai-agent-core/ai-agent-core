@@ -1,14 +1,32 @@
-# Package Layout Rules — Backend (Quarkus / Java)
+# Package Layout Rules — Backend (Quarkus / JVM)
 
-This document defines the package layout for the Quarkus / Java
-backend stack.
+This document defines the package layout for the **Quarkus / JVM**
+backend path — used when the system needs heavy domain modelling,
+complex transactional invariants, JVM-ecosystem requirements, or
+team JVM expertise.
+
+For the **default (Cloudflare Workers + Hono + TypeScript) path**,
+see `rules/PACKAGE_LAYOUT_WORKERS_RULES.md`. The path is chosen at
+project bootstrap (skill `bootstrap-project`) per
+`rules/STACK_DEFAULTS_RULES.md`.
 
 Shared conventions (the four-layer convention, dependency
 direction, bounded-context-first) are defined in
 `rules/PACKAGE_LAYOUT_COMMON_RULES.md` and apply here.
 
-The Quarkus / Java backend follows the four-layer convention with
+The Quarkus / JVM backend follows the four-layer convention with
 the stereotypes defined below.
+
+## Stack defaults on this path
+
+- **Framework**: Quarkus (RESTEasy Reactive / JAX-RS).
+- **Language**: Kotlin preferred; Java 21+ acceptable.
+- **Build**: Gradle (Kotlin DSL) or Maven.
+- **Persistence**: Hibernate ORM with Panache, or jOOQ.
+- **Migrations**: **Flyway** (`db/migration/V<N>__<name>.sql`).
+- **Entity generation**: **jeg** (database → entity reverse-generation).
+  Edits to the generated `${projectName}-entity` module are forbidden.
+- **Tests**: JUnit 5 + Quarkus DevServices (Testcontainers).
 
 ---
 

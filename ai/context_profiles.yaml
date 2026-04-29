@@ -28,6 +28,7 @@ core:
     - agent-core/rules/DECISION_RULES.md
     - agent-core/rules/WORKFLOW_RULES.md
     - agent-core/rules/TASK_MANAGEMENT_RULES.md
+    - agent-core/rules/STACK_DEFAULTS_RULES.md
     - agent-core/glossary/GLOSSARY.md
     - agent-core/ai/context_profiles.yaml
 
@@ -83,6 +84,8 @@ dimensions:
       - legacy_migration
       - release
       - branching
+      - notifications
+      - email
 
 contributions:
 
@@ -142,6 +145,7 @@ contributions:
   stack.backend:
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_WORKERS_RULES.md
     - agent-core/rules/LAYER_DEPENDENCY_RULES.md
     - agent-core/rules/MAPPER_RULES.md
     - agent-core/rules/API_DESIGN_RULES.md
@@ -296,6 +300,12 @@ contributions:
 
   topic.branching:
     - agent-core/skills/branching-and-commits/SKILL.md
+
+  topic.notifications:
+    - agent-core/rules/NOTIFICATION_RULES.md
+
+  topic.email:
+    - agent-core/rules/NOTIFICATION_RULES.md
 
 # Example task patterns — illustrative.
 examples:
@@ -497,6 +507,7 @@ fallback:
     - agent-core/rules/PROJECT_STRUCTURE_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+    - agent-core/rules/PACKAGE_LAYOUT_WORKERS_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
     - agent-core/rules/LAYER_DEPENDENCY_RULES.md
@@ -521,6 +532,7 @@ fallback:
     - agent-core/rules/DEPENDENCY_RULES.md
     - agent-core/rules/ACCESSIBILITY_RULES.md
     - agent-core/rules/DOCUMENTATION_RULES.md
+    - agent-core/rules/NOTIFICATION_RULES.md
     - agent-core/ai/reading_order.yaml
     - agent-core/ai/machine_rules.yaml
     - agent-core/ai/decision_tree.yaml

@@ -37,13 +37,36 @@ Reflect the confirmed scope into `tasks/todo.md`.
 
 ### Default stacks (unless overridden)
 
-| Stack      | Default                                                |
-| ---------- | ------------------------------------------------------ |
-| Frontend   | SvelteKit + TypeScript (strict) + Tailwind CSS + pnpm  |
-| Backend    | per the team / language ADR (Java / Kotlin / Go / TS)  |
-| Database   | PostgreSQL                                             |
-| Infra      | IaC (Terraform / Pulumi / cloud-native)                |
-| CI / CD    | GitHub Actions (or platform-native)                    |
+Two well-trodden paths — see `rules/STACK_DEFAULTS_RULES.md` for
+the full rationale.
+
+#### Default path — Cloudflare (greenfield SaaS / web)
+
+| Concern         | Default                                                       |
+| --------------- | ------------------------------------------------------------- |
+| Frontend        | SvelteKit + `@sveltejs/adapter-cloudflare` + TS strict + Tailwind + pnpm |
+| Backend         | Cloudflare Workers + Hono + TypeScript, deployed via Wrangler |
+| OLTP            | Cloudflare D1 (graduate to Postgres via Hyperdrive when needed) |
+| Object store    | Cloudflare R2                                                 |
+| KV / cache      | Cloudflare KV                                                 |
+| Queue / Cron / Realtime | Cloudflare Queues / Cron Triggers / Durable Objects   |
+| Email           | Resend                                                        |
+| Payment         | Stripe (Connect when marketplace)                             |
+| DNS / TLS / WAF | Cloudflare (proxied DNS, ACME-managed certs)                  |
+| CI / CD         | GitHub Actions with OIDC federation to Cloudflare             |
+
+#### Large-scale path — Quarkus / JVM
+
+| Concern         | Default                                                       |
+| --------------- | ------------------------------------------------------------- |
+| Backend         | Quarkus (Kotlin preferred; Java 21+ acceptable)               |
+| OLTP            | PostgreSQL (managed: RDS / Cloud SQL / Aiven / Neon)          |
+| Migrations      | Flyway                                                        |
+| Entity gen      | jeg (schema → entity reverse generation)                      |
+| Build           | Gradle (Kotlin DSL) or Maven                                  |
+| Tests           | JUnit 5 + Quarkus DevServices                                 |
+| Frontend (paired) | SvelteKit + Tailwind + pnpm — same as the default path      |
+| IaC             | Terraform / Pulumi against the chosen cloud                   |
 
 Choosing a non-default stack is a deliberate, written decision —
 skill `adr`.

@@ -111,9 +111,11 @@ READ:
 - `rules/PROJECT_STRUCTURE_RULES.md`
 - `rules/PACKAGE_LAYOUT_COMMON_RULES.md`
 - `rules/PACKAGE_LAYOUT_BACKEND_RULES.md`
+- `rules/PACKAGE_LAYOUT_WORKERS_RULES.md`
 - `rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md`
 - `rules/PACKAGE_LAYOUT_FRONTEND_RULES.md`
 - `rules/GENERATOR_RULES.md`
+- `rules/STACK_DEFAULTS_RULES.md`
 
 ---
 
@@ -193,6 +195,8 @@ when the situation applies, per `ai/context_profiles.yaml`.
 - Accessibility: `rules/ACCESSIBILITY_RULES.md`
 - Documentation: `rules/DOCUMENTATION_RULES.md`
 - Frontend Demo Mode: `rules/FRONTEND_DEMO_MODE_RULES.md`
+- Notifications / Email: `rules/NOTIFICATION_RULES.md`
+- Stack defaults (Cloudflare / Quarkus paths): `rules/STACK_DEFAULTS_RULES.md`
 
 ## Skills
 

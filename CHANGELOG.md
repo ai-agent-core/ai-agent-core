@@ -27,6 +27,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   `migration-backup-<UTC>/` so any user additions are recoverable. Files
   without the marker are treated as user-authored and never overwritten.
   Pass `--keep-entrypoints` to disable refresh.
+- New `rules/STACK_DEFAULTS_RULES.md` — single source of truth for stack
+  recommendations. Two paths: the default Cloudflare path (Workers +
+  Hono + D1 + Pages + Resend + Stripe) and the large-scale Quarkus / JVM
+  path (Postgres + Flyway + jeg).
+- New `rules/PACKAGE_LAYOUT_WORKERS_RULES.md` — Cloudflare Workers
+  backend layout (TypeScript + Hono + Wrangler + D1 / R2 / KV / Queues
+  bindings, with the Sealess monorepo shape as the reference).
+- New `rules/NOTIFICATION_RULES.md` — outbound email / webhook /
+  in-app / SMS rules. Resend is the default mailer on the Cloudflare
+  path. Sender hygiene (DKIM / SPF / DMARC), idempotency on send,
+  template source-control, suppression-list discipline.
+- `INFRA_RULES.md`, `DATABASE_RULES.md`, `MIGRATION_RULES.md`,
+  `PROJECT_STRUCTURE_RULES.md`, `PACKAGE_LAYOUT_BACKEND_RULES.md`,
+  and `skills/bootstrap-project/SKILL.md` updated to reference the
+  two paths and their defaults.
+- Routing updated: `INDEX.md`, `ai/context_profiles.yaml`, and
+  `ai/reading_order.yaml` register the new rules and add `notifications`
+  / `email` topics.
 
 ## [1.0.0] — 2026-04-29
 

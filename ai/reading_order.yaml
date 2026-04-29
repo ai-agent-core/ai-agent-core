@@ -37,9 +37,11 @@ boot_sequence:
       - rules/PROJECT_STRUCTURE_RULES.md
       - rules/PACKAGE_LAYOUT_COMMON_RULES.md
       - rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+      - rules/PACKAGE_LAYOUT_WORKERS_RULES.md
       - rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
       - rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
       - rules/GENERATOR_RULES.md
+      - rules/STACK_DEFAULTS_RULES.md
 
   - layer: boundaries
     priority: critical
@@ -86,6 +88,7 @@ boot_sequence:
       - rules/DEPENDENCY_RULES.md
       - rules/ACCESSIBILITY_RULES.md
       - rules/DOCUMENTATION_RULES.md
+      - rules/NOTIFICATION_RULES.md
 
 enforcement:
 
