@@ -35,6 +35,19 @@ Before creating a single file, confirm:
 
 Reflect the confirmed scope into `tasks/todo.md`.
 
+### Default stacks (unless overridden)
+
+| Stack      | Default                                                |
+| ---------- | ------------------------------------------------------ |
+| Frontend   | SvelteKit + TypeScript (strict) + Tailwind CSS + pnpm  |
+| Backend    | per the team / language ADR (Java / Kotlin / Go / TS)  |
+| Database   | PostgreSQL                                             |
+| Infra      | IaC (Terraform / Pulumi / cloud-native)                |
+| CI / CD    | GitHub Actions (or platform-native)                    |
+
+Choosing a non-default stack is a deliberate, written decision —
+skill `adr`.
+
 ---
 
 ## Phase 2 — mandatory modules (every project)

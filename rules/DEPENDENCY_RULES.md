@@ -41,7 +41,8 @@ package.
 
 Every project MUST have a lockfile in source control:
 
-- `package-lock.json` / `pnpm-lock.yaml` / `yarn.lock`,
+- `pnpm-lock.yaml` (preferred for JS / TS — see below),
+- `package-lock.json` / `yarn.lock` (only when pnpm cannot be used),
 - `Cargo.lock`,
 - `go.sum`,
 - `poetry.lock` / `uv.lock` / `requirements.txt` (with hashes),
@@ -50,6 +51,23 @@ Every project MUST have a lockfile in source control:
 
 Lockfiles are reviewed in PRs. Floating versions in production
 lockfiles are forbidden.
+
+## Default JS / TS package manager
+
+For JavaScript and TypeScript projects, the default package manager
+is **pnpm**:
+
+- fastest install,
+- strict node_modules layout (catches phantom dependencies),
+- first-class workspaces / monorepo support,
+- lockfile (`pnpm-lock.yaml`) is the source of truth.
+
+Pin the pnpm version via `packageManager` in `package.json`
+(Corepack-friendly). CI installs with `pnpm install --frozen-lockfile`.
+
+Choosing `npm` or `yarn` instead is a deliberate, written decision
+(skill `adr`) — typically driven by an external constraint, not by
+preference.
 
 ---
 

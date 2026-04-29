@@ -10,16 +10,37 @@ direction, bounded-context-first) are defined in
 
 # Default Stack
 
-Unless the instructor specifies otherwise, Frontend projects use:
+Unless the instructor specifies otherwise, Frontend projects use
+this stack:
 
-- **SvelteKit** (filesystem routing, SSR / SSG-capable)
-- **Tailwind CSS** (utility-first styling)
-- **TypeScript**
+- **SvelteKit** — filesystem routing, SSR / SSG-capable.
+- **TypeScript** — strict mode (`strict: true`) by default.
+- **Tailwind CSS** — utility-first styling, design tokens in
+  `tailwind.config.ts`.
+- **pnpm** — package manager. `pnpm-lock.yaml` is the lockfile and
+  is committed. Workspaces via `pnpm-workspace.yaml` for monorepos.
 
-The four-layer architecture is framework-agnostic.
+Choosing anything else is a deliberate, written decision (skill
+`adr`).
 
-Patterns documented here translate to Next.js, Nuxt, Remix, Astro,
-or Vite + React. Only the framework adapter layer changes.
+The four-layer architecture is framework-agnostic — the patterns
+here translate to Next.js, Nuxt, Remix, Astro, or Vite + React with
+only the framework adapter layer changing. But **the default for a
+new project is the stack above**, not "whatever the team used last".
+
+## Tooling defaults
+
+- **Node version** pinned via `.tool-versions` / `.nvmrc` /
+  `mise.toml`.
+- **pnpm version** pinned via `packageManager` in `package.json`
+  (Corepack-friendly).
+- **Lint / format**: ESLint + Prettier with the project-shared
+  config; `eslint-plugin-svelte` and the Tailwind plugin enabled.
+- **Type check** runs in CI (`tsc --noEmit` and `svelte-check`).
+- **Tests**: Vitest for unit, Playwright for end-to-end.
+- **CI**: pnpm install with `--frozen-lockfile`.
+- `npm install` and `yarn install` in production-bound branches
+  are forbidden — the lockfile is `pnpm-lock.yaml`.
 
 ---
 
