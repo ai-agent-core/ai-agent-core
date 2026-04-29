@@ -136,6 +136,39 @@ are authoritative.
 
 ---
 
+# Host-project-specific assets (`agent-core/local/`)
+
+Anything **specific to this project** that an AI agent needs —
+custom skills, project prompts, tools, references — goes under
+`agent-core/local/`. Examples:
+
+- `agent-core/local/skills/<name>/SKILL.md` — host-only skills.
+- `agent-core/local/tools/` — host-only tooling notes / scripts
+  the agent may consult.
+- `agent-core/local/references/` — fixtures, vendor docs, schema
+  snapshots the agent should read on demand.
+
+Constraints:
+
+- `agent-core/local/` is gitignored by agent-core itself (only
+  `.gitkeep` is tracked upstream). To commit your project's
+  customizations, override the rule in your project's own
+  `.gitignore`, e.g.:
+
+  ```
+  !agent-core/local/
+  ```
+
+- Content under `local/` MUST NOT contradict agent-core principles,
+  rules, or AI control files. Higher layers win; surface conflicts
+  rather than silently overriding.
+- Skills under `agent-core/local/skills/` follow the same load-on-
+  demand pattern as `agent-core/skills/`. Prefer upstreaming a skill
+  to agent-core if it generalizes beyond this project.
+- Runtime task state stays in `agent-core/generated/`, not `local/`.
+
+---
+
 # Verification gate
 
 Do not declare work complete without proof:

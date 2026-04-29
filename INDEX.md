@@ -26,6 +26,7 @@ improvisation. Architecture always precedes implementation.
 | Glossary     | Shared vocabulary                           | `glossary/`                   |
 | Skills       | On-demand operational playbooks             | `skills/<name>/SKILL.md`      |
 | Runtime      | Plan, progress, lessons (gitignored)        | `generated/tasks/`            |
+| Local        | Host-project-specific AI assets (gitignored)| `local/`                      |
 | Bootstrap    | Installer for host projects                 | `init/`                       |
 
 Principles, rules, AI control, and the glossary are **always
@@ -238,6 +239,39 @@ to the host's `.gitignore`.
 
 When `gh` is available, mirror state into a branch-linked GitHub
 Issue. See `skills/task-tracking/SKILL.md`.
+
+---
+
+# Host-project-specific assets (`local/`)
+
+`local/` is the **only** location agents should put or look for
+host-project-specific AI assets that don't belong upstream in
+agent-core itself:
+
+- Custom skills the host project relies on
+  (`local/skills/<name>/SKILL.md`).
+- Project-specific tools, prompts, or templates
+  (`local/tools/`, `local/prompts/`, …).
+- Vendor data, fixtures, or references the agent should consult
+  (`local/references/`).
+- Host-only overrides or notes that augment but do not contradict
+  agent-core principles or rules.
+
+Rules:
+
+- `local/` is gitignored by agent-core itself; only `.gitkeep` is
+  tracked. Host projects that vendor agent-core and want to commit
+  their `local/` content MUST add an inverse rule to their own
+  `.gitignore` (e.g. `!agent-core/local/`).
+- Content here is **subordinate** to `principles/`, `rules/`,
+  `ai/`, and the glossary. It MUST NOT contradict them. If a
+  conflict exists, the higher layer wins; surface the conflict
+  instead of silently overriding.
+- Skills under `local/skills/` are loaded the same way as
+  `skills/` — only when their situation applies. Prefer extending
+  agent-core upstream if a need is generalizable across projects.
+- Do NOT relocate runtime task state into `local/`. That stays in
+  `generated/`.
 
 ---
 

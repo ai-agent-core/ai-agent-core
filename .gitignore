@@ -4,3 +4,10 @@
 # Runtime state created by init/bootstrap.sh inside agent-core itself.
 # tasks/todo.md and tasks/lessons.md live here so the host project stays clean.
 /generated/
+
+# Host-project-specific AI tools, skills, and resources.
+# Tracked only as an empty directory (.gitkeep). Host projects that vendor
+# agent-core may invert this rule in their own .gitignore if they want to
+# commit their customizations.
+/local/*
+!/local/.gitkeep
