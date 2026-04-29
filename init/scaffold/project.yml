@@ -1,0 +1,52 @@
+# project.yml — project map for AI agents and humans
+#
+# Declares where this project's documentation lives and (later) how its
+# packages are organized. Agents read this on session start to orient
+# themselves without grepping the tree.
+#
+# This file is committed to the host repo. It is the team-wide "what
+# is here, and why" — different from local/ai-agent-core.yml which
+# captures the host's stack choice.
+#
+# Keep it honest: when packages or docs change, update this file in
+# the same PR. See rules/PROJECT_STRUCTURE_RULES.md (Project Manifest
+# section) and rules/DOCUMENTATION_RULES.md.
+
+schemaVersion: 1
+
+# ---- Documentation layout ----
+#
+# layout presets:
+#   diataxis-extended  — tutorials / how-to / reference / explanation
+#                        + adr + runbooks (recommended default; the
+#                        Diátaxis framework + ADR + runbooks combo
+#                        used by Django, GitLab, Cloudflare, etc.)
+#   diataxis           — Diátaxis only (tutorials/how-to/reference/explanation)
+#   simple             — flat: README, ARCHITECTURE.md, ADRs only
+#   custom             — sections: must be listed explicitly below
+#
+# `root` is the directory under which sections live. Default `docs/`.
+docs:
+  root: docs/
+  layout: diataxis-extended
+  sections:
+    - tutorials       # learning-oriented: "first contact" walkthroughs
+    - how-to          # task-oriented: "how do I X?" recipes
+    - reference       # information-oriented: API / config / schema
+    - explanation     # understanding-oriented: concepts, design rationale
+    - adr             # architecture decision records (NNNN-title.md)
+    - runbooks        # operational procedures, on-call playbooks
+
+# ---- Packages map ----
+#
+# A description per package gives AI agents (and humans) the WHY
+# without reading every README. Add entries as the project grows;
+# leave empty for greenfield. When a new package is introduced, an
+# entry MUST be added here in the same change.
+#
+# Schema:
+#   - path: relative path from repo root
+#     description: one-line WHY (what lives here, why it exists)
+#     layer: interfaces | applications | domains | architectures
+#     docs: optional override for this package's docs root
+packages: []

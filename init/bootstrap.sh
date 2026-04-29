@@ -15,6 +15,11 @@ CORE_JSON="$CORE_ROOT/ai-agent-core.json"
 GENERATED_DIR="$CORE_ROOT/generated"
 GENERATED_TASKS_DIR="$GENERATED_DIR/tasks"
 
+LOCAL_DIR="$CORE_ROOT/local"
+DOCS_DIR="$TARGET_DIR/docs"
+PROJECT_YML="$TARGET_DIR/project.yml"
+LOCAL_YML="$LOCAL_DIR/ai-agent-core.yml"
+
 ########################################
 # Validate
 ########################################
@@ -78,6 +83,60 @@ cp "$SCAFFOLD_DIR/AGENTS.md" "$TARGET_DIR/AGENTS.md"
 cp "$SCAFFOLD_DIR/CLAUDE.md" "$TARGET_DIR/CLAUDE.md"
 
 ########################################
+# Install project.yml at host root (committed manifest)
+########################################
+#
+# project.yml declares the docs layout (and packages map, growing
+# over time). It is the team-wide "what is here, why" surface, so
+# it lives at host root and is meant to be committed.
+########################################
+
+if [[ ! -e "$PROJECT_YML" ]]; then
+  cp "$SCAFFOLD_DIR/project.yml" "$PROJECT_YML"
+fi
+
+########################################
+# Provision docs/ scaffold (Diátaxis-extended)
+########################################
+#
+# Mirrors init/scaffold/docs/ into the host's docs/ root. Existing
+# files are NEVER overwritten — only missing files / directories are
+# created. This is so re-runs (or hosts that already started writing
+# docs) do not lose content.
+########################################
+
+copy_if_missing () {
+  local src="$1"
+  local dst="$2"
+  if [[ -d "$src" ]]; then
+    mkdir -p "$dst"
+    local entry
+    for entry in "$src"/* "$src"/.[!.]* ; do
+      [[ -e "$entry" ]] || continue
+      copy_if_missing "$entry" "$dst/$(basename "$entry")"
+    done
+  elif [[ -f "$src" && ! -e "$dst" ]]; then
+    cp "$src" "$dst"
+  fi
+}
+
+copy_if_missing "$SCAFFOLD_DIR/docs" "$DOCS_DIR"
+
+########################################
+# Provision local/ai-agent-core.yml (host stack profile)
+########################################
+#
+# Lives under ai-agent-core/local/, gitignored by ai-agent-core
+# itself. Copied only when missing — never clobbered.
+########################################
+
+mkdir -p "$LOCAL_DIR"
+
+if [[ ! -e "$LOCAL_YML" ]]; then
+  cp "$SCAFFOLD_DIR/local/ai-agent-core.yml" "$LOCAL_YML"
+fi
+
+########################################
 # Provision runtime task surface inside ai-agent-core/generated/
 ########################################
 #
@@ -122,11 +181,17 @@ echo ""
 echo "Wrote:"
 echo "  $TARGET_DIR/AGENTS.md"
 echo "  $TARGET_DIR/CLAUDE.md"
+echo "  $PROJECT_YML"
+echo "  $DOCS_DIR/ (Diátaxis-extended scaffold)"
+echo "  $LOCAL_YML"
 echo "  $GENERATED_TASKS_DIR/todo.md"
 echo "  $GENERATED_TASKS_DIR/lessons.md"
 echo ""
 echo "Next steps:"
-echo "  1. Commit AGENTS.md and CLAUDE.md."
-echo "  2. ai-agent-core/generated/ is intentionally gitignored — do not commit."
-echo "  3. Read ai-agent-core/INDEX.md before any change."
+echo "  1. Commit AGENTS.md, CLAUDE.md, project.yml, and docs/."
+echo "  2. Edit ai-agent-core/local/ai-agent-core.yml to match this project's stack."
+echo "  3. ai-agent-core/generated/ and ai-agent-core/local/ are gitignored by"
+echo "     ai-agent-core; if you vendored ai-agent-core into your repo and want to"
+echo "     commit local/, add an inverse rule (!ai-agent-core/local/) to your .gitignore."
+echo "  4. Read ai-agent-core/INDEX.md before any change."
 echo ""

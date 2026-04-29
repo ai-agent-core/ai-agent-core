@@ -17,17 +17,34 @@ Improvisation is not permitted.
    write them anywhere else. Skill:
    `ai-agent-core/skills/task-tracking`.
 
-2. **Load AI Agent Core core context.**
+2. **Read the project manifest.**
+   `project.yml` (at host repo root) declares this project's docs
+   layout and packages map. It is the team-wide "what is here, why"
+   surface — read it to orient, and update it when packages or docs
+   change. See `ai-agent-core/rules/PROJECT_STRUCTURE_RULES.md`
+   (Project Manifest section).
+
+3. **Read the host stack profile and resolve active rules.**
+   `ai-agent-core/local/ai-agent-core.yml` declares this host's
+   stack / profile / toggles. Resolve which rules and skills apply
+   for this session by walking `ai-agent-core/init/dispatch.yml`:
+   apply `always.applies` plus every section whose `when:` clause
+   matches the host profile. Rules outside any matched section
+   default to active; do not silently exclude.
+   When `local/ai-agent-core.yml` is absent (older installs),
+   treat all rules as active.
+
+4. **Load AI Agent Core core context.**
    Read `ai-agent-core/INDEX.md` and follow it. INDEX is the routing
    table for principles, governance, language, structure,
    boundaries, decisions, execution, and implementation.
 
-3. **Classify the task and load the matching context profile.**
+5. **Classify the task and load the matching context profile.**
    See `ai-agent-core/ai/context_profiles.yaml`. Prefer over-tagging
    to under-tagging; the loader deduplicates.
    When uncertain, load `fallback.load_all`.
 
-4. **Pick the relevant skills before acting.**
+6. **Pick the relevant skills before acting.**
    Skills under `ai-agent-core/skills/` carry the *how* — TDD,
    planning, architecture review, migration, observability,
    security baseline, payment integration, CI/CD, etc. Load only

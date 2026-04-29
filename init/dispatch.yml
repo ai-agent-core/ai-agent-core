@@ -1,0 +1,241 @@
+# ai-agent-core — dispatch manifest
+#
+# Maps host stack/profile/toggles (declared in
+# ai-agent-core/local/ai-agent-core.yml) to the rules and skills that
+# should apply for this project.
+#
+# Vendor-internal: this file ships with ai-agent-core and is NOT
+# host-edited. Hosts customize behavior by changing local/ai-agent-core.yml.
+#
+# How agents use this:
+#   1. Read ai-agent-core/local/ai-agent-core.yml.
+#   2. Walk this manifest top-down; whenever a `match:` clause is
+#      satisfied, treat its `applies` rules and skills as active for
+#      the session.
+#   3. `always.applies` is unconditional baseline.
+#
+# A rule absent from any matched section is NOT inactive — it is
+# unscoped. Default behavior: apply unless explicitly excluded. This
+# keeps existing host installs (no local/ai-agent-core.yml) compatible.
+
+schemaVersion: 1
+
+# Unconditional baseline — applies to every project regardless of stack.
+always:
+  applies:
+    rules:
+      - rules/AI_BEHAVIOR_RULES.md
+      - rules/META_RULES.md
+      - rules/DECISION_RULES.md
+      - rules/NAMING_RULES.md
+      - rules/CODING_RULES.md
+      - rules/ERROR_HANDLING_RULES.md
+      - rules/TESTING_RULES.md
+      - rules/WORKFLOW_RULES.md
+      - rules/TASK_MANAGEMENT_RULES.md
+      - rules/PACKAGE_LAYOUT_COMMON_RULES.md
+      - rules/PROJECT_STRUCTURE_RULES.md
+      - rules/LAYER_DEPENDENCY_RULES.md
+      - rules/MAPPER_RULES.md
+      - rules/DOCUMENTATION_RULES.md
+      - rules/SECURITY_RULES.md
+      - rules/DEPENDENCY_RULES.md
+    skills:
+      - skills/plan-and-implement
+      - skills/tdd
+      - skills/task-tracking
+      - skills/capture-lesson
+      - skills/code-review
+      - skills/branching-and-commits
+      - skills/architecture-guard
+
+# Stack-conditional rules. Each `when:` is an AND of fields against
+# the host's local/ai-agent-core.yml.
+profiles:
+
+  # ---- Frontend ----
+  - when: { stack: { frontend: sveltekit } }
+    applies:
+      rules:
+        - rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
+        - rules/FRONTEND_DESIGN_RULES.md
+        - rules/FRONTEND_DEMO_MODE_RULES.md
+        - rules/ACCESSIBILITY_RULES.md
+      skills:
+        - skills/frontend-design
+        - skills/accessibility-audit
+
+  - when: { stack: { frontend: react } }
+    applies:
+      rules:
+        - rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
+        - rules/FRONTEND_DESIGN_RULES.md
+        - rules/FRONTEND_DEMO_MODE_RULES.md
+        - rules/ACCESSIBILITY_RULES.md
+      skills:
+        - skills/frontend-design
+        - skills/accessibility-audit
+
+  - when: { stack: { frontend: vue } }
+    applies:
+      rules:
+        - rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
+        - rules/FRONTEND_DESIGN_RULES.md
+        - rules/FRONTEND_DEMO_MODE_RULES.md
+        - rules/ACCESSIBILITY_RULES.md
+      skills:
+        - skills/frontend-design
+        - skills/accessibility-audit
+
+  # ---- Backend ----
+  - when: { stack: { backend: cloudflare-workers } }
+    applies:
+      rules:
+        - rules/PACKAGE_LAYOUT_WORKERS_RULES.md
+        - rules/STACK_DEFAULTS_RULES.md
+        - rules/API_DESIGN_RULES.md
+        - rules/INFRA_RULES.md
+      skills:
+        - skills/api-design
+        - skills/infra-setup
+
+  - when: { stack: { backend: quarkus } }
+    applies:
+      rules:
+        - rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+        - rules/STACK_DEFAULTS_RULES.md
+        - rules/API_DESIGN_RULES.md
+        - rules/INFRA_RULES.md
+      skills:
+        - skills/api-design
+        - skills/infra-setup
+
+  - when: { stack: { backend: spring } }
+    applies:
+      rules:
+        - rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+        - rules/STACK_DEFAULTS_RULES.md
+        - rules/API_DESIGN_RULES.md
+        - rules/INFRA_RULES.md
+      skills:
+        - skills/api-design
+        - skills/infra-setup
+
+  - when: { stack: { backend: node } }
+    applies:
+      rules:
+        - rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
+        - rules/API_DESIGN_RULES.md
+        - rules/INFRA_RULES.md
+      skills:
+        - skills/api-design
+        - skills/infra-setup
+
+  # ---- Database ----
+  - when: { stack: { database: postgres } }
+    applies:
+      rules:
+        - rules/DATABASE_RULES.md
+        - rules/MIGRATION_RULES.md
+        - rules/GENERATOR_RULES.md
+      skills:
+        - skills/database-design
+        - skills/database-migration
+
+  - when: { stack: { database: d1 } }
+    applies:
+      rules:
+        - rules/DATABASE_RULES.md
+        - rules/MIGRATION_RULES.md
+        - rules/GENERATOR_RULES.md
+      skills:
+        - skills/database-design
+        - skills/database-migration
+
+  - when: { stack: { database: mysql } }
+    applies:
+      rules:
+        - rules/DATABASE_RULES.md
+        - rules/MIGRATION_RULES.md
+        - rules/GENERATOR_RULES.md
+      skills:
+        - skills/database-design
+        - skills/database-migration
+
+# Profile-conditional bundles.
+  - when: { profile: web-saas }
+    applies:
+      rules:
+        - rules/AUTHENTICATION_RULES.md
+        - rules/SECRETS_RULES.md
+        - rules/OBSERVABILITY_RULES.md
+        - rules/PERFORMANCE_RULES.md
+        - rules/CICD_RULES.md
+        - rules/RELEASE_RULES.md
+        - rules/EVENT_RULES.md
+        - rules/NOTIFICATION_RULES.md
+      skills:
+        - skills/authentication
+        - skills/secrets-management
+        - skills/observability-setup
+        - skills/security-baseline
+        - skills/cicd-pipeline
+        - skills/release-strategy
+        - skills/feature-flag
+        - skills/incident-response
+
+  - when: { profile: api-only }
+    applies:
+      rules:
+        - rules/AUTHENTICATION_RULES.md
+        - rules/SECRETS_RULES.md
+        - rules/OBSERVABILITY_RULES.md
+        - rules/CICD_RULES.md
+      skills:
+        - skills/authentication
+        - skills/secrets-management
+        - skills/observability-setup
+        - skills/security-baseline
+        - skills/cicd-pipeline
+
+  - when: { profile: library }
+    applies:
+      rules:
+        - rules/CICD_RULES.md
+        - rules/RELEASE_RULES.md
+      skills:
+        - skills/release-strategy
+        - skills/dependency-management
+        - skills/adr
+
+# Toggle-conditional bundles. Each toggle, when true, pulls in its own
+# rules and skills.
+toggles:
+  - when: { toggles: { payments: true } }
+    applies:
+      rules:
+        - rules/MONEY_HANDLING_RULES.md
+      skills:
+        - skills/payment-integration
+
+  - when: { toggles: { pii: true } }
+    applies:
+      rules:
+        - rules/SECURITY_RULES.md
+      skills:
+        - skills/security-baseline
+
+  - when: { toggles: { realtime: true } }
+    applies:
+      rules:
+        - rules/EVENT_RULES.md
+      skills:
+        - skills/event-driven
+
+  - when: { toggles: { multi_tenant: true } }
+    applies:
+      rules:
+        - rules/SECURITY_RULES.md
+        - rules/AUTHENTICATION_RULES.md
+      skills:
+        - skills/authentication

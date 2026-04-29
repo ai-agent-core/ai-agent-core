@@ -175,14 +175,59 @@ call :check_entrypoint AGENTS.md
 call :check_entrypoint CLAUDE.md
 
 REM ------------------------------------------------------------
-REM  Step 6 - host .gitignore mentions ai-agent-core\generated\
+REM  Step 6 - provision new scaffold files added in later versions
+REM ------------------------------------------------------------
+
+if exist "%SCAFFOLD_DIR%\project.yml" if not exist "%TARGET_DIR%\project.yml" (
+  echo.
+  echo [Step 6a] project.yml missing at host root
+  call :plan "create %TARGET_DIR%\project.yml from scaffold"
+  if "%DRY_RUN%"=="0" copy "%SCAFFOLD_DIR%\project.yml" "%TARGET_DIR%\project.yml" >nul
+)
+
+if exist "%SCAFFOLD_DIR%\docs\" (
+  set _docs_missing=0
+  for /r "%SCAFFOLD_DIR%\docs" %%f in (*) do (
+    set _rel=%%f
+    set _rel=!_rel:%SCAFFOLD_DIR%\docs\=!
+    if not exist "%TARGET_DIR%\docs\!_rel!" set /a _docs_missing+=1
+  )
+  if !_docs_missing! gtr 0 (
+    echo.
+    echo [Step 6b] docs\ scaffold missing !_docs_missing! file^(s^) at host root
+    call :plan "create missing files under %TARGET_DIR%\docs\ from scaffold ^(existing files preserved^)"
+    if "%DRY_RUN%"=="0" (
+      for /r "%SCAFFOLD_DIR%\docs" %%f in (*) do (
+        set _rel=%%f
+        set _rel=!_rel:%SCAFFOLD_DIR%\docs\=!
+        if not exist "%TARGET_DIR%\docs\!_rel!" (
+          for %%d in ("%TARGET_DIR%\docs\!_rel!") do if not exist "%%~dpd" mkdir "%%~dpd"
+          copy "%%f" "%TARGET_DIR%\docs\!_rel!" >nul
+        )
+      )
+    )
+  )
+)
+
+if exist "%SCAFFOLD_DIR%\local\ai-agent-core.yml" if not exist "%CORE_ROOT%\local\ai-agent-core.yml" (
+  echo.
+  echo [Step 6c] local\ai-agent-core.yml missing
+  call :plan "create %CORE_ROOT%\local\ai-agent-core.yml from scaffold"
+  if "%DRY_RUN%"=="0" (
+    if not exist "%CORE_ROOT%\local" mkdir "%CORE_ROOT%\local"
+    copy "%SCAFFOLD_DIR%\local\ai-agent-core.yml" "%CORE_ROOT%\local\ai-agent-core.yml" >nul
+  )
+)
+
+REM ------------------------------------------------------------
+REM  Step 7 - host .gitignore mentions ai-agent-core\generated\
 REM ------------------------------------------------------------
 
 if exist "%TARGET_DIR%\.gitignore" (
   findstr /r /c:"ai-agent-core/generated" /c:"^generated/" "%TARGET_DIR%\.gitignore" >nul 2>nul
   if errorlevel 1 (
     echo.
-    echo [Step 6] Host .gitignore does not mention ai-agent-core/generated/
+    echo [Step 7] Host .gitignore does not mention ai-agent-core/generated/
     call :plan "append ai-agent-core/generated/ to .gitignore ^(only if ai-agent-core is vendored^)"
     if "%DRY_RUN%"=="0" (
       echo.>>"%TARGET_DIR%\.gitignore"

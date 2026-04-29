@@ -1,0 +1,29 @@
+# 1. Record architecture decisions
+
+Date: TBD
+Status: proposed
+
+## Context
+
+We are starting this project and need to ensure that significant
+architectural decisions are captured in a durable, searchable form.
+Engineers six months from now (including future-us) will ask "why
+did we do it this way?" — and the answer needs to live somewhere
+authoritative, with the trade-offs that shaped it.
+
+## Decision
+
+We will record significant architectural decisions as ADRs in
+`docs/adr/`, numbered sequentially as `NNNN-title.md`, following
+the lightweight format described by Michael Nygard.
+
+## Consequences
+
+- Decisions become discoverable, dated, and reviewable in PRs.
+- "Why did we choose X?" has an answer at the time the question is
+  asked, not reconstructed years later.
+- A small ongoing cost: every significant decision needs a short
+  document. We accept this cost as cheaper than the alternative
+  (re-litigating decisions or undoing them blindly).
+- Superseding a decision means a new ADR that links the previous
+  one — never editing or deleting history.

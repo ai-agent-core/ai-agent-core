@@ -50,9 +50,23 @@ Windows:
 ai-agent-core\init\bootstrap.cmd
 ```
 
-That's it. The bootstrap writes only **two** files to your project root:
-`AGENTS.md` (entrypoint) and `CLAUDE.md` (redirect). Runtime state goes into
-`ai-agent-core/generated/tasks/`, which is gitignored.
+That's it. The bootstrap writes:
+
+- **`AGENTS.md`** / **`CLAUDE.md`** — agent entrypoints (commit).
+- **`project.yml`** — declares the docs layout (Diátaxis-extended by
+  default) and the packages map. Team-wide map of "what is here, why".
+  Commit.
+- **`docs/`** — Diátaxis-extended scaffold (`tutorials`, `how-to`,
+  `reference`, `explanation`, `adr`, `runbooks`) with READMEs explaining
+  what belongs in each section. Commit.
+- **`ai-agent-core/local/ai-agent-core.yml`** — host stack profile
+  (frontend / backend / database / profile / toggles). Drives which
+  rules and skills apply for this project, via
+  `ai-agent-core/init/dispatch.yml`. Edit to match reality. Gitignored
+  by ai-agent-core; your repo decides whether to commit it.
+- **`ai-agent-core/generated/tasks/`** — runtime state (gitignored).
+
+Existing files are never overwritten. Re-running bootstrap aborts.
 
 ---
 
@@ -62,30 +76,23 @@ That's it. The bootstrap writes only **two** files to your project root:
 your-project/
 ├── AGENTS.md                ← agents read this first
 ├── CLAUDE.md                ← redirect for Claude Code
+├── project.yml              ← docs layout + packages map (commit)
+├── docs/                    ← Diátaxis-extended scaffold (commit)
+│   ├── tutorials/           ← learning-oriented walkthroughs
+│   ├── how-to/              ← task recipes
+│   ├── reference/           ← API / config / schema descriptions
+│   ├── explanation/         ← concepts, design rationale
+│   ├── adr/                 ← Architecture Decision Records
+│   └── runbooks/            ← operational procedures
 └── ai-agent-core/
     ├── INDEX.md             ← routing table for agents
+    ├── local/
+    │   └── ai-agent-core.yml← host stack profile (drives dispatch)
+    ├── init/
+    │   └── dispatch.yml     ← rule × stack mapping (vendor)
     ├── principles/          ← non-negotiable foundations (7 files)
-    │   ├── ENGINEERING_PRINCIPLES.md
-    │   ├── ARCHITECTURE_PRINCIPLES.md
-    │   ├── SECURITY_PRINCIPLES.md
-    │   ├── OPERATIONAL_PRINCIPLES.md
-    │   ├── DATA_PRINCIPLES.md
-    │   └── …
     ├── rules/               ← enforceable invariants (34 files)
-    │   ├── API_DESIGN_RULES.md
-    │   ├── DATABASE_RULES.md
-    │   ├── MIGRATION_RULES.md
-    │   ├── MONEY_HANDLING_RULES.md
-    │   ├── SECURITY_RULES.md
-    │   ├── ACCESSIBILITY_RULES.md
-    │   └── … 28 more
     ├── skills/              ← on-demand playbooks (30 SKILL.md)
-    │   ├── tdd/SKILL.md
-    │   ├── api-design/SKILL.md
-    │   ├── payment-integration/SKILL.md
-    │   ├── legacy-migration/SKILL.md
-    │   ├── incident-response/SKILL.md
-    │   └── … 25 more
     ├── ai/                  ← machine-readable routing
     └── generated/           ← runtime task state (gitignored)
         └── tasks/
@@ -93,8 +100,9 @@ your-project/
             └── lessons.md
 ```
 
-The agent loads only what the current task needs (classification → context
-profile). 17k lines of governance, but the per-turn footprint stays small.
+The agent loads only what the current task needs (`local/ai-agent-core.yml`
++ `init/dispatch.yml` + classification → context profile). 17k lines of
+governance, but the per-turn footprint stays small.
 
 ---
 
@@ -115,6 +123,61 @@ Modern AI coding tools are powerful — but **without constraints they drift**.
 AI Agent Core covers the full surface: **web frameworks, frontend, backend,
 databases, infrastructure, CI/CD, security, observability, payments,
 accessibility, and legacy-system migration**.
+
+---
+
+## Configuring for your stack
+
+`ai-agent-core/local/ai-agent-core.yml` declares the host's stack and
+profile. AI Agent Core uses it to scope which rules and skills apply.
+
+```yaml
+stack:
+  frontend: sveltekit          # sveltekit | react | vue | none
+  backend: cloudflare-workers  # cloudflare-workers | quarkus | spring | node | none
+  package_manager: pnpm
+  database: d1                 # d1 | postgres | mysql | sqlite | none
+  language: typescript
+
+profile: web-saas              # web-saas | api-only | mobile-bff | library | internal-tool
+
+toggles:
+  payments: false              # enable MONEY_HANDLING_RULES + payment-integration
+  i18n: false
+  pii: false
+  multi_tenant: false
+  realtime: false
+  mobile: false
+```
+
+The mapping from these choices to active rules and skills lives in
+[`init/dispatch.yml`](init/dispatch.yml). Edit `local/ai-agent-core.yml`,
+not the dispatch file.
+
+When `local/ai-agent-core.yml` is absent (older installs), agents treat
+all rules as active — backwards-compatible.
+
+---
+
+## Documentation layout
+
+`project.yml` declares where docs live and how they are structured.
+The default preset `diataxis-extended` ships the **Diátaxis framework**
+(tutorials / how-to / reference / explanation) plus **ADRs** and
+**runbooks** — the structure used by Django, GitLab, and Cloudflare.
+
+```yaml
+docs:
+  root: docs/
+  layout: diataxis-extended
+  sections: [tutorials, how-to, reference, explanation, adr, runbooks]
+packages: []                   # add entries as the project grows
+```
+
+When packages or documentation sections change, `project.yml` MUST
+be updated in the same change. See
+[`PROJECT_STRUCTURE_RULES.md`](rules/PROJECT_STRUCTURE_RULES.md) and
+[`DOCUMENTATION_RULES.md`](rules/DOCUMENTATION_RULES.md).
 
 ---
 
