@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 80" width="420" height="80" role="img" aria-label="ai-agent-core">
+  <rect width="420" height="80" fill="#ffffff"/>
+  <g fill="none" stroke="#000000" stroke-width="6" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M 32 22 L 14 22 L 14 58 L 32 58"/>
+    <path d="M 388 22 L 406 22 L 406 58 L 388 58"/>
+  </g>
+  <text x="44" y="54"
+        font-family="ui-monospace, 'SF Mono', 'JetBrains Mono', 'Menlo', 'Roboto Mono', monospace"
+        font-size="32"
+        font-weight="500"
+        letter-spacing="-0.5"
+        fill="#000000">ai-agent-core</text>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 64" width="360" height="64" role="img" aria-label="ai-agent-core">
+  <rect width="360" height="64" fill="#ffffff"/>
+  <text x="0" y="46"
+        font-family="ui-monospace, 'SF Mono', 'JetBrains Mono', 'Menlo', 'Roboto Mono', monospace"
+        font-size="36"
+        font-weight="500"
+        letter-spacing="-0.5"
+        fill="#000000">ai-agent-core</text>
+</svg>
