@@ -454,7 +454,78 @@ check_entrypoints_staleness () {
 }
 
 ########################################
-# Step 6 — verify host .gitignore mentions ai-agent-core/generated/
+# Step 6 — provision new scaffold files added in later versions
+########################################
+#
+# When upgrading from an older ai-agent-core, the host may not yet
+# have project.yml, docs/, or local/ai-agent-core.yml. Create them
+# from the current scaffold without overwriting any existing files
+# the host has already authored.
+
+provision_new_scaffold () {
+  local provisioned=0
+
+  # project.yml (host root)
+  local project_yml="$TARGET_DIR/project.yml"
+  if [[ -f "$SCAFFOLD_DIR/project.yml" && ! -e "$project_yml" ]]; then
+    say ""
+    say "[Step 6a] project.yml missing at host root"
+    plan "create $project_yml from scaffold"
+    if [[ $DRY_RUN -eq 0 ]]; then
+      cp "$SCAFFOLD_DIR/project.yml" "$project_yml"
+    fi
+    provisioned=1
+  fi
+
+  # docs/ (host root, copy missing files only)
+  local docs_src="$SCAFFOLD_DIR/docs"
+  local docs_dst="$TARGET_DIR/docs"
+  if [[ -d "$docs_src" ]]; then
+    local missing_count=0
+    while IFS= read -r src_path; do
+      local rel="${src_path#$docs_src/}"
+      [[ -e "$docs_dst/$rel" ]] || missing_count=$((missing_count + 1))
+    done < <(find "$docs_src" -type f)
+
+    if [[ $missing_count -gt 0 ]]; then
+      say ""
+      say "[Step 6b] docs/ scaffold missing $missing_count file(s) at host root"
+      plan "create missing files under $docs_dst/ from scaffold (existing files preserved)"
+      if [[ $DRY_RUN -eq 0 ]]; then
+        while IFS= read -r src_path; do
+          local rel="${src_path#$docs_src/}"
+          local dst="$docs_dst/$rel"
+          if [[ ! -e "$dst" ]]; then
+            mkdir -p "$(dirname "$dst")"
+            cp "$src_path" "$dst"
+          fi
+        done < <(find "$docs_src" -type f)
+      fi
+      provisioned=1
+    fi
+  fi
+
+  # local/ai-agent-core.yml (under ai-agent-core/local/)
+  local local_dir="$CORE_ROOT/local"
+  local local_yml="$local_dir/ai-agent-core.yml"
+  if [[ -f "$SCAFFOLD_DIR/local/ai-agent-core.yml" && ! -e "$local_yml" ]]; then
+    say ""
+    say "[Step 6c] local/ai-agent-core.yml missing"
+    plan "create $local_yml from scaffold"
+    if [[ $DRY_RUN -eq 0 ]]; then
+      mkdir -p "$local_dir"
+      cp "$SCAFFOLD_DIR/local/ai-agent-core.yml" "$local_yml"
+    fi
+    provisioned=1
+  fi
+
+  if [[ $provisioned -eq 0 ]]; then
+    note "all current scaffold files already provisioned"
+  fi
+}
+
+########################################
+# Step 7 — verify host .gitignore mentions ai-agent-core/generated/
 ########################################
 #
 # When ai-agent-core is vendored (not a submodule), the host project's
@@ -473,7 +544,7 @@ check_host_gitignore () {
   fi
 
   say ""
-  say "[Step 6] Host .gitignore does not mention ai-agent-core/generated/"
+  say "[Step 7] Host .gitignore does not mention ai-agent-core/generated/"
   plan "add line 'ai-agent-core/generated/' to $gi (only if ai-agent-core is vendored, not a submodule)"
   if [[ $DRY_RUN -eq 0 ]]; then
     {
@@ -502,6 +573,7 @@ migrate_legacy_agent_works
 migrate_legacy_agent_spec
 migrate_legacy_agent_input
 check_entrypoints_staleness
+provision_new_scaffold
 check_host_gitignore
 
 say ""

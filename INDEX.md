@@ -27,6 +27,9 @@ improvisation. Architecture always precedes implementation.
 | Skills       | On-demand operational playbooks             | `skills/<name>/SKILL.md`      |
 | Runtime      | Plan, progress, lessons (gitignored)        | `generated/tasks/`            |
 | Local        | Host-project-specific AI assets (gitignored)| `local/`                      |
+| Host profile | Stack / profile / toggles for this host     | `local/ai-agent-core.yml`     |
+| Dispatch     | Stack → active rules/skills mapping (vendor)| `init/dispatch.yml`           |
+| Project map  | Docs layout + packages (host root, commit)  | `<host>/project.yml`          |
 | Bootstrap    | Installer for host projects                 | `init/`                       |
 
 Principles, rules, AI control, and the glossary are **always
@@ -40,6 +43,10 @@ applies**. Runtime state is the live working memory.
 Initialize in this order. Lower layers MUST NOT override higher
 layers.
 
+0. **Host context** — read `<host>/project.yml` (docs / packages
+   map) and `local/ai-agent-core.yml` (stack / profile / toggles),
+   then resolve active rules and skills via `init/dispatch.yml`.
+   When `local/ai-agent-core.yml` is absent, treat all rules as active.
 1. **AI control** — load before any reasoning.
 2. **Principles** — anchor judgment.
 3. **Governance** — meta-rules resolve conflicts.

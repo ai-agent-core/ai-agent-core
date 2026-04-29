@@ -14,6 +14,11 @@ set CORE_JSON=%CORE_ROOT%\ai-agent-core.json
 set GENERATED_DIR=%CORE_ROOT%\generated
 set GENERATED_TASKS_DIR=%GENERATED_DIR%\tasks
 
+set LOCAL_DIR=%CORE_ROOT%\local
+set DOCS_DIR=%TARGET_DIR%\docs
+set PROJECT_YML=%TARGET_DIR%\project.yml
+set LOCAL_YML=%LOCAL_DIR%\ai-agent-core.yml
+
 REM ------------------------------------
 REM Validate
 REM ------------------------------------
@@ -82,6 +87,31 @@ copy "%SCAFFOLD_DIR%\AGENTS.md" "%TARGET_DIR%\AGENTS.md" >nul
 copy "%SCAFFOLD_DIR%\CLAUDE.md" "%TARGET_DIR%\CLAUDE.md" >nul
 
 REM ------------------------------------
+REM Install project.yml at host root (committed manifest)
+REM ------------------------------------
+
+if not exist "%PROJECT_YML%" (
+  copy "%SCAFFOLD_DIR%\project.yml" "%PROJECT_YML%" >nul
+)
+
+REM ------------------------------------
+REM Provision docs/ scaffold (Diataxis-extended)
+REM Existing files are never overwritten.
+REM ------------------------------------
+
+if not exist "%DOCS_DIR%" mkdir "%DOCS_DIR%"
+xcopy "%SCAFFOLD_DIR%\docs" "%DOCS_DIR%" /E /I /Y /D >nul
+
+REM ------------------------------------
+REM Provision local/ai-agent-core.yml (host stack profile)
+REM ------------------------------------
+
+if not exist "%LOCAL_DIR%" mkdir "%LOCAL_DIR%"
+if not exist "%LOCAL_YML%" (
+  copy "%SCAFFOLD_DIR%\local\ai-agent-core.yml" "%LOCAL_YML%" >nul
+)
+
+REM ------------------------------------
 REM Provision runtime task surface inside ai-agent-core\generated\
 REM ------------------------------------
 
@@ -115,11 +145,17 @@ echo.
 echo Wrote:
 echo   %TARGET_DIR%\AGENTS.md
 echo   %TARGET_DIR%\CLAUDE.md
+echo   %PROJECT_YML%
+echo   %DOCS_DIR%\ (Diataxis-extended scaffold)
+echo   %LOCAL_YML%
 echo   %GENERATED_TASKS_DIR%\todo.md
 echo   %GENERATED_TASKS_DIR%\lessons.md
 echo.
 echo Next steps:
-echo   1. Commit AGENTS.md and CLAUDE.md.
-echo   2. ai-agent-core\generated\ is intentionally gitignored — do not commit.
-echo   3. Read ai-agent-core\INDEX.md before any change.
+echo   1. Commit AGENTS.md, CLAUDE.md, project.yml, and docs\.
+echo   2. Edit ai-agent-core\local\ai-agent-core.yml to match this project's stack.
+echo   3. ai-agent-core\generated\ and ai-agent-core\local\ are gitignored by
+echo      ai-agent-core; if you vendored ai-agent-core and want to commit local\,
+echo      add !ai-agent-core/local/ to your .gitignore.
+echo   4. Read ai-agent-core\INDEX.md before any change.
 echo.

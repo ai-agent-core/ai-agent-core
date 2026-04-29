@@ -1,0 +1,51 @@
+# ai-agent-core — host-local stack profile
+#
+# This file is the single declarative source for which stack the host
+# project is built on. AI Agent Core uses it to scope which rules and
+# skills apply, so generic governance does not bleed across stacks.
+#
+# - Edit values to match the project. Bootstrap shipped sensible
+#   defaults; change them when reality diverges.
+# - This file lives under ai-agent-core/local/ and is gitignored by
+#   ai-agent-core itself. To commit it for your team, add an inverse
+#   rule to your project's own .gitignore (e.g. !ai-agent-core/local/).
+# - Higher-priority policies still win. This is configuration, not an
+#   override mechanism for principles or rules.
+#
+# See: ai-agent-core/init/dispatch.yml for the rule × profile mapping.
+
+schemaVersion: 1
+
+stack:
+  # frontend: sveltekit | react | vue | none
+  frontend: sveltekit
+
+  # backend: cloudflare-workers | quarkus | spring | node | none
+  backend: cloudflare-workers
+
+  # package_manager: pnpm | npm | yarn | bun | gradle | maven | none
+  package_manager: pnpm
+
+  # database: d1 | postgres | mysql | sqlite | mongodb | none
+  database: d1
+
+  # language: typescript | kotlin | java | go | python | rust
+  language: typescript
+
+# profile: convenience preset that bundles common cross-cutting concerns.
+#   web-saas       — typical multi-tenant SaaS (auth, billing, a11y, observability)
+#   api-only       — backend-only service (no frontend rules)
+#   mobile-bff     — backend-for-frontend serving native apps
+#   library        — published library / SDK (docs + API surface heavy)
+#   internal-tool  — internal-only (relaxed a11y / public-API rules)
+profile: web-saas
+
+# toggles: turn on rule sets that are off by default. Only enable what
+# the system actually needs — each toggle pulls in its own playbook.
+toggles:
+  payments: false      # MONEY_HANDLING_RULES + payment-integration skill
+  i18n: false          # localization rules
+  pii: false           # PII handling + retention
+  multi_tenant: false  # tenant isolation rules
+  realtime: false      # websockets / SSE / durable objects guidance
+  mobile: false        # mobile release / store rules
