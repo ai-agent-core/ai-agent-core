@@ -154,6 +154,7 @@ READ:
 - `rules/ERROR_HANDLING_RULES.md`
 - `rules/TESTING_RULES.md`
 - `rules/FRONTEND_DESIGN_RULES.md`
+- `rules/FRONTEND_DEMO_MODE_RULES.md`
 
 Then matching skills:
 
@@ -191,6 +192,7 @@ when the situation applies, per `ai/context_profiles.yaml`.
 - Dependencies: `rules/DEPENDENCY_RULES.md`
 - Accessibility: `rules/ACCESSIBILITY_RULES.md`
 - Documentation: `rules/DOCUMENTATION_RULES.md`
+- Frontend Demo Mode: `rules/FRONTEND_DEMO_MODE_RULES.md`
 
 ## Skills
 

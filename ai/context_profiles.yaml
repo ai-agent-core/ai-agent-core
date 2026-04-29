@@ -162,6 +162,7 @@ contributions:
     - agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
     - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
     - agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - agent-core/rules/FRONTEND_DEMO_MODE_RULES.md
     - agent-core/rules/ACCESSIBILITY_RULES.md
     - agent-core/rules/PERFORMANCE_RULES.md
 
@@ -492,6 +493,7 @@ fallback:
     - agent-core/rules/ERROR_HANDLING_RULES.md
     - agent-core/rules/TESTING_RULES.md
     - agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - agent-core/rules/FRONTEND_DEMO_MODE_RULES.md
     - agent-core/rules/PROJECT_STRUCTURE_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
@@ -517,6 +519,7 @@ fallback:
     - agent-core/rules/INFRA_RULES.md
     - agent-core/rules/RELEASE_RULES.md
     - agent-core/rules/DEPENDENCY_RULES.md
+    - agent-core/rules/ACCESSIBILITY_RULES.md
     - agent-core/rules/DOCUMENTATION_RULES.md
     - agent-core/ai/reading_order.yaml
     - agent-core/ai/machine_rules.yaml
