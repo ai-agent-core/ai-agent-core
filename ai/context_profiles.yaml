@@ -1,4 +1,4 @@
-version: 1
+version: 2
 
 # Context loading routing table.
 #
@@ -7,19 +7,25 @@ version: 1
 # contribution list is looked up. The union (deduplicated) of all
 # contribution lists is the set of files to load beyond Core.
 #
-# If no tag can be assigned confidently, the fallback is to load
-# ALL files listed under "fallback.load_all".
+# When uncertain, prefer over-tagging. The dedupe makes it cheap.
+# When classification itself fails, fall back to "fallback.load_all".
 
 core:
-  description: Files that MUST be loaded for every task.
+  description: |
+    Files that MUST be loaded for every task. Establish governance,
+    architecture, language, and routing.
   files:
     - AGENTS.md
     - agent-core/INDEX.md
     - agent-core/principles/ENGINEERING_PRINCIPLES.md
     - agent-core/principles/ARCHITECTURE_PRINCIPLES.md
     - agent-core/principles/DESIGN_PHILOSOPHY.md
+    - agent-core/principles/SECURITY_PRINCIPLES.md
+    - agent-core/principles/OPERATIONAL_PRINCIPLES.md
+    - agent-core/principles/DATA_PRINCIPLES.md
     - agent-core/rules/AI_BEHAVIOR_RULES.md
     - agent-core/rules/META_RULES.md
+    - agent-core/rules/DECISION_RULES.md
     - agent-core/rules/WORKFLOW_RULES.md
     - agent-core/rules/TASK_MANAGEMENT_RULES.md
     - agent-core/glossary/GLOSSARY.md
@@ -35,6 +41,10 @@ dimensions:
       - visual_design
       - bootstrap
       - review
+      - migration
+      - incident_response
+      - release
+      - audit
 
   stack:
     description: Which technology surface the work targets. Multiple allowed.
@@ -42,19 +52,41 @@ dimensions:
       - backend
       - functions
       - frontend
+      - mobile
+      - data
+      - infra
+      - cicd
 
   topic:
-    description: Cross-cutting concerns that may attach to a task. Zero or more.
+    description: Cross-cutting concerns that may attach. Zero or more.
     values:
       - aggregate_boundary
       - persistence
       - test_authoring
       - naming
       - error_handling
+      - api_contract
+      - security
+      - authentication
+      - secrets
+      - observability
+      - performance
+      - caching
+      - feature_flag
+      - event_driven
+      - money
+      - payment
+      - accessibility
+      - documentation
+      - dependency
+      - schema_migration
+      - legacy_migration
+      - release
+      - branching
 
 contributions:
 
-  # Activity contributions
+  # ---- Activity contributions ---------------------------------------
 
   activity.implementation:
     - agent-core/rules/CODING_RULES.md
@@ -71,52 +103,114 @@ contributions:
   activity.visual_design:
     - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
     - agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - agent-core/rules/ACCESSIBILITY_RULES.md
 
   activity.bootstrap:
     - agent-core/rules/PROJECT_STRUCTURE_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/GENERATOR_RULES.md
+    - agent-core/skills/bootstrap-project/SKILL.md
 
   activity.review:
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - agent-core/skills/code-review/SKILL.md
 
-  # Stack contributions
+  activity.migration:
+    - agent-core/rules/MIGRATION_RULES.md
+    - agent-core/skills/database-migration/SKILL.md
+    - agent-core/skills/legacy-migration/SKILL.md
+
+  activity.incident_response:
+    - agent-core/rules/OBSERVABILITY_RULES.md
+    - agent-core/skills/incident-response/SKILL.md
+
+  activity.release:
+    - agent-core/rules/RELEASE_RULES.md
+    - agent-core/rules/CICD_RULES.md
+    - agent-core/skills/release-strategy/SKILL.md
+    - agent-core/skills/feature-flag/SKILL.md
+
+  activity.audit:
+    - agent-core/rules/SECURITY_RULES.md
+    - agent-core/rules/DEPENDENCY_RULES.md
+    - agent-core/rules/ACCESSIBILITY_RULES.md
+    - agent-core/skills/security-baseline/SKILL.md
+
+  # ---- Stack contributions ------------------------------------------
 
   stack.backend:
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
     - agent-core/rules/LAYER_DEPENDENCY_RULES.md
     - agent-core/rules/MAPPER_RULES.md
+    - agent-core/rules/API_DESIGN_RULES.md
+    - agent-core/rules/DATABASE_RULES.md
+    - agent-core/rules/OBSERVABILITY_RULES.md
+    - agent-core/rules/PERFORMANCE_RULES.md
 
   stack.functions:
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md  # functions reuse backend stereotypes
+    - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
     - agent-core/rules/LAYER_DEPENDENCY_RULES.md
     - agent-core/rules/MAPPER_RULES.md
+    - agent-core/rules/OBSERVABILITY_RULES.md
 
   stack.frontend:
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
     - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
     - agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - agent-core/rules/ACCESSIBILITY_RULES.md
+    - agent-core/rules/PERFORMANCE_RULES.md
 
-  # Topic contributions
+  stack.mobile:
+    - agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - agent-core/rules/ACCESSIBILITY_RULES.md
+    - agent-core/rules/PERFORMANCE_RULES.md
+    - agent-core/rules/RELEASE_RULES.md
+
+  stack.data:
+    - agent-core/principles/DATA_PRINCIPLES.md
+    - agent-core/rules/DATABASE_RULES.md
+    - agent-core/rules/MIGRATION_RULES.md
+    - agent-core/rules/EVENT_RULES.md
+
+  stack.infra:
+    - agent-core/principles/OPERATIONAL_PRINCIPLES.md
+    - agent-core/rules/INFRA_RULES.md
+    - agent-core/rules/SECURITY_RULES.md
+    - agent-core/rules/SECRETS_RULES.md
+    - agent-core/rules/OBSERVABILITY_RULES.md
+    - agent-core/skills/infra-setup/SKILL.md
+
+  stack.cicd:
+    - agent-core/rules/CICD_RULES.md
+    - agent-core/rules/RELEASE_RULES.md
+    - agent-core/rules/DEPENDENCY_RULES.md
+    - agent-core/rules/SECRETS_RULES.md
+    - agent-core/skills/cicd-pipeline/SKILL.md
+
+  # ---- Topic contributions ------------------------------------------
 
   topic.aggregate_boundary:
     - agent-core/rules/LAYER_DEPENDENCY_RULES.md
     - agent-core/rules/MAPPER_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+    - agent-core/skills/aggregate-boundary/SKILL.md
 
   topic.persistence:
+    - agent-core/rules/DATABASE_RULES.md
     - agent-core/rules/MAPPER_RULES.md
     - agent-core/rules/GENERATOR_RULES.md
     - agent-core/rules/PROJECT_STRUCTURE_RULES.md
+    - agent-core/skills/database-design/SKILL.md
 
   topic.test_authoring:
     - agent-core/rules/TESTING_RULES.md
+    - agent-core/skills/tdd/SKILL.md
 
   topic.naming:
     - agent-core/rules/NAMING_RULES.md
@@ -124,19 +218,89 @@ contributions:
   topic.error_handling:
     - agent-core/rules/ERROR_HANDLING_RULES.md
 
-# Example task patterns — for agent reference and human audit.
-# These are illustrative, not exhaustive. The union mechanism
-# generalizes beyond this list.
+  topic.api_contract:
+    - agent-core/rules/API_DESIGN_RULES.md
+    - agent-core/skills/api-design/SKILL.md
+
+  topic.security:
+    - agent-core/principles/SECURITY_PRINCIPLES.md
+    - agent-core/rules/SECURITY_RULES.md
+    - agent-core/skills/security-baseline/SKILL.md
+
+  topic.authentication:
+    - agent-core/rules/AUTHENTICATION_RULES.md
+    - agent-core/rules/SECURITY_RULES.md
+    - agent-core/skills/authentication/SKILL.md
+
+  topic.secrets:
+    - agent-core/rules/SECRETS_RULES.md
+    - agent-core/skills/secrets-management/SKILL.md
+
+  topic.observability:
+    - agent-core/rules/OBSERVABILITY_RULES.md
+    - agent-core/skills/observability-setup/SKILL.md
+
+  topic.performance:
+    - agent-core/rules/PERFORMANCE_RULES.md
+    - agent-core/skills/performance-budget/SKILL.md
+
+  topic.caching:
+    - agent-core/rules/PERFORMANCE_RULES.md
+    - agent-core/skills/caching-strategy/SKILL.md
+
+  topic.feature_flag:
+    - agent-core/rules/RELEASE_RULES.md
+    - agent-core/skills/feature-flag/SKILL.md
+
+  topic.event_driven:
+    - agent-core/rules/EVENT_RULES.md
+    - agent-core/skills/event-driven/SKILL.md
+
+  topic.money:
+    - agent-core/rules/MONEY_HANDLING_RULES.md
+    - agent-core/principles/DATA_PRINCIPLES.md
+
+  topic.payment:
+    - agent-core/rules/MONEY_HANDLING_RULES.md
+    - agent-core/rules/SECURITY_RULES.md
+    - agent-core/rules/AUTHENTICATION_RULES.md
+    - agent-core/skills/payment-integration/SKILL.md
+
+  topic.accessibility:
+    - agent-core/rules/ACCESSIBILITY_RULES.md
+    - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
+    - agent-core/skills/accessibility-audit/SKILL.md
+
+  topic.documentation:
+    - agent-core/rules/DOCUMENTATION_RULES.md
+    - agent-core/skills/adr/SKILL.md
+
+  topic.dependency:
+    - agent-core/rules/DEPENDENCY_RULES.md
+    - agent-core/skills/dependency-management/SKILL.md
+
+  topic.schema_migration:
+    - agent-core/rules/MIGRATION_RULES.md
+    - agent-core/rules/DATABASE_RULES.md
+    - agent-core/skills/database-migration/SKILL.md
+
+  topic.legacy_migration:
+    - agent-core/rules/MIGRATION_RULES.md
+    - agent-core/skills/legacy-migration/SKILL.md
+
+  topic.release:
+    - agent-core/rules/RELEASE_RULES.md
+    - agent-core/rules/CICD_RULES.md
+    - agent-core/skills/release-strategy/SKILL.md
+
+  topic.branching:
+    - agent-core/skills/branching-and-commits/SKILL.md
+
+# Example task patterns — illustrative.
 examples:
 
   backend_new_usecase:
     description: Backend で新しい UseCase を実装する
-    tags:
-      activity: implementation
-      stack: [backend]
-
-  backend_new_processor:
-    description: Backend で新しい Processor を実装する
     tags:
       activity: implementation
       stack: [backend]
@@ -159,12 +323,14 @@ examples:
     tags:
       activity: implementation
       stack: [frontend]
+      topic: [accessibility, performance]
 
   full_stack_new_feature:
     description: Backend と Frontend を同時に実装する
     tags:
       activity: implementation
       stack: [backend, frontend]
+      topic: [api_contract, accessibility]
 
   aggregate_boundary_discussion:
     description: Aggregate 境界を指示者と詰める
@@ -174,10 +340,11 @@ examples:
       topic: [aggregate_boundary]
 
   landing_page_design:
-    description: LP のデザイン判断を行う
+    description: LP のデザイン判断
     tags:
       activity: visual_design
       stack: [frontend]
+      topic: [accessibility]
 
   new_project_bootstrap:
     description: 新規プロジェクトを初期化する
@@ -189,6 +356,7 @@ examples:
     tags:
       activity: review
       stack: [frontend]
+      topic: [accessibility]
 
   backend_code_review:
     description: Backend のコードレビュー
@@ -196,19 +364,135 @@ examples:
       activity: review
       stack: [backend]
 
+  api_design_session:
+    description: 公開 API を設計 / 変更する
+    tags:
+      activity: structure_design
+      stack: [backend]
+      topic: [api_contract, security]
+
+  database_schema_change:
+    description: DB スキーマ変更を計画 / 実行する
+    tags:
+      activity: migration
+      stack: [data, backend]
+      topic: [schema_migration]
+
+  legacy_system_migration:
+    description: 既存システムを段階的に置き換える
+    tags:
+      activity: migration
+      stack: [backend, data, infra]
+      topic: [legacy_migration]
+
+  payment_integration:
+    description: 決済プロバイダ統合
+    tags:
+      activity: implementation
+      stack: [backend]
+      topic: [payment, money, security, authentication, observability]
+
+  cicd_setup:
+    description: CI / CD パイプラインを構築 / 変更する
+    tags:
+      activity: structure_design
+      stack: [cicd]
+      topic: [release, dependency]
+
+  infra_provisioning:
+    description: 新環境 / 新リージョン / 新クラスタの構築
+    tags:
+      activity: structure_design
+      stack: [infra]
+      topic: [security, secrets, observability]
+
+  observability_instrumentation:
+    description: サービスを計装する (logs/metrics/traces)
+    tags:
+      activity: implementation
+      stack: [backend]
+      topic: [observability]
+
+  security_baseline_audit:
+    description: サービスのセキュリティベースラインを監査する
+    tags:
+      activity: audit
+      stack: [backend]
+      topic: [security, authentication, secrets, dependency]
+
+  incident_response:
+    description: 本番障害の対応中
+    tags:
+      activity: incident_response
+
+  feature_release_rollout:
+    description: 機能を段階リリースする
+    tags:
+      activity: release
+      topic: [feature_flag, release]
+
+  dependency_update:
+    description: 依存パッケージを更新 / 監査する
+    tags:
+      activity: audit
+      topic: [dependency, security]
+
+  performance_audit:
+    description: 性能予算を超過した surface を調整する
+    tags:
+      activity: audit
+      topic: [performance]
+
+  caching_introduction:
+    description: 新しいキャッシュ層を追加する
+    tags:
+      activity: implementation
+      stack: [backend]
+      topic: [caching, performance, observability]
+
+  event_pipeline_design:
+    description: 非同期 / event-driven フローを設計する
+    tags:
+      activity: structure_design
+      stack: [backend]
+      topic: [event_driven, observability]
+
+  authentication_change:
+    description: 認証フローを変更する
+    tags:
+      activity: implementation
+      stack: [backend]
+      topic: [authentication, security, secrets]
+
+  accessibility_audit:
+    description: UI のアクセシビリティ監査
+    tags:
+      activity: audit
+      stack: [frontend]
+      topic: [accessibility]
+
+  adr_writing:
+    description: Architecture Decision Record を書く
+    tags:
+      activity: structure_design
+      topic: [documentation]
+
 fallback:
   description: |
-    Trigger when task tags cannot be determined, or when the
-    classification itself is ambiguous. Load every file — this is
-    the safe default and matches the original pre-optimization
-    behavior.
+    Triggered when task tags cannot be determined, or classification
+    itself is ambiguous. Load every governance rule and skill index.
+    Prefer fallback to skipping governance.
   load_all:
     - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
+    - agent-core/principles/SECURITY_PRINCIPLES.md
+    - agent-core/principles/OPERATIONAL_PRINCIPLES.md
+    - agent-core/principles/DATA_PRINCIPLES.md
     - agent-core/rules/CODING_RULES.md
     - agent-core/rules/NAMING_RULES.md
     - agent-core/rules/ERROR_HANDLING_RULES.md
     - agent-core/rules/TESTING_RULES.md
     - agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - agent-core/rules/ACCESSIBILITY_RULES.md
     - agent-core/rules/PROJECT_STRUCTURE_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
@@ -219,6 +503,22 @@ fallback:
     - agent-core/rules/GENERATOR_RULES.md
     - agent-core/rules/WORKFLOW_RULES.md
     - agent-core/rules/TASK_MANAGEMENT_RULES.md
+    - agent-core/rules/DECISION_RULES.md
+    - agent-core/rules/API_DESIGN_RULES.md
+    - agent-core/rules/DATABASE_RULES.md
+    - agent-core/rules/MIGRATION_RULES.md
+    - agent-core/rules/EVENT_RULES.md
+    - agent-core/rules/MONEY_HANDLING_RULES.md
+    - agent-core/rules/SECURITY_RULES.md
+    - agent-core/rules/AUTHENTICATION_RULES.md
+    - agent-core/rules/SECRETS_RULES.md
+    - agent-core/rules/OBSERVABILITY_RULES.md
+    - agent-core/rules/PERFORMANCE_RULES.md
+    - agent-core/rules/CICD_RULES.md
+    - agent-core/rules/INFRA_RULES.md
+    - agent-core/rules/RELEASE_RULES.md
+    - agent-core/rules/DEPENDENCY_RULES.md
+    - agent-core/rules/DOCUMENTATION_RULES.md
     - agent-core/ai/reading_order.yaml
     - agent-core/ai/machine_rules.yaml
     - agent-core/ai/decision_tree.yaml

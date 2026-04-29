@@ -1,278 +1,262 @@
-# AGENT CORE INDEX
+# Agent Core — Index
 
 Violating architecture causes more damage than delivering late.
 
-Agent Core is the operating system for engineering decisions.
+Agent Core is the operating system for engineering decisions
+across web, mobile, backend, frontend, data, infrastructure,
+CI/CD, payments, security, and migration work. This file is the
+routing table agents follow on boot.
 
-All instructions in this repository are subject to higher-priority
-policies (system/developer/tool). If a conflict exists, follow the
-higher-priority policy and report the conflict.
+Higher-priority policies (system / developer / tool) always win
+over what is written here; if a conflict exists, follow the
+higher-priority policy and report it.
 
-Agents MUST complete this boot sequence before making changes.
-
-Avoid improvisation.
-
-Architecture ALWAYS precedes implementation.
-
----
-
-# BOOT SEQUENCE (ABSOLUTE)
-
-Agents MUST initialize in the following order:
-
-0. AI Control
-1. Principles
-2. Governance
-3. Shared Language
-4. Structure
-5. Boundaries
-6. Decisions
-7. Execution Discipline
-8. Implementation
-
-Do not skip layers.
-
-Lower layers MUST NEVER override higher layers.
+Agents MUST complete the boot sequence before making changes. No
+improvisation. Architecture always precedes implementation.
 
 ---
 
-# 0. AI CONTROL (FIRST — NON-NEGOTIABLE)
+# How Agent Core is structured
 
-Defines how agents think and behave.
+| Layer        | What it is                                  | Where it lives                |
+| ------------ | ------------------------------------------- | ----------------------------- |
+| Principles   | Beliefs that guide judgment                 | `principles/`                 |
+| Rules        | Enforceable constraints                     | `rules/`                      |
+| AI control   | Machine-readable reasoning guides           | `ai/`                         |
+| Glossary     | Shared vocabulary                           | `glossary/`                   |
+| Skills       | On-demand operational playbooks             | `skills/<name>/SKILL.md`      |
+| Runtime      | Plan, progress, lessons (gitignored)        | `generated/tasks/`            |
+| Bootstrap    | Installer for host projects                 | `init/`                       |
+
+Principles, rules, AI control, and the glossary are **always
+authoritative**. Skills are loaded **only when their situation
+applies**. Runtime state is the live working memory.
+
+---
+
+# Boot sequence (absolute)
+
+Initialize in this order. Lower layers MUST NOT override higher
+layers.
+
+1. **AI control** — load before any reasoning.
+2. **Principles** — anchor judgment.
+3. **Governance** — meta-rules resolve conflicts.
+4. **Shared language** — glossary aligns vocabulary.
+5. **Structure** — project and package layout invariants.
+6. **Boundaries** — layering and dependency direction.
+7. **Decisions** — disciplined option selection.
+8. **Execution discipline** — workflow + task tracking.
+9. **Implementation** — code, errors, tests, frontend rules.
+10. **Cross-cutting** — security, data, ops, API, CICD, money,
+    events, accessibility, etc., loaded by classification.
+
+---
+
+# 0 — AI control (first, non-negotiable)
 
 READ:
 
-- rules/AI_BEHAVIOR_RULES.md
-- ai/reading_order.yaml
-- ai/machine_rules.yaml
-- ai/decision_tree.yaml
+- `rules/AI_BEHAVIOR_RULES.md`
+- `ai/reading_order.yaml`
+- `ai/machine_rules.yaml`
+- `ai/decision_tree.yaml`
 
-Agents MUST NOT act before internalizing this layer.
-
-Purpose:
-
-- prevent hallucination
-- enforce disciplined reasoning
-- ensure behavioral predictability
-
-Uncontrolled intelligence is systemic risk.
+Purpose: prevent hallucination, enforce disciplined reasoning,
+ensure behavioral predictability.
 
 ---
 
-# 1. PRINCIPLES (FOUNDATIONAL)
-
-Defines the philosophical backbone of the system.
+# 1 — Principles (foundational)
 
 READ:
 
-- principles/ENGINEERING_PRINCIPLES.md
-- principles/ARCHITECTURE_PRINCIPLES.md
-- principles/DESIGN_PHILOSOPHY.md
-- principles/FRONTEND_DESIGN_PHILOSOPHY.md
-
-Purpose:
-
-- anchor decision-making
-- align engineering values
-- eliminate short-term thinking
+- `principles/ENGINEERING_PRINCIPLES.md`
+- `principles/ARCHITECTURE_PRINCIPLES.md`
+- `principles/DESIGN_PHILOSOPHY.md`
+- `principles/FRONTEND_DESIGN_PHILOSOPHY.md`
+- `principles/SECURITY_PRINCIPLES.md`
+- `principles/OPERATIONAL_PRINCIPLES.md`
+- `principles/DATA_PRINCIPLES.md`
 
 When uncertain, default to principles.
 
 ---
 
-# 2. GOVERNANCE (CONSTITUTIONAL)
-
-Defines how rules are interpreted and how conflicts are resolved.
+# 2 — Governance (constitutional)
 
 READ:
 
-- rules/META_RULES.md
+- `rules/META_RULES.md`
+- `rules/DECISION_RULES.md`
 
-Meta Rules function as constitutional law.
-
-All other rules are subordinate.
-
-Purpose:
-
-- establish rule hierarchy
-- eliminate ambiguity
-- stabilize decision-making
-
-Without governance, rules collapse into opinion.
+Meta rules are constitutional. All other rules are subordinate.
 
 ---
 
-# 3. SHARED LANGUAGE (MANDATORY)
-
-A shared vocabulary prevents conceptual drift.
+# 3 — Shared language (mandatory)
 
 READ:
 
-- glossary/GLOSSARY.md
-
-Purpose:
-
-- enforce ubiquitous language
-- eliminate synonym chaos
-- stabilize models
+- `glossary/GLOSSARY.md`
 
 Naming IS architecture.
 
-Inconsistent language produces inconsistent systems.
-
 ---
 
-# 4. STRUCTURE (NON-NEGOTIABLE)
-
-Ensures systems remain reproducible,
-predictable, and operationally stable.
+# 4 — Structure (non-negotiable)
 
 READ:
 
-- rules/PROJECT_STRUCTURE_RULES.md
-- rules/PACKAGE_LAYOUT_COMMON_RULES.md
-- rules/PACKAGE_LAYOUT_BACKEND_RULES.md
-- rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
-- rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
-- rules/GENERATOR_RULES.md
-
-Purpose:
-
-- enforce deterministic layouts
-- guarantee regeneration safety
-- scale engineering patterns
-
-Structural mistakes compound silently.
-
-Protect the structure aggressively.
+- `rules/PROJECT_STRUCTURE_RULES.md`
+- `rules/PACKAGE_LAYOUT_COMMON_RULES.md`
+- `rules/PACKAGE_LAYOUT_BACKEND_RULES.md`
+- `rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md`
+- `rules/PACKAGE_LAYOUT_FRONTEND_RULES.md`
+- `rules/GENERATOR_RULES.md`
 
 ---
 
-# 5. BOUNDARIES (CRITICAL)
-
-Protects the domain and enforces dependency direction.
+# 5 — Boundaries (critical)
 
 READ:
 
-- rules/LAYER_DEPENDENCY_RULES.md
-- rules/MAPPER_RULES.md
-
-Purpose:
-
-- preserve domain purity
-- prevent infrastructure leakage
-- maintain layer integrity
+- `rules/LAYER_DEPENDENCY_RULES.md`
+- `rules/MAPPER_RULES.md`
 
 The domain is the highest-value asset.
 
-Guard it relentlessly.
-
 ---
 
-# 6. DECISIONS (MANDATORY)
-
-Guides agents when multiple valid paths exist.
+# 6 — Execution discipline (operational)
 
 READ:
 
-- rules/DECISION_RULES.md
+- `rules/WORKFLOW_RULES.md`
+- `rules/TASK_MANAGEMENT_RULES.md`
 
-Purpose:
+Then load matching skills:
 
-- ensure consistent judgment
-- prevent architectural drift
-- block convenience-driven design
-
-When no safe path is obvious:
-
-Pause and request clarification.
-
-Avoid guessing.
+| Situation                                  | Skill                                |
+| ------------------------------------------ | ------------------------------------ |
+| Starting non-trivial work                  | `skills/plan-and-implement/`         |
+| Tracking plan, progress, GitHub Issue      | `skills/task-tracking/`              |
+| User correction or validated approach      | `skills/capture-lesson/`             |
 
 ---
 
-# 7. EXECUTION DISCIPLINE (OPERATIONAL)
-
-Defines how agents plan, track, and verify work day-to-day.
+# 7 — Implementation (disciplined)
 
 READ:
 
-- rules/WORKFLOW_RULES.md
-- rules/TASK_MANAGEMENT_RULES.md
+- `rules/NAMING_RULES.md`
+- `rules/CODING_RULES.md`
+- `rules/ERROR_HANDLING_RULES.md`
+- `rules/TESTING_RULES.md`
+- `rules/FRONTEND_DESIGN_RULES.md`
 
-Purpose:
+Then matching skills:
 
-- enforce explicit planning before non-trivial work
-- make execution state resumable across sessions
-- close the loop between corrections and durable learnings
-
-Workflow Rules govern HOW agents act.
-Task Management Rules govern HOW agents track work
-across `tasks/todo.md`, `tasks/lessons.md`, and the branch-linked GitHub Issue.
-
-Undisciplined execution silently undoes good architecture.
-
----
-
-# 8. IMPLEMENTATION (DISCIPLINED EXECUTION)
-
-Defines how code is written,
-how failures are handled,
-and how behavior is verified.
-
-READ:
-
-- rules/NAMING_RULES.md
-- rules/CODING_RULES.md
-- rules/ERROR_HANDLING_RULES.md
-- rules/TESTING_RULES.md
-- rules/FRONTEND_DESIGN_RULES.md
-
-Purpose:
-
-- produce senior-level code
-- ensure diagnosable failures
-- define behavior through tests
-
-Implementation MUST reflect architecture.
-
-Never the reverse.
+| Situation                                  | Skill                                  |
+| ------------------------------------------ | -------------------------------------- |
+| Writing or changing production code        | `skills/tdd/`                          |
+| Crossing layer boundaries                  | `skills/architecture-guard/`           |
+| Deciding aggregate granularity             | `skills/aggregate-boundary/`           |
+| Producing UI / visual design               | `skills/frontend-design/`              |
+| Reviewing existing code                    | `skills/code-review/`                  |
+| Initializing a new project                 | `skills/bootstrap-project/`            |
 
 ---
 
-# GLOBAL ENFORCEMENT
+# 8 — Cross-cutting (load by classification)
 
-If any guidance conflicts with architecture:
+These rules and skills are not loaded on every turn. Load them
+when the situation applies, per `ai/context_profiles.yaml`.
 
-Follow the architecture unless a higher-priority policy requires otherwise.
+## Rules
 
-Short-term velocity MUST NEVER override
-long-term structural integrity.
+- API: `rules/API_DESIGN_RULES.md`
+- Database: `rules/DATABASE_RULES.md`
+- Migration (schema + system): `rules/MIGRATION_RULES.md`
+- Events / async: `rules/EVENT_RULES.md`
+- Money: `rules/MONEY_HANDLING_RULES.md`
+- Security: `rules/SECURITY_RULES.md`
+- Authentication: `rules/AUTHENTICATION_RULES.md`
+- Secrets: `rules/SECRETS_RULES.md`
+- Observability: `rules/OBSERVABILITY_RULES.md`
+- Performance: `rules/PERFORMANCE_RULES.md`
+- CI/CD: `rules/CICD_RULES.md`
+- Infrastructure: `rules/INFRA_RULES.md`
+- Release: `rules/RELEASE_RULES.md`
+- Dependencies: `rules/DEPENDENCY_RULES.md`
+- Accessibility: `rules/ACCESSIBILITY_RULES.md`
+- Documentation: `rules/DOCUMENTATION_RULES.md`
+
+## Skills
+
+| Situation                                          | Skill                                  |
+| -------------------------------------------------- | -------------------------------------- |
+| Designing or changing a public API                 | `skills/api-design/`                   |
+| Designing a schema or new datastore                | `skills/database-design/`              |
+| Schema or data migration                           | `skills/database-migration/`           |
+| Replacing or absorbing a legacy system             | `skills/legacy-migration/`             |
+| Integrating a payment provider                     | `skills/payment-integration/`          |
+| Building or extending CI/CD                        | `skills/cicd-pipeline/`                |
+| Provisioning infrastructure                        | `skills/infra-setup/`                  |
+| Instrumenting a service                            | `skills/observability-setup/`          |
+| Applying the security baseline                     | `skills/security-baseline/`            |
+| Running an incident                                | `skills/incident-response/`            |
+| Introducing or retiring a feature flag             | `skills/feature-flag/`                 |
+| Designing async / event-driven flows               | `skills/event-driven/`                 |
+| Designing or changing authentication               | `skills/authentication/`               |
+| Adding or changing a cache                         | `skills/caching-strategy/`             |
+| Rolling out a release                              | `skills/release-strategy/`             |
+| Auditing accessibility                             | `skills/accessibility-audit/`          |
+| Managing secrets                                   | `skills/secrets-management/`           |
+| Setting / enforcing performance budgets            | `skills/performance-budget/`           |
+| Recording an architectural decision                | `skills/adr/`                          |
+| Adding / updating / removing a dependency          | `skills/dependency-management/`        |
+| Branching and commit hygiene                       | `skills/branching-and-commits/`        |
 
 ---
 
-# ESCALATION PROTOCOL
+# Runtime state
 
-If no safe decision emerges:
+`generated/tasks/todo.md` and `generated/tasks/lessons.md` are the
+live planning surface. They are written by `init/bootstrap.sh`
+the first time it runs and updated by agents during work.
 
-Pause and ask for human clarification.
+`generated/` is gitignored by agent-core. If `agent-core` is
+vendored into a host project (not a submodule), add the same path
+to the host's `.gitignore`.
 
-Do not guess.  
-Do not improvise.
-
-Uncertainty must be surfaced — never hidden.
+When `gh` is available, mirror state into a branch-linked GitHub
+Issue. See `skills/task-tracking/SKILL.md`.
 
 ---
 
-# PRIME DIRECTIVE
+# Global enforcement
 
-Build systems that remain:
+If any guidance conflicts with architecture, follow the
+architecture, unless a higher-priority policy requires otherwise.
 
-- understandable
-- modifiable
-- structurally safe
-- resilient under change
+Short-term velocity MUST NEVER override long-term structural
+integrity.
 
-Optimize for future engineers.
+---
 
-Not present convenience.
+# Escalation protocol
+
+If no safe decision emerges, pause and ask for human clarification.
+Do not guess. Do not improvise. Uncertainty must be surfaced —
+never hidden.
+
+---
+
+# Prime directive
+
+Build systems that remain understandable, modifiable, structurally
+safe, secure under attack, observable in production, and resilient
+under change.
+
+Optimize for future engineers. Not for present convenience.

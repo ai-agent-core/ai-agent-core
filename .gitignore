@@ -1,2 +1,6 @@
 .idea
 *.iml
+
+# Runtime state created by init/bootstrap.sh inside agent-core itself.
+# tasks/todo.md and tasks/lessons.md live here so the host project stays clean.
+/generated/

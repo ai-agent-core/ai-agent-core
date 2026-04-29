@@ -1,4 +1,4 @@
-version: 1
+version: 2
 
 boot_sequence:
 
@@ -16,11 +16,15 @@ boot_sequence:
       - principles/ARCHITECTURE_PRINCIPLES.md
       - principles/DESIGN_PHILOSOPHY.md
       - principles/FRONTEND_DESIGN_PHILOSOPHY.md
+      - principles/SECURITY_PRINCIPLES.md
+      - principles/OPERATIONAL_PRINCIPLES.md
+      - principles/DATA_PRINCIPLES.md
 
   - layer: governance
     priority: constitutional
     files:
       - rules/META_RULES.md
+      - rules/DECISION_RULES.md
 
   - layer: shared_language
     priority: mandatory
@@ -43,11 +47,6 @@ boot_sequence:
       - rules/LAYER_DEPENDENCY_RULES.md
       - rules/MAPPER_RULES.md
 
-  - layer: decisions
-    priority: mandatory
-    files:
-      - rules/DECISION_RULES.md
-
   - layer: execution_discipline
     priority: operational
     files:
@@ -62,6 +61,30 @@ boot_sequence:
       - rules/ERROR_HANDLING_RULES.md
       - rules/TESTING_RULES.md
       - rules/FRONTEND_DESIGN_RULES.md
+
+  - layer: cross_cutting
+    priority: load_by_classification
+    description: |
+      Loaded only when the task classification (see
+      ai/context_profiles.yaml) attaches the relevant tag. Listed
+      here so the union is auditable.
+    files:
+      - rules/API_DESIGN_RULES.md
+      - rules/DATABASE_RULES.md
+      - rules/MIGRATION_RULES.md
+      - rules/EVENT_RULES.md
+      - rules/MONEY_HANDLING_RULES.md
+      - rules/SECURITY_RULES.md
+      - rules/AUTHENTICATION_RULES.md
+      - rules/SECRETS_RULES.md
+      - rules/OBSERVABILITY_RULES.md
+      - rules/PERFORMANCE_RULES.md
+      - rules/CICD_RULES.md
+      - rules/INFRA_RULES.md
+      - rules/RELEASE_RULES.md
+      - rules/DEPENDENCY_RULES.md
+      - rules/ACCESSIBILITY_RULES.md
+      - rules/DOCUMENTATION_RULES.md
 
 enforcement:
 

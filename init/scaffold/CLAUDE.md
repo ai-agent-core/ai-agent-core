@@ -1,20 +1,16 @@
-# CLAUDE INITIALIZATION
+# Claude entrypoint
 
 This repository is governed by Agent Core.
 
-Claude MUST NOT begin reasoning or generating output
-until initialization is complete.
+Before generating any output, read `AGENTS.md` and follow it. Treat
+that file as the boot protocol for every session.
 
----
+Keep this file short on purpose. Project-specific Bash commands,
+style overrides, or workflow notes for this concrete project belong
+here — directly under sections you add yourself. Anything that
+applies to *all* projects belongs in `agent-core/`, not here.
 
-# REQUIRED FIRST STEP
-
-READ:
-
-AGENTS.md
-
-Follow it exactly.
-
-Do not bypass the execution protocol.
-
-Agent Core defines behavior.
+When you need a procedure (TDD loop, planning, lesson capture,
+review checklist, frontend judgment, architecture guard), load the
+matching skill from `agent-core/skills/<name>/SKILL.md` instead of
+inlining it.
