@@ -1,6 +1,6 @@
-# Contributing to Agent Core
+# Contributing to AI Agent Core
 
-Thanks for considering a contribution. Agent Core values **precision over
+Thanks for considering a contribution. AI Agent Core values **precision over
 feature growth** — improvements to architectural safety, clarity,
 determinism, or cross-agent consistency are warmly received. Adding rules
 "just because" is not.
@@ -15,7 +15,7 @@ determinism, or cross-agent consistency are warmly received. Adding rules
 | New **rule**                  | `rules/`                 | A new enforceable invariant. Concrete, testable in review.  |
 | New **skill**                 | `skills/<name>/SKILL.md` | A repeatable situation with its own playbook (≤300 lines).  |
 | Updates to **routing**        | `ai/context_profiles.yaml` and `INDEX.md` | When you add or rename anything above. |
-| Bootstrap / migration script  | `init/`                  | Layout changes between Agent Core versions.                 |
+| Bootstrap / migration script  | `init/`                  | Layout changes between AI Agent Core versions.                 |
 | README / CHANGELOG            | repo root                | User-visible changes.                                       |
 
 ---
@@ -139,7 +139,7 @@ to scaffold or context_profiles) come with an ADR — see skill
 
 ## Code of Conduct
 
-Participation in Agent Core requires upholding the
+Participation in AI Agent Core requires upholding the
 [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
 
 ---
@@ -154,7 +154,7 @@ terms.
 
 ## Thanks
 
-Agent Core gets sharper with every well-grounded contribution. Even a tiny
+AI Agent Core gets sharper with every well-grounded contribution. Even a tiny
 PR — fixing a forbidden anti-pattern that lets bugs through, sharpening a
 sentence that gets misread — meaningfully improves the agent runtime for
 every team using it.

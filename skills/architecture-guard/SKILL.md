@@ -10,10 +10,10 @@ boundaries, dependency direction, or the domain layer**. The skill
 is a checklist; it does not rewrite the architecture rules. The
 authoritative rules live in:
 
-- `agent-core/principles/ARCHITECTURE_PRINCIPLES.md`
-- `agent-core/rules/LAYER_DEPENDENCY_RULES.md`
-- `agent-core/rules/PACKAGE_LAYOUT_*_RULES.md`
-- `agent-core/rules/MAPPER_RULES.md`
+- `ai-agent-core/principles/ARCHITECTURE_PRINCIPLES.md`
+- `ai-agent-core/rules/LAYER_DEPENDENCY_RULES.md`
+- `ai-agent-core/rules/PACKAGE_LAYOUT_*_RULES.md`
+- `ai-agent-core/rules/MAPPER_RULES.md`
 
 ---
 

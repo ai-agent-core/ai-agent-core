@@ -23,7 +23,7 @@ Goal: understand the surface before changing it.
 
 - Read the relevant files. Use subagents for breadth so the main
   context stays clean ("use a subagent to map how X works").
-- Read `agent-core/generated/tasks/lessons.md`; apply prior
+- Read `ai-agent-core/generated/tasks/lessons.md`; apply prior
   learnings before re-deciding things.
 - If unsure which files matter, ask the user — do not guess.
 
@@ -34,7 +34,7 @@ without a plan is context burn.
 
 ## Phase 2 — Plan (write it down)
 
-Write the plan into `agent-core/generated/tasks/todo.md` as
+Write the plan into `ai-agent-core/generated/tasks/todo.md` as
 checkable items. Each item should be small and verifiable.
 
 Required content:

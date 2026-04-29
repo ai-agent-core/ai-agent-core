@@ -1,13 +1,13 @@
 <div align="center">
 
-# Agent Core
+# AI Agent Core
 
 **Production-grade governance for AI coding agents.**
 Principles, rules, and skills that keep Claude Code, Cursor, Copilot, and
 custom agents from drifting away from your architecture.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Smoke tests](https://img.shields.io/github/actions/workflow/status/kakeru-kageshima/agent-core/smoke.yml?branch=main&label=smoke%20tests)](.github/workflows/smoke.yml)
+[![Smoke tests](https://img.shields.io/github/actions/workflow/status/ai-agent-core/ai-agent-core/smoke.yml?branch=main&label=smoke%20tests)](.github/workflows/smoke.yml)
 [![Skills](https://img.shields.io/badge/skills-30-blue)](skills/)
 [![Rules](https://img.shields.io/badge/rules-34-purple)](rules/)
 [![Stack: SvelteKit · pnpm · TS · Tailwind](https://img.shields.io/badge/default%20frontend-SvelteKit%20%C2%B7%20TS%20%C2%B7%20Tailwind%20%C2%B7%20pnpm-orange)](rules/PACKAGE_LAYOUT_FRONTEND_RULES.md)
@@ -18,7 +18,7 @@ custom agents from drifting away from your architecture.
 
 ## What is this?
 
-Agent Core is a **governance layer for AI-assisted software engineering**.
+AI Agent Core is a **governance layer for AI-assisted software engineering**.
 Drop it into any project. Your AI agents read it on every session and follow
 it across architecture, domain modeling, testing, security, observability,
 CI/CD, payments, and migrations.
@@ -37,22 +37,22 @@ mounted at `.claude/skills/` for native auto-discovery.
 From the host project root:
 
 ```bash
-# vendor agent-core (or git submodule add)
-git clone https://github.com/kakeru-kageshima/agent-core.git
-./agent-core/init/bootstrap.sh
+# vendor ai-agent-core (or git submodule add)
+git clone https://github.com/ai-agent-core/ai-agent-core.git
+./ai-agent-core/init/bootstrap.sh
 
-git add AGENTS.md CLAUDE.md && git commit -m "Install Agent Core"
+git add AGENTS.md CLAUDE.md && git commit -m "Install AI Agent Core"
 ```
 
 Windows:
 
 ```bat
-agent-core\init\bootstrap.cmd
+ai-agent-core\init\bootstrap.cmd
 ```
 
 That's it. The bootstrap writes only **two** files to your project root:
 `AGENTS.md` (entrypoint) and `CLAUDE.md` (redirect). Runtime state goes into
-`agent-core/generated/tasks/`, which is gitignored.
+`ai-agent-core/generated/tasks/`, which is gitignored.
 
 ---
 
@@ -62,7 +62,7 @@ That's it. The bootstrap writes only **two** files to your project root:
 your-project/
 ├── AGENTS.md                ← agents read this first
 ├── CLAUDE.md                ← redirect for Claude Code
-└── agent-core/
+└── ai-agent-core/
     ├── INDEX.md             ← routing table for agents
     ├── principles/          ← non-negotiable foundations (7 files)
     │   ├── ENGINEERING_PRINCIPLES.md
@@ -98,11 +98,11 @@ profile). 17k lines of governance, but the per-turn footprint stays small.
 
 ---
 
-## Why Agent Core
+## Why AI Agent Core
 
 Modern AI coding tools are powerful — but **without constraints they drift**.
 
-| Symptom                                    | What Agent Core does about it                            |
+| Symptom                                    | What AI Agent Core does about it                            |
 | ------------------------------------------ | -------------------------------------------------------- |
 | Architecture inconsistency PR-by-PR        | Layer / dependency / aggregate rules enforced on review  |
 | Plausible code that fails real edge cases  | TDD skill is mandatory for behavior change               |
@@ -112,7 +112,7 @@ Modern AI coding tools are powerful — but **without constraints they drift**.
 | Schemas that lie to consumers              | Database / API design rules treat schema as public API   |
 | Same correction every time                 | `capture-lesson` skill writes durable rules into project |
 
-Agent Core covers the full surface: **web frameworks, frontend, backend,
+AI Agent Core covers the full surface: **web frameworks, frontend, backend,
 databases, infrastructure, CI/CD, security, observability, payments,
 accessibility, and legacy-system migration**.
 
@@ -120,7 +120,7 @@ accessibility, and legacy-system migration**.
 
 ## How it compares
 
-|                                   | Agent Core | `.cursorrules` / Cursor Rules | `CLAUDE.md` alone | Prompt collections | Spec-driven (e.g. SpecKit) |
+|                                   | AI Agent Core | `.cursorrules` / Cursor Rules | `CLAUDE.md` alone | Prompt collections | Spec-driven (e.g. SpecKit) |
 | --------------------------------- | :--------: | :---------------------------: | :---------------: | :----------------: | :------------------------: |
 | Architectural principles          | ✅          | minimal                       | minimal           | ❌                  | partial                    |
 | Enforceable rules with hierarchy  | ✅          | flat list                     | flat list         | ❌                  | per-spec                   |
@@ -206,7 +206,7 @@ Browse them in [`skills/`](skills/).
 
 ## Default stacks
 
-Agent Core ships two well-trodden paths. Pick at bootstrap and
+AI Agent Core ships two well-trodden paths. Pick at bootstrap and
 record the choice in an ADR — see
 [`STACK_DEFAULTS_RULES.md`](rules/STACK_DEFAULTS_RULES.md).
 
@@ -245,13 +245,13 @@ changes.
 
 ## Use with Claude Code (optional)
 
-Agent Core skills follow the [Claude Code Skills](https://code.claude.com/docs/skills)
+AI Agent Core skills follow the [Claude Code Skills](https://code.claude.com/docs/skills)
 SKILL.md format. To enable native auto-discovery in your host project:
 
 ```bash
 mkdir -p .claude
-ln -s ../agent-core/skills .claude/skills
-# or:  cp -R agent-core/skills .claude/skills
+ln -s ../ai-agent-core/skills .claude/skills
+# or:  cp -R ai-agent-core/skills .claude/skills
 ```
 
 The bootstrap intentionally does **not** symlink — it is an explicit
@@ -261,19 +261,19 @@ opt-in.
 
 ## Upgrading from an older version
 
-When you replace or update `agent-core/`, run the migration script from the
+When you replace or update `ai-agent-core/`, run the migration script from the
 host project root:
 
 ```bash
-./agent-core/init/migration.sh           # dry run
-./agent-core/init/migration.sh --apply   # execute
+./ai-agent-core/init/migration.sh           # dry run
+./ai-agent-core/init/migration.sh --apply   # execute
 ```
 
 It relocates user content from legacy locations (`tasks/`, `agent-works/`,
-`agent-spec/WORK_STATE.md`, `agent-input/`) into `agent-core/generated/`,
-removes deprecated Agent Core scaffolding, and **refreshes `AGENTS.md` /
+`agent-spec/WORK_STATE.md`, `agent-input/`) into `ai-agent-core/generated/`,
+removes deprecated AI Agent Core scaffolding, and **refreshes `AGENTS.md` /
 `CLAUDE.md`** from the current scaffold when they carry the
-`Generated by agent-core` marker — backing the previous version up to
+`Generated by ai-agent-core` marker — backing the previous version up to
 `migration-backup-<UTC>/` so any additions are recoverable.
 
 Pass `--keep-entrypoints` if you want to refresh everything *except*
@@ -281,7 +281,7 @@ Pass `--keep-entrypoints` if you want to refresh everything *except*
 removed (i.e. you adopted it as user-authored), the script never
 overwrites it — drift is reported only.
 
-Backups land at `agent-core/generated/migration-backup-<UTC>/`. Idempotent.
+Backups land at `ai-agent-core/generated/migration-backup-<UTC>/`. Idempotent.
 
 ---
 
@@ -307,7 +307,7 @@ Backups land at `agent-core/generated/migration-backup-<UTC>/`. Idempotent.
 - Anyone tired of correcting the same agent mistakes repeatedly.
 
 **Not for:** rapid throwaway prototypes, scripts, or one-off scratch code.
-Agent Core is intentionally opinionated. It favours safety over speed.
+AI Agent Core is intentionally opinionated. It favours safety over speed.
 
 ---
 
@@ -324,7 +324,7 @@ See [issues](../../issues) for current roadmap and open work.
 
 ## Contributing
 
-Contributions welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md). Agent Core
+Contributions welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md). AI Agent Core
 values precision over feature growth: improvements to architectural safety,
 clarity, determinism, or cross-agent consistency are warmly received.
 

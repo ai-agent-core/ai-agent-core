@@ -9,8 +9,8 @@ Use this skill **whenever you produce or modify UI / visual design**
 — layouts, landing pages, components, copy, ornamentation,
 information density. Authoritative rules:
 
-- `agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md`
-- `agent-core/rules/FRONTEND_DESIGN_RULES.md`
+- `ai-agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md`
+- `ai-agent-core/rules/FRONTEND_DESIGN_RULES.md`
 
 This skill is the operational checklist; the rules are the law.
 

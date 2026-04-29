@@ -1,5 +1,5 @@
 name: Question
-description: Ask a usage / integration question about Agent Core.
+description: Ask a usage / integration question about AI Agent Core.
 title: "question: <subject>"
 labels: ["question"]
 body:
@@ -15,7 +15,7 @@ body:
       label: What are you trying to do?
       description: |
         Describe the goal first, then the question. "I'm trying to X, and
-        I'm not sure how Agent Core handles Y" is more useful than the
+        I'm not sure how AI Agent Core handles Y" is more useful than the
         question alone.
     validations:
       required: true

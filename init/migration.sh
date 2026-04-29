@@ -3,15 +3,15 @@
 set -euo pipefail
 
 #
-# Agent Core migration
+# AI Agent Core migration
 #
-# Run from the host project root (one level above agent-core/) when an
-# older version of Agent Core has been replaced or upgraded.
+# Run from the host project root (one level above ai-agent-core/) when an
+# older version of AI Agent Core has been replaced or upgraded.
 #
 # The script:
 #   - relocates legacy USER content (tasks/, agent-works/, agent-spec/
 #     WORK_STATE, agent-input/) into the new locations under
-#     agent-core/generated/,
+#     ai-agent-core/generated/,
 #   - removes legacy AGENT-CORE-PROVIDED scaffolding that has been
 #     replaced (agent-spec/ shell, etc.),
 #   - reports staleness of host-root entrypoints (AGENTS.md, CLAUDE.md)
@@ -19,7 +19,7 @@ set -euo pipefail
 #
 # Default mode is DRY RUN. Pass --apply to perform actions.
 # All destructive moves go through a timestamped backup directory:
-#     agent-core/generated/migration-backup-<UTC timestamp>/
+#     ai-agent-core/generated/migration-backup-<UTC timestamp>/
 # so any move can be undone manually.
 #
 # The script is idempotent — running it twice on the same tree should
@@ -40,9 +40,9 @@ TASKS_DIR="$GENERATED_DIR/tasks"
 INPUTS_DIR="$GENERATED_DIR/inputs"
 TIMESTAMP="$(date -u +%Y%m%dT%H%M%SZ)"
 BACKUP_DIR="$GENERATED_DIR/migration-backup-$TIMESTAMP"
-CORE_JSON="$CORE_ROOT/agent-core.json"
+CORE_JSON="$CORE_ROOT/ai-agent-core.json"
 
-# Read agent-core version (used when refreshing entrypoint generation
+# Read ai-agent-core version (used when refreshing entrypoint generation
 # stamp). Falls back to "unknown" if the JSON cannot be read.
 if [[ -f "$CORE_JSON" ]]; then
   VERSION="$(grep -m 1 '"version"' "$CORE_JSON" | sed -E 's/.*"([^"]+)".*/\1/' || echo unknown)"
@@ -66,14 +66,14 @@ Usage: $(basename "$0") [--apply] [--keep-entrypoints] [--verbose] [--help]
   --apply                 Execute the plan.
   --keep-entrypoints      Do NOT refresh AGENTS.md / CLAUDE.md from the
                           current scaffold; report drift only. By default
-                          they are refreshed when an Agent Core
+                          they are refreshed when an AI Agent Core
                           generation marker is present.
   --verbose               Extra detail in output.
   --help                  This message.
 
-Run from the host project root (the directory containing agent-core/).
+Run from the host project root (the directory containing ai-agent-core/).
 
-Backups (when --apply): agent-core/generated/migration-backup-<UTC>/
+Backups (when --apply): ai-agent-core/generated/migration-backup-<UTC>/
 USAGE
 }
 
@@ -164,11 +164,11 @@ backup_then_remove () {
 }
 
 ########################################
-# Step 1 — legacy host/tasks/ → agent-core/generated/tasks/
+# Step 1 — legacy host/tasks/ → ai-agent-core/generated/tasks/
 ########################################
 #
 # Older versions of bootstrap.sh placed tasks/ at the host project
-# root. The new layout puts it inside agent-core/generated/tasks/.
+# root. The new layout puts it inside ai-agent-core/generated/tasks/.
 # Move user content, then remove the old directory.
 
 migrate_legacy_host_tasks () {
@@ -218,7 +218,7 @@ migrate_legacy_host_tasks () {
 }
 
 ########################################
-# Step 2 — legacy host/agent-works/ → agent-core/generated/tasks/legacy-agent-works/
+# Step 2 — legacy host/agent-works/ → ai-agent-core/generated/tasks/legacy-agent-works/
 ########################################
 #
 # Pre-tasks/ versions used agent-works/ as the working-state tree. It
@@ -242,11 +242,11 @@ migrate_legacy_agent_works () {
 }
 
 ########################################
-# Step 3 — legacy host/agent-spec/ (Agent Core-provided shell) + WORK_STATE.md
+# Step 3 — legacy host/agent-spec/ (AI Agent Core-provided shell) + WORK_STATE.md
 ########################################
 #
-# The agent-spec/ folder was Agent Core-provided scaffolding. It is
-# replaced entirely by the agent-core/ tree. Inside it, WORK_STATE.md
+# The agent-spec/ folder was AI Agent Core-provided scaffolding. It is
+# replaced entirely by the ai-agent-core/ tree. Inside it, WORK_STATE.md
 # was the prior plan surface — this is user content; archive it.
 # Anything else looks like user customisation; back it up before
 # removing the directory.
@@ -256,7 +256,7 @@ migrate_legacy_agent_spec () {
   if [[ ! -d "$src_dir" ]]; then return 0; fi
 
   say ""
-  say "[Step 3] Legacy host/agent-spec/ detected (replaced by agent-core/)"
+  say "[Step 3] Legacy host/agent-spec/ detected (replaced by ai-agent-core/)"
 
   # 1. WORK_STATE.md → archive into tasks/legacy-work-state.md
   local work_state="$src_dir/WORK_STATE.md"
@@ -289,12 +289,12 @@ migrate_legacy_agent_spec () {
     fi
   fi
 
-  plan "remove $src_dir/ (Agent Core-provided shell, replaced by agent-core/)"
+  plan "remove $src_dir/ (AI Agent Core-provided shell, replaced by ai-agent-core/)"
   run_rm_rf "$src_dir"
 }
 
 ########################################
-# Step 4 — legacy host/agent-input/ → agent-core/generated/inputs/
+# Step 4 — legacy host/agent-input/ → ai-agent-core/generated/inputs/
 ########################################
 
 migrate_legacy_agent_input () {
@@ -316,8 +316,8 @@ migrate_legacy_agent_input () {
 # Step 5 — host-root entrypoints (AGENTS.md / CLAUDE.md) refresh
 ########################################
 #
-# AGENTS.md and CLAUDE.md at the host root are Agent Core-managed by
-# default. When they carry the "Generated by agent-core" marker AND
+# AGENTS.md and CLAUDE.md at the host root are AI Agent Core-managed by
+# default. When they carry the "Generated by ai-agent-core" marker AND
 # differ from the current scaffold, refresh them — backing the old
 # version up so any user additions are recoverable.
 #
@@ -328,16 +328,16 @@ migrate_legacy_agent_input () {
 
 is_generated_marker_present () {
   local file="$1"
-  [[ -f "$file" ]] && grep -q '^Generated by agent-core' "$file"
+  [[ -f "$file" ]] && grep -q '^Generated by ai-agent-core' "$file"
 }
 
-# Strip the trailing "---\nGenerated by agent-core ..." footer (added
+# Strip the trailing "---\nGenerated by ai-agent-core ..." footer (added
 # by bootstrap) so we compare the body only.
 strip_generated_footer () {
   local file="$1"
   awk '
     BEGIN { footer_start = -1 }
-    /^Generated by agent-core/ { footer_start = NR; }
+    /^Generated by ai-agent-core/ { footer_start = NR; }
     { lines[NR] = $0; total = NR }
     END {
       stop = total
@@ -353,13 +353,13 @@ strip_generated_footer () {
 
 write_fresh_entrypoint () {
   # Replicate the layout bootstrap.sh produces: scaffold body + blank
-  # line + "---" + "Generated by agent-core vX.Y.Z".
+  # line + "---" + "Generated by ai-agent-core vX.Y.Z".
   local scaffold="$1" dst="$2"
   cat "$scaffold" > "$dst"
   {
     echo ""
     echo "---"
-    echo "Generated by agent-core v$VERSION"
+    echo "Generated by ai-agent-core v$VERSION"
   } >> "$dst"
 }
 
@@ -392,7 +392,7 @@ handle_entrypoint () {
       note "$file matches the current scaffold (no marker, no drift)"
     else
       say ""
-      say "[Step 5] $file has no Agent Core marker — assumed user-authored"
+      say "[Step 5] $file has no AI Agent Core marker — assumed user-authored"
       advise "review $scaffold and reconcile $file manually if needed"
       advise "(not auto-replaced because the file looks user-authored)"
     fi
@@ -408,8 +408,8 @@ handle_entrypoint () {
     # Body matches scaffold; only the version stamp may differ. If so,
     # refresh the stamp; otherwise no-op.
     local current_stamp
-    current_stamp="$(grep -m 1 '^Generated by agent-core' "$src" || true)"
-    if [[ "$current_stamp" != "Generated by agent-core v$VERSION" ]]; then
+    current_stamp="$(grep -m 1 '^Generated by ai-agent-core' "$src" || true)"
+    if [[ "$current_stamp" != "Generated by ai-agent-core v$VERSION" ]]; then
       say ""
       say "[Step 5] $file body matches scaffold; version stamp is older"
       plan "refresh $file (rewrite stamp → v$VERSION; body unchanged)"
@@ -454,11 +454,11 @@ check_entrypoints_staleness () {
 }
 
 ########################################
-# Step 6 — verify host .gitignore mentions agent-core/generated/
+# Step 6 — verify host .gitignore mentions ai-agent-core/generated/
 ########################################
 #
-# When agent-core is vendored (not a submodule), the host project's
-# .gitignore should also exclude agent-core/generated/.
+# When ai-agent-core is vendored (not a submodule), the host project's
+# .gitignore should also exclude ai-agent-core/generated/.
 
 check_host_gitignore () {
   local gi="$TARGET_DIR/.gitignore"
@@ -466,20 +466,20 @@ check_host_gitignore () {
   # decision, not ours.
   [[ -f "$gi" ]] || return 0
 
-  if grep -qE '(^|/)agent-core/generated/?(\s|$)' "$gi" 2>/dev/null \
+  if grep -qE '(^|/)ai-agent-core/generated/?(\s|$)' "$gi" 2>/dev/null \
      || grep -qE '^\s*generated/?\s*$' "$gi" 2>/dev/null; then
-    note ".gitignore already mentions agent-core/generated/"
+    note ".gitignore already mentions ai-agent-core/generated/"
     return 0
   fi
 
   say ""
-  say "[Step 6] Host .gitignore does not mention agent-core/generated/"
-  plan "add line 'agent-core/generated/' to $gi (only if agent-core is vendored, not a submodule)"
+  say "[Step 6] Host .gitignore does not mention ai-agent-core/generated/"
+  plan "add line 'ai-agent-core/generated/' to $gi (only if ai-agent-core is vendored, not a submodule)"
   if [[ $DRY_RUN -eq 0 ]]; then
     {
       echo ""
-      echo "# agent-core runtime state (vendored install only — submodules manage their own .gitignore)"
-      echo "agent-core/generated/"
+      echo "# ai-agent-core runtime state (vendored install only — submodules manage their own .gitignore)"
+      echo "ai-agent-core/generated/"
     } >> "$gi"
   fi
 }
@@ -488,8 +488,8 @@ check_host_gitignore () {
 # Run
 ########################################
 
-say "Agent Core migration"
-say "  agent-core: $CORE_ROOT"
+say "AI Agent Core migration"
+say "  ai-agent-core: $CORE_ROOT"
 say "  host root:  $TARGET_DIR"
 if [[ $DRY_RUN -eq 1 ]]; then
   say "  mode:       DRY RUN  (re-run with --apply to execute)"

@@ -9,8 +9,8 @@ Use this skill **whenever production code is about to change**. If
 the change has no behavior (rename, formatting, dead-code removal),
 skip the skill but say so explicitly in the plan.
 
-The rules in `agent-core/principles/ENGINEERING_PRINCIPLES.md` and
-`agent-core/rules/TESTING_RULES.md` are the source of truth. This
+The rules in `ai-agent-core/principles/ENGINEERING_PRINCIPLES.md` and
+`ai-agent-core/rules/TESTING_RULES.md` are the source of truth. This
 skill is the operational loop.
 
 ---

@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Agent Core values precision over feature growth. Use this template
+        AI Agent Core values precision over feature growth. Use this template
         when you have evidence — an incident, recurring agent mistake, or a
         clear gap — that motivates the change.
   - type: dropdown

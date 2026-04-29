@@ -16,7 +16,7 @@ Trigger this skill when **any** of the following happens:
   the code alone.
 
 Lessons are written into
-`agent-core/generated/tasks/lessons.md`. They survive across
+`ai-agent-core/generated/tasks/lessons.md`. They survive across
 sessions, across agents, and across model upgrades.
 
 ---
@@ -34,7 +34,7 @@ Save things that future-you cannot rederive from the codebase:
 Do **not** save:
 
 - Things visible from `git log` or current code.
-- Generic best practices that already live in `agent-core/rules/`.
+- Generic best practices that already live in `ai-agent-core/rules/`.
 - Per-task details ("we fixed bug 1234"). Ephemeral context lives
   in the Issue and the commit message.
 

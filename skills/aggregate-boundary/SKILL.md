@@ -16,7 +16,7 @@ Use this skill **before**:
 - introducing a second repository where one might suffice,
 - designing a new bounded context boundary.
 
-Source of truth: `agent-core/principles/ARCHITECTURE_PRINCIPLES.md`
+Source of truth: `ai-agent-core/principles/ARCHITECTURE_PRINCIPLES.md`
 (section "Right-Size the Aggregation Unit").
 
 ---

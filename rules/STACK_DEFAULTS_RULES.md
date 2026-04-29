@@ -1,6 +1,6 @@
 # Stack Defaults
 
-Single source of truth for the technology stack Agent Core
+Single source of truth for the technology stack AI Agent Core
 recommends as the **default** when starting a new project. Other
 rules cite this file rather than restate the choices.
 
@@ -17,7 +17,7 @@ in an ADR.
 
 # Two paths
 
-Agent Core supports two well-trodden paths:
+AI Agent Core supports two well-trodden paths:
 
 | Path                      | When                                                                |
 | ------------------------- | ------------------------------------------------------------------- |

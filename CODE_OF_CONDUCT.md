@@ -1,6 +1,6 @@
 # Code of Conduct
 
-Agent Core follows the [Contributor Covenant](https://www.contributor-covenant.org/),
+AI Agent Core follows the [Contributor Covenant](https://www.contributor-covenant.org/),
 version 2.1.
 
 ## Our Pledge

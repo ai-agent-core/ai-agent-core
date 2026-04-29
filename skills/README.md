@@ -1,8 +1,8 @@
-# Agent Core Skills
+# AI Agent Core Skills
 
-Skills are the **on-demand playbooks** of Agent Core.
+Skills are the **on-demand playbooks** of AI Agent Core.
 
-`agent-core/INDEX.md` defines *what to know*. Skills define
+`ai-agent-core/INDEX.md` defines *what to know*. Skills define
 *what to do in a specific situation*. They are not loaded on
 every turn — agents pick the matching skill when the situation
 arises.
@@ -100,9 +100,9 @@ copy or symlink:
 
 ```bash
 mkdir -p .claude
-ln -s ../agent-core/skills .claude/skills
+ln -s ../ai-agent-core/skills .claude/skills
 # or, to copy:
-# cp -R agent-core/skills .claude/skills
+# cp -R ai-agent-core/skills .claude/skills
 ```
 
 This is intentionally not done by `bootstrap.sh`. The bootstrap

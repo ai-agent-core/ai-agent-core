@@ -16,21 +16,21 @@ core:
     architecture, language, and routing.
   files:
     - AGENTS.md
-    - agent-core/INDEX.md
-    - agent-core/principles/ENGINEERING_PRINCIPLES.md
-    - agent-core/principles/ARCHITECTURE_PRINCIPLES.md
-    - agent-core/principles/DESIGN_PHILOSOPHY.md
-    - agent-core/principles/SECURITY_PRINCIPLES.md
-    - agent-core/principles/OPERATIONAL_PRINCIPLES.md
-    - agent-core/principles/DATA_PRINCIPLES.md
-    - agent-core/rules/AI_BEHAVIOR_RULES.md
-    - agent-core/rules/META_RULES.md
-    - agent-core/rules/DECISION_RULES.md
-    - agent-core/rules/WORKFLOW_RULES.md
-    - agent-core/rules/TASK_MANAGEMENT_RULES.md
-    - agent-core/rules/STACK_DEFAULTS_RULES.md
-    - agent-core/glossary/GLOSSARY.md
-    - agent-core/ai/context_profiles.yaml
+    - ai-agent-core/INDEX.md
+    - ai-agent-core/principles/ENGINEERING_PRINCIPLES.md
+    - ai-agent-core/principles/ARCHITECTURE_PRINCIPLES.md
+    - ai-agent-core/principles/DESIGN_PHILOSOPHY.md
+    - ai-agent-core/principles/SECURITY_PRINCIPLES.md
+    - ai-agent-core/principles/OPERATIONAL_PRINCIPLES.md
+    - ai-agent-core/principles/DATA_PRINCIPLES.md
+    - ai-agent-core/rules/AI_BEHAVIOR_RULES.md
+    - ai-agent-core/rules/META_RULES.md
+    - ai-agent-core/rules/DECISION_RULES.md
+    - ai-agent-core/rules/WORKFLOW_RULES.md
+    - ai-agent-core/rules/TASK_MANAGEMENT_RULES.md
+    - ai-agent-core/rules/STACK_DEFAULTS_RULES.md
+    - ai-agent-core/glossary/GLOSSARY.md
+    - ai-agent-core/ai/context_profiles.yaml
 
 dimensions:
 
@@ -92,220 +92,220 @@ contributions:
   # ---- Activity contributions ---------------------------------------
 
   activity.implementation:
-    - agent-core/rules/CODING_RULES.md
-    - agent-core/rules/NAMING_RULES.md
-    - agent-core/rules/ERROR_HANDLING_RULES.md
-    - agent-core/rules/TESTING_RULES.md
+    - ai-agent-core/rules/CODING_RULES.md
+    - ai-agent-core/rules/NAMING_RULES.md
+    - ai-agent-core/rules/ERROR_HANDLING_RULES.md
+    - ai-agent-core/rules/TESTING_RULES.md
 
   activity.structure_design:
-    - agent-core/rules/PROJECT_STRUCTURE_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
-    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
-    - agent-core/rules/GENERATOR_RULES.md
+    - ai-agent-core/rules/PROJECT_STRUCTURE_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - ai-agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - ai-agent-core/rules/GENERATOR_RULES.md
 
   activity.visual_design:
-    - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
-    - agent-core/rules/FRONTEND_DESIGN_RULES.md
-    - agent-core/rules/ACCESSIBILITY_RULES.md
+    - ai-agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
+    - ai-agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - ai-agent-core/rules/ACCESSIBILITY_RULES.md
 
   activity.bootstrap:
-    - agent-core/rules/PROJECT_STRUCTURE_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
-    - agent-core/rules/GENERATOR_RULES.md
-    - agent-core/skills/bootstrap-project/SKILL.md
+    - ai-agent-core/rules/PROJECT_STRUCTURE_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - ai-agent-core/rules/GENERATOR_RULES.md
+    - ai-agent-core/skills/bootstrap-project/SKILL.md
 
   activity.review:
-    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
-    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
-    - agent-core/skills/code-review/SKILL.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - ai-agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - ai-agent-core/skills/code-review/SKILL.md
 
   activity.migration:
-    - agent-core/rules/MIGRATION_RULES.md
-    - agent-core/skills/database-migration/SKILL.md
-    - agent-core/skills/legacy-migration/SKILL.md
+    - ai-agent-core/rules/MIGRATION_RULES.md
+    - ai-agent-core/skills/database-migration/SKILL.md
+    - ai-agent-core/skills/legacy-migration/SKILL.md
 
   activity.incident_response:
-    - agent-core/rules/OBSERVABILITY_RULES.md
-    - agent-core/skills/incident-response/SKILL.md
+    - ai-agent-core/rules/OBSERVABILITY_RULES.md
+    - ai-agent-core/skills/incident-response/SKILL.md
 
   activity.release:
-    - agent-core/rules/RELEASE_RULES.md
-    - agent-core/rules/CICD_RULES.md
-    - agent-core/skills/release-strategy/SKILL.md
-    - agent-core/skills/feature-flag/SKILL.md
+    - ai-agent-core/rules/RELEASE_RULES.md
+    - ai-agent-core/rules/CICD_RULES.md
+    - ai-agent-core/skills/release-strategy/SKILL.md
+    - ai-agent-core/skills/feature-flag/SKILL.md
 
   activity.audit:
-    - agent-core/rules/SECURITY_RULES.md
-    - agent-core/rules/DEPENDENCY_RULES.md
-    - agent-core/rules/ACCESSIBILITY_RULES.md
-    - agent-core/skills/security-baseline/SKILL.md
+    - ai-agent-core/rules/SECURITY_RULES.md
+    - ai-agent-core/rules/DEPENDENCY_RULES.md
+    - ai-agent-core/rules/ACCESSIBILITY_RULES.md
+    - ai-agent-core/skills/security-baseline/SKILL.md
 
   # ---- Stack contributions ------------------------------------------
 
   stack.backend:
-    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_WORKERS_RULES.md
-    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
-    - agent-core/rules/MAPPER_RULES.md
-    - agent-core/rules/API_DESIGN_RULES.md
-    - agent-core/rules/DATABASE_RULES.md
-    - agent-core/rules/OBSERVABILITY_RULES.md
-    - agent-core/rules/PERFORMANCE_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_WORKERS_RULES.md
+    - ai-agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - ai-agent-core/rules/MAPPER_RULES.md
+    - ai-agent-core/rules/API_DESIGN_RULES.md
+    - ai-agent-core/rules/DATABASE_RULES.md
+    - ai-agent-core/rules/OBSERVABILITY_RULES.md
+    - ai-agent-core/rules/PERFORMANCE_RULES.md
 
   stack.functions:
-    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
-    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
-    - agent-core/rules/MAPPER_RULES.md
-    - agent-core/rules/OBSERVABILITY_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+    - ai-agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - ai-agent-core/rules/MAPPER_RULES.md
+    - ai-agent-core/rules/OBSERVABILITY_RULES.md
 
   stack.frontend:
-    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
-    - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
-    - agent-core/rules/FRONTEND_DESIGN_RULES.md
-    - agent-core/rules/FRONTEND_DEMO_MODE_RULES.md
-    - agent-core/rules/ACCESSIBILITY_RULES.md
-    - agent-core/rules/PERFORMANCE_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
+    - ai-agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
+    - ai-agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - ai-agent-core/rules/FRONTEND_DEMO_MODE_RULES.md
+    - ai-agent-core/rules/ACCESSIBILITY_RULES.md
+    - ai-agent-core/rules/PERFORMANCE_RULES.md
 
   stack.mobile:
-    - agent-core/rules/FRONTEND_DESIGN_RULES.md
-    - agent-core/rules/ACCESSIBILITY_RULES.md
-    - agent-core/rules/PERFORMANCE_RULES.md
-    - agent-core/rules/RELEASE_RULES.md
+    - ai-agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - ai-agent-core/rules/ACCESSIBILITY_RULES.md
+    - ai-agent-core/rules/PERFORMANCE_RULES.md
+    - ai-agent-core/rules/RELEASE_RULES.md
 
   stack.data:
-    - agent-core/principles/DATA_PRINCIPLES.md
-    - agent-core/rules/DATABASE_RULES.md
-    - agent-core/rules/MIGRATION_RULES.md
-    - agent-core/rules/EVENT_RULES.md
+    - ai-agent-core/principles/DATA_PRINCIPLES.md
+    - ai-agent-core/rules/DATABASE_RULES.md
+    - ai-agent-core/rules/MIGRATION_RULES.md
+    - ai-agent-core/rules/EVENT_RULES.md
 
   stack.infra:
-    - agent-core/principles/OPERATIONAL_PRINCIPLES.md
-    - agent-core/rules/INFRA_RULES.md
-    - agent-core/rules/SECURITY_RULES.md
-    - agent-core/rules/SECRETS_RULES.md
-    - agent-core/rules/OBSERVABILITY_RULES.md
-    - agent-core/skills/infra-setup/SKILL.md
+    - ai-agent-core/principles/OPERATIONAL_PRINCIPLES.md
+    - ai-agent-core/rules/INFRA_RULES.md
+    - ai-agent-core/rules/SECURITY_RULES.md
+    - ai-agent-core/rules/SECRETS_RULES.md
+    - ai-agent-core/rules/OBSERVABILITY_RULES.md
+    - ai-agent-core/skills/infra-setup/SKILL.md
 
   stack.cicd:
-    - agent-core/rules/CICD_RULES.md
-    - agent-core/rules/RELEASE_RULES.md
-    - agent-core/rules/DEPENDENCY_RULES.md
-    - agent-core/rules/SECRETS_RULES.md
-    - agent-core/skills/cicd-pipeline/SKILL.md
+    - ai-agent-core/rules/CICD_RULES.md
+    - ai-agent-core/rules/RELEASE_RULES.md
+    - ai-agent-core/rules/DEPENDENCY_RULES.md
+    - ai-agent-core/rules/SECRETS_RULES.md
+    - ai-agent-core/skills/cicd-pipeline/SKILL.md
 
   # ---- Topic contributions ------------------------------------------
 
   topic.aggregate_boundary:
-    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
-    - agent-core/rules/MAPPER_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
-    - agent-core/skills/aggregate-boundary/SKILL.md
+    - ai-agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - ai-agent-core/rules/MAPPER_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+    - ai-agent-core/skills/aggregate-boundary/SKILL.md
 
   topic.persistence:
-    - agent-core/rules/DATABASE_RULES.md
-    - agent-core/rules/MAPPER_RULES.md
-    - agent-core/rules/GENERATOR_RULES.md
-    - agent-core/rules/PROJECT_STRUCTURE_RULES.md
-    - agent-core/skills/database-design/SKILL.md
+    - ai-agent-core/rules/DATABASE_RULES.md
+    - ai-agent-core/rules/MAPPER_RULES.md
+    - ai-agent-core/rules/GENERATOR_RULES.md
+    - ai-agent-core/rules/PROJECT_STRUCTURE_RULES.md
+    - ai-agent-core/skills/database-design/SKILL.md
 
   topic.test_authoring:
-    - agent-core/rules/TESTING_RULES.md
-    - agent-core/skills/tdd/SKILL.md
+    - ai-agent-core/rules/TESTING_RULES.md
+    - ai-agent-core/skills/tdd/SKILL.md
 
   topic.naming:
-    - agent-core/rules/NAMING_RULES.md
+    - ai-agent-core/rules/NAMING_RULES.md
 
   topic.error_handling:
-    - agent-core/rules/ERROR_HANDLING_RULES.md
+    - ai-agent-core/rules/ERROR_HANDLING_RULES.md
 
   topic.api_contract:
-    - agent-core/rules/API_DESIGN_RULES.md
-    - agent-core/skills/api-design/SKILL.md
+    - ai-agent-core/rules/API_DESIGN_RULES.md
+    - ai-agent-core/skills/api-design/SKILL.md
 
   topic.security:
-    - agent-core/principles/SECURITY_PRINCIPLES.md
-    - agent-core/rules/SECURITY_RULES.md
-    - agent-core/skills/security-baseline/SKILL.md
+    - ai-agent-core/principles/SECURITY_PRINCIPLES.md
+    - ai-agent-core/rules/SECURITY_RULES.md
+    - ai-agent-core/skills/security-baseline/SKILL.md
 
   topic.authentication:
-    - agent-core/rules/AUTHENTICATION_RULES.md
-    - agent-core/rules/SECURITY_RULES.md
-    - agent-core/skills/authentication/SKILL.md
+    - ai-agent-core/rules/AUTHENTICATION_RULES.md
+    - ai-agent-core/rules/SECURITY_RULES.md
+    - ai-agent-core/skills/authentication/SKILL.md
 
   topic.secrets:
-    - agent-core/rules/SECRETS_RULES.md
-    - agent-core/skills/secrets-management/SKILL.md
+    - ai-agent-core/rules/SECRETS_RULES.md
+    - ai-agent-core/skills/secrets-management/SKILL.md
 
   topic.observability:
-    - agent-core/rules/OBSERVABILITY_RULES.md
-    - agent-core/skills/observability-setup/SKILL.md
+    - ai-agent-core/rules/OBSERVABILITY_RULES.md
+    - ai-agent-core/skills/observability-setup/SKILL.md
 
   topic.performance:
-    - agent-core/rules/PERFORMANCE_RULES.md
-    - agent-core/skills/performance-budget/SKILL.md
+    - ai-agent-core/rules/PERFORMANCE_RULES.md
+    - ai-agent-core/skills/performance-budget/SKILL.md
 
   topic.caching:
-    - agent-core/rules/PERFORMANCE_RULES.md
-    - agent-core/skills/caching-strategy/SKILL.md
+    - ai-agent-core/rules/PERFORMANCE_RULES.md
+    - ai-agent-core/skills/caching-strategy/SKILL.md
 
   topic.feature_flag:
-    - agent-core/rules/RELEASE_RULES.md
-    - agent-core/skills/feature-flag/SKILL.md
+    - ai-agent-core/rules/RELEASE_RULES.md
+    - ai-agent-core/skills/feature-flag/SKILL.md
 
   topic.event_driven:
-    - agent-core/rules/EVENT_RULES.md
-    - agent-core/skills/event-driven/SKILL.md
+    - ai-agent-core/rules/EVENT_RULES.md
+    - ai-agent-core/skills/event-driven/SKILL.md
 
   topic.money:
-    - agent-core/rules/MONEY_HANDLING_RULES.md
-    - agent-core/principles/DATA_PRINCIPLES.md
+    - ai-agent-core/rules/MONEY_HANDLING_RULES.md
+    - ai-agent-core/principles/DATA_PRINCIPLES.md
 
   topic.payment:
-    - agent-core/rules/MONEY_HANDLING_RULES.md
-    - agent-core/rules/SECURITY_RULES.md
-    - agent-core/rules/AUTHENTICATION_RULES.md
-    - agent-core/skills/payment-integration/SKILL.md
+    - ai-agent-core/rules/MONEY_HANDLING_RULES.md
+    - ai-agent-core/rules/SECURITY_RULES.md
+    - ai-agent-core/rules/AUTHENTICATION_RULES.md
+    - ai-agent-core/skills/payment-integration/SKILL.md
 
   topic.accessibility:
-    - agent-core/rules/ACCESSIBILITY_RULES.md
-    - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
-    - agent-core/skills/accessibility-audit/SKILL.md
+    - ai-agent-core/rules/ACCESSIBILITY_RULES.md
+    - ai-agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
+    - ai-agent-core/skills/accessibility-audit/SKILL.md
 
   topic.documentation:
-    - agent-core/rules/DOCUMENTATION_RULES.md
-    - agent-core/skills/adr/SKILL.md
+    - ai-agent-core/rules/DOCUMENTATION_RULES.md
+    - ai-agent-core/skills/adr/SKILL.md
 
   topic.dependency:
-    - agent-core/rules/DEPENDENCY_RULES.md
-    - agent-core/skills/dependency-management/SKILL.md
+    - ai-agent-core/rules/DEPENDENCY_RULES.md
+    - ai-agent-core/skills/dependency-management/SKILL.md
 
   topic.schema_migration:
-    - agent-core/rules/MIGRATION_RULES.md
-    - agent-core/rules/DATABASE_RULES.md
-    - agent-core/skills/database-migration/SKILL.md
+    - ai-agent-core/rules/MIGRATION_RULES.md
+    - ai-agent-core/rules/DATABASE_RULES.md
+    - ai-agent-core/skills/database-migration/SKILL.md
 
   topic.legacy_migration:
-    - agent-core/rules/MIGRATION_RULES.md
-    - agent-core/skills/legacy-migration/SKILL.md
+    - ai-agent-core/rules/MIGRATION_RULES.md
+    - ai-agent-core/skills/legacy-migration/SKILL.md
 
   topic.release:
-    - agent-core/rules/RELEASE_RULES.md
-    - agent-core/rules/CICD_RULES.md
-    - agent-core/skills/release-strategy/SKILL.md
+    - ai-agent-core/rules/RELEASE_RULES.md
+    - ai-agent-core/rules/CICD_RULES.md
+    - ai-agent-core/skills/release-strategy/SKILL.md
 
   topic.branching:
-    - agent-core/skills/branching-and-commits/SKILL.md
+    - ai-agent-core/skills/branching-and-commits/SKILL.md
 
   topic.notifications:
-    - agent-core/rules/NOTIFICATION_RULES.md
+    - ai-agent-core/rules/NOTIFICATION_RULES.md
 
   topic.email:
-    - agent-core/rules/NOTIFICATION_RULES.md
+    - ai-agent-core/rules/NOTIFICATION_RULES.md
 
 # Example task patterns — illustrative.
 examples:
@@ -494,48 +494,48 @@ fallback:
     itself is ambiguous. Load every governance rule and skill index.
     Prefer fallback to skipping governance.
   load_all:
-    - agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
-    - agent-core/principles/SECURITY_PRINCIPLES.md
-    - agent-core/principles/OPERATIONAL_PRINCIPLES.md
-    - agent-core/principles/DATA_PRINCIPLES.md
-    - agent-core/rules/CODING_RULES.md
-    - agent-core/rules/NAMING_RULES.md
-    - agent-core/rules/ERROR_HANDLING_RULES.md
-    - agent-core/rules/TESTING_RULES.md
-    - agent-core/rules/FRONTEND_DESIGN_RULES.md
-    - agent-core/rules/FRONTEND_DEMO_MODE_RULES.md
-    - agent-core/rules/PROJECT_STRUCTURE_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_WORKERS_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
-    - agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
-    - agent-core/rules/LAYER_DEPENDENCY_RULES.md
-    - agent-core/rules/MAPPER_RULES.md
-    - agent-core/rules/GENERATOR_RULES.md
-    - agent-core/rules/WORKFLOW_RULES.md
-    - agent-core/rules/TASK_MANAGEMENT_RULES.md
-    - agent-core/rules/DECISION_RULES.md
-    - agent-core/rules/API_DESIGN_RULES.md
-    - agent-core/rules/DATABASE_RULES.md
-    - agent-core/rules/MIGRATION_RULES.md
-    - agent-core/rules/EVENT_RULES.md
-    - agent-core/rules/MONEY_HANDLING_RULES.md
-    - agent-core/rules/SECURITY_RULES.md
-    - agent-core/rules/AUTHENTICATION_RULES.md
-    - agent-core/rules/SECRETS_RULES.md
-    - agent-core/rules/OBSERVABILITY_RULES.md
-    - agent-core/rules/PERFORMANCE_RULES.md
-    - agent-core/rules/CICD_RULES.md
-    - agent-core/rules/INFRA_RULES.md
-    - agent-core/rules/RELEASE_RULES.md
-    - agent-core/rules/DEPENDENCY_RULES.md
-    - agent-core/rules/ACCESSIBILITY_RULES.md
-    - agent-core/rules/DOCUMENTATION_RULES.md
-    - agent-core/rules/NOTIFICATION_RULES.md
-    - agent-core/ai/reading_order.yaml
-    - agent-core/ai/machine_rules.yaml
-    - agent-core/ai/decision_tree.yaml
+    - ai-agent-core/principles/FRONTEND_DESIGN_PHILOSOPHY.md
+    - ai-agent-core/principles/SECURITY_PRINCIPLES.md
+    - ai-agent-core/principles/OPERATIONAL_PRINCIPLES.md
+    - ai-agent-core/principles/DATA_PRINCIPLES.md
+    - ai-agent-core/rules/CODING_RULES.md
+    - ai-agent-core/rules/NAMING_RULES.md
+    - ai-agent-core/rules/ERROR_HANDLING_RULES.md
+    - ai-agent-core/rules/TESTING_RULES.md
+    - ai-agent-core/rules/FRONTEND_DESIGN_RULES.md
+    - ai-agent-core/rules/FRONTEND_DEMO_MODE_RULES.md
+    - ai-agent-core/rules/PROJECT_STRUCTURE_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_WORKERS_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md
+    - ai-agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md
+    - ai-agent-core/rules/LAYER_DEPENDENCY_RULES.md
+    - ai-agent-core/rules/MAPPER_RULES.md
+    - ai-agent-core/rules/GENERATOR_RULES.md
+    - ai-agent-core/rules/WORKFLOW_RULES.md
+    - ai-agent-core/rules/TASK_MANAGEMENT_RULES.md
+    - ai-agent-core/rules/DECISION_RULES.md
+    - ai-agent-core/rules/API_DESIGN_RULES.md
+    - ai-agent-core/rules/DATABASE_RULES.md
+    - ai-agent-core/rules/MIGRATION_RULES.md
+    - ai-agent-core/rules/EVENT_RULES.md
+    - ai-agent-core/rules/MONEY_HANDLING_RULES.md
+    - ai-agent-core/rules/SECURITY_RULES.md
+    - ai-agent-core/rules/AUTHENTICATION_RULES.md
+    - ai-agent-core/rules/SECRETS_RULES.md
+    - ai-agent-core/rules/OBSERVABILITY_RULES.md
+    - ai-agent-core/rules/PERFORMANCE_RULES.md
+    - ai-agent-core/rules/CICD_RULES.md
+    - ai-agent-core/rules/INFRA_RULES.md
+    - ai-agent-core/rules/RELEASE_RULES.md
+    - ai-agent-core/rules/DEPENDENCY_RULES.md
+    - ai-agent-core/rules/ACCESSIBILITY_RULES.md
+    - ai-agent-core/rules/DOCUMENTATION_RULES.md
+    - ai-agent-core/rules/NOTIFICATION_RULES.md
+    - ai-agent-core/ai/reading_order.yaml
+    - ai-agent-core/ai/machine_rules.yaml
+    - ai-agent-core/ai/decision_tree.yaml
 
 enforcement:
   classification_required: true

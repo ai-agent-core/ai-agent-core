@@ -1,8 +1,8 @@
-# Agent Core — Index
+# AI Agent Core — Index
 
 Violating architecture causes more damage than delivering late.
 
-Agent Core is the operating system for engineering decisions
+AI Agent Core is the operating system for engineering decisions
 across web, mobile, backend, frontend, data, infrastructure,
 CI/CD, payments, security, and migration work. This file is the
 routing table agents follow on boot.
@@ -16,7 +16,7 @@ improvisation. Architecture always precedes implementation.
 
 ---
 
-# How Agent Core is structured
+# How AI Agent Core is structured
 
 | Layer        | What it is                                  | Where it lives                |
 | ------------ | ------------------------------------------- | ----------------------------- |
@@ -233,7 +233,7 @@ when the situation applies, per `ai/context_profiles.yaml`.
 live planning surface. They are written by `init/bootstrap.sh`
 the first time it runs and updated by agents during work.
 
-`generated/` is gitignored by agent-core. If `agent-core` is
+`generated/` is gitignored by ai-agent-core. If `ai-agent-core` is
 vendored into a host project (not a submodule), add the same path
 to the host's `.gitignore`.
 
@@ -246,7 +246,7 @@ Issue. See `skills/task-tracking/SKILL.md`.
 
 `local/` is the **only** location agents should put or look for
 host-project-specific AI assets that don't belong upstream in
-agent-core itself:
+ai-agent-core itself:
 
 - Custom skills the host project relies on
   (`local/skills/<name>/SKILL.md`).
@@ -255,21 +255,21 @@ agent-core itself:
 - Vendor data, fixtures, or references the agent should consult
   (`local/references/`).
 - Host-only overrides or notes that augment but do not contradict
-  agent-core principles or rules.
+  ai-agent-core principles or rules.
 
 Rules:
 
-- `local/` is gitignored by agent-core itself; only `.gitkeep` is
-  tracked. Host projects that vendor agent-core and want to commit
+- `local/` is gitignored by ai-agent-core itself; only `.gitkeep` is
+  tracked. Host projects that vendor ai-agent-core and want to commit
   their `local/` content MUST add an inverse rule to their own
-  `.gitignore` (e.g. `!agent-core/local/`).
+  `.gitignore` (e.g. `!ai-agent-core/local/`).
 - Content here is **subordinate** to `principles/`, `rules/`,
   `ai/`, and the glossary. It MUST NOT contradict them. If a
   conflict exists, the higher layer wins; surface the conflict
   instead of silently overriding.
 - Skills under `local/skills/` are loaded the same way as
   `skills/` — only when their situation applies. Prefer extending
-  agent-core upstream if a need is generalizable across projects.
+  ai-agent-core upstream if a need is generalizable across projects.
 - Do NOT relocate runtime task state into `local/`. That stays in
   `generated/`.
 

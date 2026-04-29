@@ -1,6 +1,6 @@
 # Security Policy
 
-Agent Core is a text-content governance framework — it ships principles,
+AI Agent Core is a text-content governance framework — it ships principles,
 rules, skills, and shell installers. There is no persistent service, no
 network surface, and no credential storage in this repository.
 
@@ -51,12 +51,12 @@ pull requests until a fix is available.
 
 ## Hardening recommendations for adopters
 
-When you vendor Agent Core into a host project:
+When you vendor AI Agent Core into a host project:
 
-- Pin `agent-core` by commit SHA or git submodule, not a floating tag.
+- Pin `ai-agent-core` by commit SHA or git submodule, not a floating tag.
 - Review the diff before upgrading.
 - Run the smoke tests in CI on a clean checkout.
-- Add `agent-core/generated/` to your host `.gitignore` if vendoring
+- Add `ai-agent-core/generated/` to your host `.gitignore` if vendoring
   without a submodule (the migration script can do this for you).
 
-Thanks for helping keep Agent Core safe to adopt.
+Thanks for helping keep AI Agent Core safe to adopt.

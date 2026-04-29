@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Security report
-    url: https://github.com/kakeru-kageshima/agent-core/security/advisories/new
+    url: https://github.com/ai-agent-core/ai-agent-core/security/advisories/new
     about: For vulnerabilities in bootstrap / migration scripts or CI workflows. Please do not file public issues for these.
   - name: Discussion
-    url: https://github.com/kakeru-kageshima/agent-core/discussions
-    about: Open-ended questions, design ideas, sharing how you use Agent Core.
+    url: https://github.com/ai-agent-core/ai-agent-core/discussions
+    about: Open-ended questions, design ideas, sharing how you use AI Agent Core.

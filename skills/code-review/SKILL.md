@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Review a diff or branch against Agent Core principles. Flag architecture, domain, naming, and testing violations before approving.
+description: Review a diff or branch against AI Agent Core principles. Flag architecture, domain, naming, and testing violations before approving.
 ---
 
 # Code review
@@ -8,7 +8,7 @@ description: Review a diff or branch against Agent Core principles. Flag archite
 Use this skill **whenever you review existing or proposed code**,
 including your own diff before declaring work done.
 
-A code review under Agent Core is not a style pass. It is an
+A code review under AI Agent Core is not a style pass. It is an
 architectural integrity check.
 
 ---

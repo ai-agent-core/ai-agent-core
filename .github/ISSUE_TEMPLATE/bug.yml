@@ -23,8 +23,8 @@ body:
       description: Exact commands and starting state.
       placeholder: |
         1. mkdir host && cd host
-        2. cp -R agent-core .
-        3. bash agent-core/init/bootstrap.sh
+        2. cp -R ai-agent-core .
+        3. bash ai-agent-core/init/bootstrap.sh
         4. ...
     validations:
       required: true
@@ -40,9 +40,9 @@ body:
       label: Actual behavior (with relevant output)
       render: shell
   - type: input
-    id: agent-core-version
+    id: ai-agent-core-version
     attributes:
-      label: Agent Core version / commit
+      label: AI Agent Core version / commit
       placeholder: e.g. v1.0.0 or commit SHA
     validations:
       required: true

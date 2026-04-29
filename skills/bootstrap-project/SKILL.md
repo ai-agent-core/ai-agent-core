@@ -1,6 +1,6 @@
 ---
 name: bootstrap-project
-description: Initialize a new project layout under Agent Core — mandatory modules, four-layer convention, migration-as-source-of-truth.
+description: Initialize a new project layout under AI Agent Core — mandatory modules, four-layer convention, migration-as-source-of-truth.
 ---
 
 # Bootstrap project
@@ -11,12 +11,12 @@ under an existing project). Do not use it for routine work.
 
 Authoritative rules:
 
-- `agent-core/rules/PROJECT_STRUCTURE_RULES.md`
-- `agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md`
-- `agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md`
-- `agent-core/rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md`
-- `agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md`
-- `agent-core/rules/GENERATOR_RULES.md`
+- `ai-agent-core/rules/PROJECT_STRUCTURE_RULES.md`
+- `ai-agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md`
+- `ai-agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md`
+- `ai-agent-core/rules/PACKAGE_LAYOUT_FUNCTIONS_RULES.md`
+- `ai-agent-core/rules/PACKAGE_LAYOUT_FRONTEND_RULES.md`
+- `ai-agent-core/rules/GENERATOR_RULES.md`
 
 ---
 
@@ -117,20 +117,20 @@ root is forbidden.
 
 ---
 
-## Phase 5 — install Agent Core in the new project
+## Phase 5 — install AI Agent Core in the new project
 
-If the new project will use Agent Core, run:
+If the new project will use AI Agent Core, run:
 
 ```bash
-./agent-core/init/bootstrap.sh
+./ai-agent-core/init/bootstrap.sh
 ```
 
 This writes only `AGENTS.md` and `CLAUDE.md` to the project root,
-and provisions `agent-core/generated/tasks/todo.md` and
-`tasks/lessons.md` inside the agent-core directory.
+and provisions `ai-agent-core/generated/tasks/todo.md` and
+`tasks/lessons.md` inside the ai-agent-core directory.
 
-`agent-core/generated/` is gitignored by agent-core itself. If
-agent-core is vendored (not a submodule), add the same line to the
+`ai-agent-core/generated/` is gitignored by ai-agent-core itself. If
+ai-agent-core is vendored (not a submodule), add the same line to the
 host project's `.gitignore`.
 
 ---
