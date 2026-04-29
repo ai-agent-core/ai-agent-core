@@ -1,0 +1,67 @@
+name: Rule / Skill / Principle proposal
+description: Propose a new rule, skill, or principle, or a substantive change to an existing one.
+title: "proposal: <subject>"
+labels: ["proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Agent Core values precision over feature growth. Use this template
+        when you have evidence — an incident, recurring agent mistake, or a
+        clear gap — that motivates the change.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind of proposal
+      options:
+        - New rule (rules/*_RULES.md)
+        - New skill (skills/<name>/SKILL.md)
+        - New principle (rare)
+        - Update to existing rule / skill / principle
+        - Reorganisation (routing, layout, naming)
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem this addresses
+      description: What pattern, mistake, or gap is the motivation?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Sketch the rule / skill / principle. Bullet points are fine.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: |
+        What did you consider and reject? "Do nothing" / status-quo is a
+        valid alternative — include it.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Where does this apply? Backend? Frontend? Specific stack?
+  - type: textarea
+    id: routing
+    attributes:
+      label: Routing impact
+      description: |
+        Which dimension / topic in ai/context_profiles.yaml does this attach
+        to? Which existing rules does it cross-reference?
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submission checks
+      options:
+        - label: I searched existing rules / skills and confirmed this is not a duplicate.
+          required: true
+        - label: I read CONTRIBUTING.md.
+          required: true

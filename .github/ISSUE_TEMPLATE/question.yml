@@ -1,0 +1,30 @@
+name: Question
+description: Ask a usage / integration question about Agent Core.
+title: "question: <subject>"
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For open-ended discussion, prefer GitHub Discussions if you have
+        access. Use this template for concrete usage questions where a
+        targeted answer helps.
+  - type: textarea
+    id: question
+    attributes:
+      label: What are you trying to do?
+      description: |
+        Describe the goal first, then the question. "I'm trying to X, and
+        I'm not sure how Agent Core handles Y" is more useful than the
+        question alone.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Which agent / IDE / stack are you on? Anything relevant?
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you have tried so far

@@ -1,304 +1,326 @@
+<div align="center">
+
 # Agent Core
 
-**Agent Core is a governance layer for AI-assisted software
-engineering — covering web frameworks, frontend, backend,
-databases, infrastructure, CI/CD, payments, security,
-observability, and migrations.**
+**Production-grade governance for AI coding agents.**
+Principles, rules, and skills that keep Claude Code, Cursor, Copilot, and
+custom agents from drifting away from your architecture.
 
-It is a structured control system that ensures agents reason,
-design, and implement software with architectural discipline,
-across the full surface area of real-world systems.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Smoke tests](https://img.shields.io/github/actions/workflow/status/kakeru-kageshima/agent-core/smoke.yml?branch=main&label=smoke%20tests)](.github/workflows/smoke.yml)
+[![Skills](https://img.shields.io/badge/skills-30-blue)](skills/)
+[![Rules](https://img.shields.io/badge/rules-34-purple)](rules/)
+[![Stack: SvelteKit · pnpm · TS · Tailwind](https://img.shields.io/badge/default%20frontend-SvelteKit%20%C2%B7%20TS%20%C2%B7%20Tailwind%20%C2%B7%20pnpm-orange)](rules/PACKAGE_LAYOUT_FRONTEND_RULES.md)
 
-Agent Core is not a prompt collection. It is an execution
-framework for controlled intelligence.
-
----
-
-# Why Agent Core exists
-
-Modern AI coding tools are powerful — but without constraints
-they drift. Common failure patterns:
-
-- architectural inconsistency,
-- uncontrolled agent improvisation,
-- short-term decisions damaging long-term systems,
-- code that future engineers must rewrite,
-- security and operability treated as afterthoughts,
-- migrations that break production at the wrong moment.
-
-Agent Core prevents this by enforcing structured decision-making.
-
-**Architecture must not emerge accidentally.**
+</div>
 
 ---
 
-# Who this is for
+## What is this?
 
-Engineers and teams who:
+Agent Core is a **governance layer for AI-assisted software engineering**.
+Drop it into any project. Your AI agents read it on every session and follow
+it across architecture, domain modeling, testing, security, observability,
+CI/CD, payments, and migrations.
 
-- build production systems with AI agents,
-- care about long-term maintainability,
-- want deterministic agent behavior,
-- enforce architectural boundaries,
-- ship software that handles money, PII, multi-tenant data, or
-  high availability,
-- treat AI as an engineering partner — not a code generator.
+Works with **Claude Code**, **Cursor**, **GitHub Copilot**, **Aider**, and any
+agent that respects `AGENTS.md` / `CLAUDE.md` conventions. Skills follow the
+[Claude Code Skills](https://code.claude.com/docs/skills) format and can be
+mounted at `.claude/skills/` for native auto-discovery.
 
-If you are experimenting casually, Agent Core is probably
-unnecessary. If you are building systems meant to last, it
-becomes extremely valuable.
+> Architecture must not emerge accidentally.
 
 ---
 
-# What Agent Core covers
+## Install
 
-### Always-loaded foundations
-
-- **Principles** — engineering, architecture, design, frontend,
-  security, operational, data.
-- **Governance** — meta-rules and decision discipline.
-- **Glossary** — shared vocabulary.
-- **Reading order** and **context profile** — deterministic
-  routing.
-
-### On-demand operational playbooks (Skills)
-
-| Domain                  | Skills                                                                                  |
-| ----------------------- | --------------------------------------------------------------------------------------- |
-| Engineering execution   | tdd, plan-and-implement, task-tracking, capture-lesson, code-review, adr, branching-and-commits |
-| Architecture            | architecture-guard, aggregate-boundary, api-design, database-design, event-driven       |
-| Migration               | database-migration, legacy-migration                                                    |
-| Frontend                | frontend-design, accessibility-audit                                                    |
-| Security & identity     | security-baseline, authentication, secrets-management                                   |
-| Operations              | cicd-pipeline, infra-setup, observability-setup, incident-response, release-strategy, feature-flag |
-| Performance & deps      | performance-budget, caching-strategy, dependency-management                             |
-| Domain                  | payment-integration                                                                     |
-| Project lifecycle       | bootstrap-project                                                                       |
-
-### Cross-cutting rules (loaded by classification)
-
-API design, database, migration, events, money, security,
-authentication, secrets, observability, performance, CI/CD,
-infrastructure, release, dependency, accessibility,
-documentation.
-
-### Deterministic initialization
-
-Every agent follows the same boot sequence:
-
-1. Load AI control.
-2. Load principles.
-3. Apply governance / glossary / structure / boundaries.
-4. Pick the matching skill for the current situation.
-5. Implement under discipline.
-
-### Execution continuity
-
-Agents externalize working memory into:
-
-```
-agent-core/generated/tasks/todo.md      current plan + progress + review
-agent-core/generated/tasks/lessons.md   durable learnings
-```
-
-`generated/` is gitignored by agent-core itself. When the host
-repository is connected to GitHub, state mirrors into a
-branch-linked Issue (skill: `task-tracking`).
-
-### Architectural protection
-
-Agent Core enforces dependency direction, layer isolation, domain
-protection, explicit contracts, observability-by-design,
-secure-by-default, and reversible operations. Short-term speed
-never overrides structural safety.
-
----
-
-# Installation
-
-Run the bootstrap from the host project root (one directory above
-`agent-core/`).
-
-## macOS / Linux
+From the host project root:
 
 ```bash
+# vendor agent-core (or git submodule add)
+git clone https://github.com/kakeru-kageshima/agent-core.git
 ./agent-core/init/bootstrap.sh
+
+git add AGENTS.md CLAUDE.md && git commit -m "Install Agent Core"
 ```
 
-## Windows (Command Prompt or PowerShell)
+Windows:
 
 ```bat
 agent-core\init\bootstrap.cmd
 ```
 
-The bootstrap writes:
-
-- `AGENTS.md` — entrypoint at the host project root.
-- `CLAUDE.md` — short redirect to AGENTS.md at the host project
-  root.
-- `agent-core/generated/tasks/todo.md` — runtime plan surface.
-- `agent-core/generated/tasks/lessons.md` — durable lessons
-  surface.
-
-Nothing else is generated at the host project root.
-`agent-core/generated/` is gitignored. If you vendor `agent-core`
-without using a git submodule, add the same line to the host
-project's `.gitignore`.
-
-After installation, commit the entrypoints:
-
-```bash
-git add AGENTS.md CLAUDE.md
-git commit -m "Install Agent Core"
-```
+That's it. The bootstrap writes only **two** files to your project root:
+`AGENTS.md` (entrypoint) and `CLAUDE.md` (redirect). Runtime state goes into
+`agent-core/generated/tasks/`, which is gitignored.
 
 ---
 
-# Upgrading from an older version
+## What you get
 
-When you replace or update `agent-core/` (vendor pull / submodule
-update / clean re-vendor), run the migration script from the host
-project root to:
-
-- relocate user content from legacy locations
-  (`tasks/`, `agent-works/`, `agent-spec/WORK_STATE.md`,
-  `agent-input/`) into `agent-core/generated/`,
-- remove Agent Core-provided shells that have been replaced
-  (e.g. `agent-spec/`),
-- add `agent-core/generated/` to `.gitignore` if missing,
-- report drift in `AGENTS.md` / `CLAUDE.md` against the current
-  scaffold (without overwriting your customisations).
-
-## macOS / Linux
-
-```bash
-./agent-core/init/migration.sh           # dry run, no changes
-./agent-core/init/migration.sh --apply   # perform the migration
+```text
+your-project/
+├── AGENTS.md                ← agents read this first
+├── CLAUDE.md                ← redirect for Claude Code
+└── agent-core/
+    ├── INDEX.md             ← routing table for agents
+    ├── principles/          ← non-negotiable foundations (7 files)
+    │   ├── ENGINEERING_PRINCIPLES.md
+    │   ├── ARCHITECTURE_PRINCIPLES.md
+    │   ├── SECURITY_PRINCIPLES.md
+    │   ├── OPERATIONAL_PRINCIPLES.md
+    │   ├── DATA_PRINCIPLES.md
+    │   └── …
+    ├── rules/               ← enforceable invariants (34 files)
+    │   ├── API_DESIGN_RULES.md
+    │   ├── DATABASE_RULES.md
+    │   ├── MIGRATION_RULES.md
+    │   ├── MONEY_HANDLING_RULES.md
+    │   ├── SECURITY_RULES.md
+    │   ├── ACCESSIBILITY_RULES.md
+    │   └── … 28 more
+    ├── skills/              ← on-demand playbooks (30 SKILL.md)
+    │   ├── tdd/SKILL.md
+    │   ├── api-design/SKILL.md
+    │   ├── payment-integration/SKILL.md
+    │   ├── legacy-migration/SKILL.md
+    │   ├── incident-response/SKILL.md
+    │   └── … 25 more
+    ├── ai/                  ← machine-readable routing
+    └── generated/           ← runtime task state (gitignored)
+        └── tasks/
+            ├── todo.md
+            └── lessons.md
 ```
 
-## Windows
-
-```bat
-agent-core\init\migration.cmd
-agent-core\init\migration.cmd --apply
-```
-
-Migration is **idempotent** — running it again on a clean tree
-does nothing. All destructive moves go through a timestamped
-backup at `agent-core/generated/migration-backup-<UTC>/` so any
-move can be undone manually.
-
-User content (plans, lessons, working notes) is preserved or
-backed up; Agent Core-provided scaffolding is removed and
-replaced.
-
-`AGENTS.md` and `CLAUDE.md` are **never auto-replaced** — they
-may carry project-specific customisation. The script reports
-drift and points to the new scaffold; you decide whether to
-adopt it.
+The agent loads only what the current task needs (classification → context
+profile). 17k lines of governance, but the per-turn footprint stays small.
 
 ---
 
-# Optional: enable Claude Code skill auto-discovery
+## Why Agent Core
 
-If you want Claude Code to discover Agent Core skills natively in
-the host project, copy or symlink them into `.claude/skills/`:
+Modern AI coding tools are powerful — but **without constraints they drift**.
+
+| Symptom                                    | What Agent Core does about it                            |
+| ------------------------------------------ | -------------------------------------------------------- |
+| Architecture inconsistency PR-by-PR        | Layer / dependency / aggregate rules enforced on review  |
+| Plausible code that fails real edge cases  | TDD skill is mandatory for behavior change               |
+| Migrations that break prod at the worst moment | Expand→migrate→contract enforced; rollback required  |
+| Money math wrong in subtle ways            | `MONEY_HANDLING_RULES` + `payment-integration` skill     |
+| "It works on my machine" deploys           | CICD / observability / release-strategy rules            |
+| Schemas that lie to consumers              | Database / API design rules treat schema as public API   |
+| Same correction every time                 | `capture-lesson` skill writes durable rules into project |
+
+Agent Core covers the full surface: **web frameworks, frontend, backend,
+databases, infrastructure, CI/CD, security, observability, payments,
+accessibility, and legacy-system migration**.
+
+---
+
+## How it compares
+
+|                                   | Agent Core | `.cursorrules` / Cursor Rules | `CLAUDE.md` alone | Prompt collections | Spec-driven (e.g. SpecKit) |
+| --------------------------------- | :--------: | :---------------------------: | :---------------: | :----------------: | :------------------------: |
+| Architectural principles          | ✅          | minimal                       | minimal           | ❌                  | partial                    |
+| Enforceable rules with hierarchy  | ✅          | flat list                     | flat list         | ❌                  | per-spec                   |
+| Situational skills (on-demand)    | ✅          | ❌                             | ❌                 | partial            | ❌                          |
+| TDD / DDD discipline              | ✅          | ❌                             | ❌                 | ❌                  | partial                    |
+| Security / observability / payments | ✅          | ❌                             | ❌                 | partial            | ❌                          |
+| Schema + system migration playbook | ✅          | ❌                             | ❌                 | ❌                  | ❌                          |
+| Runtime task tracking             | ✅          | ❌                             | partial           | ❌                  | ✅                          |
+| Self-improvement loop             | ✅          | ❌                             | ❌                 | ❌                  | ❌                          |
+| Multi-agent compatibility         | ✅          | Cursor only                   | Claude only       | varies             | varies                     |
+| Bootstrap + migration tooling     | ✅          | ❌                             | ❌                 | ❌                  | partial                    |
+
+The differentiator is the **integrated layering**: principles → rules →
+skills → runtime, with deterministic routing between them.
+
+---
+
+## Skills catalog (30)
+
+<details>
+<summary><b>Engineering execution</b> (7)</summary>
+
+`tdd` · `plan-and-implement` · `task-tracking` · `capture-lesson` ·
+`code-review` · `adr` · `branching-and-commits`
+
+</details>
+
+<details>
+<summary><b>Architecture & design</b> (5)</summary>
+
+`architecture-guard` · `aggregate-boundary` · `api-design` ·
+`database-design` · `event-driven`
+
+</details>
+
+<details>
+<summary><b>Migration</b> (2)</summary>
+
+`database-migration` · `legacy-migration`
+
+</details>
+
+<details>
+<summary><b>Frontend</b> (2)</summary>
+
+`frontend-design` · `accessibility-audit`
+
+</details>
+
+<details>
+<summary><b>Security & identity</b> (3)</summary>
+
+`security-baseline` · `authentication` · `secrets-management`
+
+</details>
+
+<details>
+<summary><b>Operations</b> (6)</summary>
+
+`cicd-pipeline` · `infra-setup` · `observability-setup` ·
+`incident-response` · `release-strategy` · `feature-flag`
+
+</details>
+
+<details>
+<summary><b>Performance & dependencies</b> (3)</summary>
+
+`performance-budget` · `caching-strategy` · `dependency-management`
+
+</details>
+
+<details>
+<summary><b>Domain & lifecycle</b> (2)</summary>
+
+`payment-integration` · `bootstrap-project`
+
+</details>
+
+Each skill is a self-contained playbook (≤300 lines) loaded on demand.
+Browse them in [`skills/`](skills/).
+
+---
+
+## Default frontend stack
+
+For new frontend projects, Agent Core defaults to:
+
+| Tool          | Role                                                |
+| ------------- | --------------------------------------------------- |
+| **SvelteKit** | filesystem routing, SSR / SSG-capable               |
+| **TypeScript** (strict) | type-safe by default                      |
+| **Tailwind CSS** | utility-first, design tokens in `tailwind.config.ts` |
+| **pnpm**      | package manager + workspaces                        |
+
+A different stack is a deliberate, written decision (skill `adr`). The
+four-layer architecture (`interfaces / applications / domains /
+architectures`) is framework-agnostic — only the adapter layer changes.
+
+See [`PACKAGE_LAYOUT_FRONTEND_RULES.md`](rules/PACKAGE_LAYOUT_FRONTEND_RULES.md).
+
+---
+
+## Use with Claude Code (optional)
+
+Agent Core skills follow the [Claude Code Skills](https://code.claude.com/docs/skills)
+SKILL.md format. To enable native auto-discovery in your host project:
 
 ```bash
 mkdir -p .claude
 ln -s ../agent-core/skills .claude/skills
-# or:
-# cp -R agent-core/skills .claude/skills
+# or:  cp -R agent-core/skills .claude/skills
 ```
 
-This is an explicit opt-in. The bootstrap does not do it
-automatically — only `AGENTS.md` and `CLAUDE.md` are written to
-the host root.
+The bootstrap intentionally does **not** symlink — it is an explicit
+opt-in.
 
 ---
 
-# Core philosophy
+## Upgrading from an older version
 
-Architecture precedes implementation.
+When you replace or update `agent-core/`, run the migration script from the
+host project root:
 
-Structural integrity outweighs convenience.
+```bash
+./agent-core/init/migration.sh           # dry run
+./agent-core/init/migration.sh --apply   # execute
+```
 
-Controlled intelligence beats improvisation.
+It relocates user content from legacy locations (`tasks/`, `agent-works/`,
+`agent-spec/WORK_STATE.md`, `agent-input/`) into `agent-core/generated/`,
+removes deprecated Agent Core scaffolding, and reports drift on
+`AGENTS.md` / `CLAUDE.md` without overwriting your customisation.
 
-Operability is a feature.
-
-Security is the default path.
-
-Data outlives code.
-
-Systems should not require future rewrites.
-
-Agent Core optimizes for long-term engineering safety.
-
----
-
-# How it works (conceptual)
-
-Agent Core separates concerns:
-
-- **Principles** — foundational beliefs guiding decisions.
-- **Rules** — enforceable constraints on agent behavior.
-- **AI control** — machine-readable reasoning guidance.
-- **Glossary** — shared vocabulary.
-- **Skills** — on-demand operational playbooks.
-- **Runtime state** — externalized working memory.
-
-Together, these create a predictable agent runtime.
+Backups land at `agent-core/generated/migration-backup-<UTC>/`. Idempotent.
 
 ---
 
-# When NOT to use Agent Core
+## Documentation
 
-- You are prototyping rapidly.
-- The code will be discarded.
-- Architectural consistency is irrelevant.
-- Agents are used only for small, throwaway tasks.
-
-Agent Core is intentionally opinionated. It favors safety over
-speed.
-
----
-
-# Design goals
-
-Agent Core is built to be:
-
-- comprehensive — covering the full surface of real-world
-  systems,
-- lightweight at runtime — load only what the situation needs,
-- dependency-free,
-- OS-agnostic,
-- bootstrap-driven,
-- structurally strict,
-- interruption-safe.
-
-It should feel invisible — yet protective.
+- [`INDEX.md`](INDEX.md) — boot sequence and routing table.
+- [`principles/`](principles/) — engineering, architecture, security,
+  operational, data foundations.
+- [`rules/`](rules/) — 34 enforceable rule files.
+- [`skills/`](skills/) — 30 on-demand playbooks.
+- [`ai/context_profiles.yaml`](ai/context_profiles.yaml) — task
+  classification → loaded files.
+- [`CHANGELOG.md`](CHANGELOG.md) — release history.
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to add rules / skills.
 
 ---
 
-# Contributing
+## Who this is for
 
-Contributions are welcome if they improve architectural safety,
-operational quality, security posture, clarity, determinism, or
-cross-agent consistency. Avoid adding complexity without
-structural benefit. Agent Core values precision over feature
-growth.
+- Teams shipping production systems with AI agents.
+- Engineers who care about long-term maintainability.
+- Builders of payment, multi-tenant, or PII-handling systems.
+- Anyone tired of correcting the same agent mistakes repeatedly.
 
----
-
-# Philosophy in one sentence
-
-**Prevent architectural drift before it begins; build for the
-engineer who reads this code in five years and the operator who
-pages at 3 AM.**
+**Not for:** rapid throwaway prototypes, scripts, or one-off scratch code.
+Agent Core is intentionally opinionated. It favours safety over speed.
 
 ---
 
-# License
+## Status & roadmap
 
-MIT
+- ✅ v1.0 — 7 principles, 34 rules, 30 skills, bootstrap + migration tooling.
+- 🚧 More skills (e.g. `mobile-release`, `data-pipeline`).
+- 🚧 Plug-ins for Cursor `.cursor/rules/` and Copilot custom instructions.
+- 🚧 Optional MCP server exposing rules and skills as queryable resources.
+
+See [issues](../../issues) for current roadmap and open work.
+
+---
+
+## Contributing
+
+Contributions welcome — see [`CONTRIBUTING.md`](CONTRIBUTING.md). Agent Core
+values precision over feature growth: improvements to architectural safety,
+clarity, determinism, or cross-agent consistency are warmly received.
+
+By participating you agree to the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+---
+
+## Philosophy in one sentence
+
+> **Prevent architectural drift before it begins; build for the engineer who
+> reads this code in five years and the operator who pages at 3 AM.**
+
+---
+
+## Keywords
+
+`AI coding agents` · `Claude Code` · `AGENTS.md` · `CLAUDE.md` ·
+`Cursor rules` · `Copilot` · `governance` · `DDD` · `TDD` · `Clean
+Architecture` · `agent skills` · `sub-agents` · `prompt engineering` ·
+`SvelteKit` · `pnpm` · `TypeScript`
+
+---
+
+## License
+
+[MIT](LICENSE)

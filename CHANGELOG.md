@@ -1,0 +1,63 @@
+# Changelog
+
+All notable changes to Agent Core are documented in this file.
+
+The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/).
+
+## [Unreleased]
+
+### Added
+
+- Default frontend stack: SvelteKit + TypeScript (strict) + Tailwind CSS +
+  pnpm. Documented in `PACKAGE_LAYOUT_FRONTEND_RULES.md`,
+  `DEPENDENCY_RULES.md`, and `skills/bootstrap-project/SKILL.md`.
+- README rewrite for OSS launch: hero, badges, comparison table, skills
+  catalog, default-stack section, keywords for discoverability.
+- `LICENSE` (MIT), `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md`,
+  `CHANGELOG.md`.
+- `.github/workflows/smoke.yml` — CI smoke tests for bootstrap and migration
+  scripts.
+- `.github/ISSUE_TEMPLATE/` — bug, rule / skill proposal, question
+  templates.
+- `.github/PULL_REQUEST_TEMPLATE.md`.
+
+## [1.0.0] — 2026-04-29
+
+First public release.
+
+### Added
+
+- 7 principles: engineering, architecture, design, frontend design,
+  security, operational, data.
+- 34 rules covering coding, naming, testing, error handling, project
+  structure, package layout (common / backend / functions / frontend),
+  layer dependency, mappers, generators, frontend design, frontend demo
+  mode, accessibility, AI behavior, meta rules, decision rules, workflow,
+  task management, API design, database, migration, events, money
+  handling, security, authentication, secrets, observability, performance,
+  CI/CD, infrastructure, release, dependencies, and documentation.
+- 30 on-demand skills (SKILL.md format compatible with Claude Code skills):
+  - Engineering: tdd, plan-and-implement, task-tracking, capture-lesson,
+    code-review, adr, branching-and-commits.
+  - Architecture: architecture-guard, aggregate-boundary, api-design,
+    database-design, event-driven.
+  - Migration: database-migration, legacy-migration.
+  - Frontend: frontend-design, accessibility-audit.
+  - Security: security-baseline, authentication, secrets-management.
+  - Operations: cicd-pipeline, infra-setup, observability-setup,
+    incident-response, release-strategy, feature-flag.
+  - Performance / deps: performance-budget, caching-strategy,
+    dependency-management.
+  - Domain / lifecycle: payment-integration, bootstrap-project.
+- Deterministic boot sequence with profile-based context loading
+  (`ai/context_profiles.yaml`, `ai/reading_order.yaml`).
+- `init/bootstrap.sh` and `init/bootstrap.cmd` — host project installer
+  writing only `AGENTS.md` and `CLAUDE.md` to the project root, with
+  runtime state at `agent-core/generated/tasks/`.
+- `init/migration.sh` and `init/migration.cmd` — layout-upgrade tool with
+  dry run, conflict resolution, timestamped backups, idempotency.
+- Glossary of ubiquitous language at `glossary/GLOSSARY.md`.
+
+[Unreleased]: https://github.com/kakeru-kageshima/agent-core/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/kakeru-kageshima/agent-core/releases/tag/v1.0.0
