@@ -253,3 +253,19 @@ and minimal resets.
 - inline hex colors or pixel values instead of Tailwind tokens
 - CSS-in-JS or styled-components introduced alongside Tailwind
 - Converter logic duplicated across multiple Components
+
+---
+
+# Demo Mode
+
+Every Sealess frontend app MUST be buildable in a self-contained
+**demo mode** (no backend, no third-party keys) alongside its
+production mode.
+
+The DI swap between Real and Mock clients happens exclusively in
+`architectures/shared/bootstrapClients.ts`, driven by the
+`PUBLIC_SEALESS_MODE` environment variable.
+
+See `rules/FRONTEND_DEMO_MODE_RULES.md` for the full contract:
+mode source, DI boundary, fixture layout, UI banner / demo-login
+requirements, and forbidden patterns.

@@ -492,7 +492,6 @@ fallback:
     - agent-core/rules/ERROR_HANDLING_RULES.md
     - agent-core/rules/TESTING_RULES.md
     - agent-core/rules/FRONTEND_DESIGN_RULES.md
-    - agent-core/rules/ACCESSIBILITY_RULES.md
     - agent-core/rules/PROJECT_STRUCTURE_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_COMMON_RULES.md
     - agent-core/rules/PACKAGE_LAYOUT_BACKEND_RULES.md
