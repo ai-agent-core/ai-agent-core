@@ -1,6 +1,6 @@
 ---
 name: task-tracking
-description: Maintain tasks/todo.md and tasks/lessons.md inside ai-agent-core/generated, and mirror state into the branch-linked GitHub Issue when gh is available.
+description: Maintain tasks/todo.md and tasks/lessons.md inside .aiac, and mirror state into the branch-linked GitHub Issue when gh is available.
 ---
 
 # Task tracking
@@ -9,9 +9,9 @@ Use this skill **whenever a work unit starts, advances, or ends**.
 
 Authoritative state lives in:
 
-- `ai-agent-core/generated/tasks/todo.md` — current plan, progress,
+- `.aiac/tasks/todo.md` — current plan, progress,
   review section.
-- `ai-agent-core/generated/tasks/lessons.md` — durable learnings.
+- `.aiac/tasks/lessons.md` — durable learnings.
 
 If `gh` is reachable, the branch-linked GitHub Issue is the
 cross-session source of truth. Without `gh`, the local files are

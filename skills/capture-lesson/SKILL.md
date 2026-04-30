@@ -16,7 +16,7 @@ Trigger this skill when **any** of the following happens:
   the code alone.
 
 Lessons are written into
-`ai-agent-core/generated/tasks/lessons.md`. They survive across
+`.aiac/tasks/lessons.md`. They survive across
 sessions, across agents, and across model upgrades.
 
 ---

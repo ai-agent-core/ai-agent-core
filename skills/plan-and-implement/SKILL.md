@@ -56,7 +56,7 @@ Goal: understand the surface before changing it.
 
 - Read the relevant files. Use subagents for breadth so the main
   context stays clean ("use a subagent to map how X works").
-- Read `ai-agent-core/generated/tasks/lessons.md`; apply prior
+- Read `.aiac/tasks/lessons.md`; apply prior
   learnings before re-deciding things.
 - If unsure which files matter, ask the user — do not guess.
 
@@ -67,7 +67,7 @@ without a plan is context burn.
 
 ## Phase 2 — Plan (write it down)
 
-Write the plan into `ai-agent-core/generated/tasks/todo.md` as
+Write the plan into `.aiac/tasks/todo.md` as
 checkable items. Each item should be small and verifiable.
 
 Required content:
@@ -118,8 +118,9 @@ Cannot verify? Say so explicitly. Do not claim "done."
 ## Phase 5 — Commit and capture
 
 - Commit with a message that explains *why*, not *what*.
-- Mirror the Review section into `tasks/todo.md` and (if connected)
-  into the Issue. Close the Issue only after verification.
+- Mirror the Review section into `.aiac/tasks/todo.md` and
+  (if connected) into the Issue. Close the Issue only after
+  verification.
 - If the user corrected anything during the work, run skill
   `capture-lesson` before closing out.
 
@@ -128,7 +129,7 @@ Cannot verify? Say so explicitly. Do not claim "done."
 ## Anti-patterns this skill rejects
 
 - Editing before reading.
-- Planning in your head instead of in `tasks/todo.md`.
+- Planning in your head instead of in `.aiac/tasks/todo.md`.
 - "I'll write the test after." Forbidden — see skill `tdd`.
 - Repeated re-tries on a failing approach. After two failed
   attempts, `/clear` (or wipe context) and restart with a sharper

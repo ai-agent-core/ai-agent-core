@@ -54,6 +54,34 @@ Schema per entry:
   `architectures` (per `PACKAGE_LAYOUT_COMMON_RULES.md`).
 - `docs:` — optional override for this package's docs root.
 
+## Required `.aiac/` directory
+
+Every host project MUST keep a `.aiac/` directory at the repo
+root for AI Agent Core host-specific assets. The vendored
+`agent-core/` (or `ai-agent-core/`) directory is treated as a
+read-only library — host customizations live in `.aiac/`.
+
+```
+<host-repo>/
+├── .aiac/
+│   ├── config.yml          # stack / profile / toggles
+│   ├── tasks/              # todo.md, lessons.md (gitignored)
+│   ├── skills/             # custom skills
+│   ├── tools/              # project-local tools / scripts
+│   ├── prompts/            # project-local prompts
+│   └── references/         # fixtures the agent should consult
+├── agent-core/             # vendored, upstream-tracked
+└── project.yml             # this file
+```
+
+The host's `.gitignore` MUST list `.aiac/tasks/`. Other
+sub-directories under `.aiac/` are committed by default.
+
+See `INDEX.md` ("Host-project assets") for the canonical layout
+and rationale.
+
+---
+
 ## Maintenance is mandatory
 
 When packages or docs sections change, `project.yml` MUST be

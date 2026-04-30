@@ -25,9 +25,9 @@ improvisation. Architecture always precedes implementation.
 | AI control   | Machine-readable reasoning guides           | `ai/`                         |
 | Glossary     | Shared vocabulary                           | `glossary/`                   |
 | Skills       | On-demand operational playbooks             | `skills/<name>/SKILL.md`      |
-| Runtime      | Plan, progress, lessons (gitignored)        | `generated/tasks/`            |
-| Local        | Host-project-specific AI assets (gitignored)| `local/`                      |
-| Host profile | Stack / profile / toggles for this host     | `local/ai-agent-core.yml`     |
+| Runtime      | Plan, progress, lessons (host, gitignored)  | `<host>/.aiac/tasks/`         |
+| Host assets  | Custom skills / tools / prompts (host)      | `<host>/.aiac/`               |
+| Host profile | Stack / profile / toggles for this host     | `<host>/.aiac/config.yml`     |
 | Dispatch     | Stack → active rules/skills mapping (vendor)| `init/dispatch.yml`           |
 | Project map  | Docs layout + packages (host root, commit)  | `<host>/project.yml`          |
 | Bootstrap    | Installer for host projects                 | `init/`                       |
@@ -250,51 +250,55 @@ when the situation applies, per `ai/context_profiles.yaml`.
 
 ---
 
-# Runtime state
+# Host-project assets — `.aiac/` at host root
 
-`generated/tasks/todo.md` and `generated/tasks/lessons.md` are the
-live planning surface. They are written by `init/bootstrap.sh`
-the first time it runs and updated by agents during work.
+All host-project-specific AI Agent Core assets live in **`.aiac/`
+at the host repo root**. ai-agent-core itself stays read-only;
+nothing under `agent-core/` (or `ai-agent-core/`) is mutated by
+the host.
 
-`generated/` is gitignored by ai-agent-core. If `ai-agent-core` is
-vendored into a host project (not a submodule), add the same path
-to the host's `.gitignore`.
+```
+<host-repo>/
+├── .aiac/                          # Host-specific AI assets
+│   ├── config.yml                  # stack / profile / toggles (= the old local/ai-agent-core.yml)
+│   ├── tasks/                      # Runtime: todo.md, lessons.md (gitignored)
+│   ├── skills/                     # Project-specific custom skills (committed)
+│   ├── tools/                      # Project-specific tools / scripts (committed)
+│   ├── prompts/                    # Project-specific prompts (committed)
+│   └── references/                 # Fixtures the agent should consult (committed)
+└── agent-core/                     # Vendored library, upstream-tracked, read-only
+```
 
-When `gh` is available, mirror state into a branch-linked GitHub
-Issue. See `skills/task-tracking/SKILL.md`.
+What lives where:
 
----
-
-# Host-project-specific assets (`local/`)
-
-`local/` is the **only** location agents should put or look for
-host-project-specific AI assets that don't belong upstream in
-ai-agent-core itself:
-
-- Custom skills the host project relies on
-  (`local/skills/<name>/SKILL.md`).
-- Project-specific tools, prompts, or templates
-  (`local/tools/`, `local/prompts/`, …).
-- Vendor data, fixtures, or references the agent should consult
-  (`local/references/`).
-- Host-only overrides or notes that augment but do not contradict
-  ai-agent-core principles or rules.
+- **Runtime state** — `.aiac/tasks/todo.md` and
+  `.aiac/tasks/lessons.md` are the live planning surface,
+  rewritten by agents during work. The host's `.gitignore` MUST
+  list `.aiac/tasks/`.
+- **Custom skills** — `.aiac/skills/<name>/SKILL.md`. Loaded the
+  same way as `agent-core/skills/` — only when the situation
+  applies. Prefer upstreaming generalizable skills to
+  ai-agent-core itself.
+- **Project tools / scripts / prompts / references** —
+  `.aiac/tools/`, `.aiac/prompts/`, `.aiac/references/`.
+  Committed by default.
+- **Host config** — `.aiac/config.yml` (stack / profile / toggles
+  per `init/dispatch.yml`).
 
 Rules:
 
-- `local/` is gitignored by ai-agent-core itself; only `.gitkeep` is
-  tracked. Host projects that vendor ai-agent-core and want to commit
-  their `local/` content MUST add an inverse rule to their own
-  `.gitignore` (e.g. `!ai-agent-core/local/`).
-- Content here is **subordinate** to `principles/`, `rules/`,
-  `ai/`, and the glossary. It MUST NOT contradict them. If a
-  conflict exists, the higher layer wins; surface the conflict
-  instead of silently overriding.
-- Skills under `local/skills/` are loaded the same way as
-  `skills/` — only when their situation applies. Prefer extending
-  ai-agent-core upstream if a need is generalizable across projects.
-- Do NOT relocate runtime task state into `local/`. That stays in
-  `generated/`.
+- Content under `.aiac/` is **subordinate** to `principles/`,
+  `rules/`, `ai/`, and the glossary. It MUST NOT contradict them.
+  Surface the conflict instead of silently overriding.
+- Do NOT mutate `agent-core/` from the host. Treat it as a
+  vendored library: pull upstream changes, do not branch
+  locally. Host-specific divergence belongs in `.aiac/`.
+- When `gh` is available, mirror runtime state into a
+  branch-linked GitHub Issue. See `skills/task-tracking/`.
+
+Legacy paths still found in older host repos
+(`agent-core/local/`, `agent-core/generated/tasks/`) are
+**deprecated**; migrate to `.aiac/` on the next touch.
 
 ---
 
