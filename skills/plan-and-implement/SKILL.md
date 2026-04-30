@@ -17,6 +17,39 @@ variable renames. The diff fits in one sentence → just do it.
 
 ---
 
+## Phase 0 — Spec (write the contract first)
+
+When new development is decided (= not a fix or refactor on an
+existing feature), the FIRST artifact is the **specification** —
+written into `docs/`:
+
+- `docs/explanation/<feature>.md` — WHY (business intent,
+  constraints, design rationale).
+- `docs/reference/<feature>.md` — WHAT (data shape, API
+  surface, invariants).
+
+Use cases are organized in the spec, with one section per
+end-user scenario.
+
+The spec drives both layers of testing:
+
+- Unit / integration tests → derived from invariants &
+  contracts in the spec.
+- End-to-end use cases → declared in `e2e/usecases/<feature>.yml`
+  (skill `usecase-driven-e2e`). Same YAML produces both the
+  Playwright tests and the user manual under `docs/how-to/`.
+
+Skip Phase 0 ONLY for fixes / refactors of an already-specified
+feature.
+
+If the spec cannot be written, the feature is not yet
+understood. STOP and clarify.
+
+See `rules/WORKFLOW_RULES.md` (Spec-Driven Development) and
+`rules/DOCUMENTATION_RULES.md` (Specifications & Use Cases).
+
+---
+
 ## Phase 1 — Explore (no edits)
 
 Goal: understand the surface before changing it.

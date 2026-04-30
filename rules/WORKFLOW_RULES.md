@@ -43,12 +43,37 @@ Pushing through a broken plan amplifies damage.
 
 ---
 
-# Specs Reduce Ambiguity
+# Spec-Driven Development
 
-Agents SHOULD write detailed specs upfront when scope is fuzzy.
+When new development is decided, the FIRST artifact agents produce
+is the specification — not the code, not the test, not the issue.
+
+The order is non-negotiable:
+
+1. **Specification** — write / update docs under `docs/`
+   (explanation + reference) so the WHY and the WHAT are
+   articulated. Use cases are organized here, with one section
+   per scenario the user can perform.
+2. **Tests from the spec** — derive both fine-grained tests
+   (unit / integration, see `rules/TESTING_RULES.md`) and
+   end-to-end usecase scenarios (skill `usecase-driven-e2e`)
+   directly from the spec. The spec is the SoR; the tests are
+   its executable form.
+3. **Implementation** — write code TDD-style (skill `tdd`) to
+   make the failing tests green.
+4. **Verify the spec is satisfied** — re-read the spec next to
+   the diff. If anything in the spec is not yet covered by a
+   test, the work is not done.
+
+The spec is short and disciplined — not a wall of text. Aim for
+the minimum that lets a stranger understand the feature, the
+scenarios, and the contract.
 
 Ambiguity discovered late is expensive.
-Ambiguity discovered early is cheap.
+Ambiguity discovered early — at the spec — is cheap.
+
+If the spec cannot be written, the feature is not yet understood.
+STOP and clarify.
 
 ---
 

@@ -36,6 +36,21 @@ Principles, rules, AI control, and the glossary are **always
 authoritative**. Skills are loaded **only when their situation
 applies**. Runtime state is the live working memory.
 
+The development loop is **spec-driven** (see
+`rules/WORKFLOW_RULES.md`):
+
+1. spec under `docs/` (explanation + reference + use cases),
+2. tests derived from the spec (TDD pair + executable use cases),
+3. implementation written to make the failing tests green,
+4. user manual auto-generated from the use case YAML
+   (skill `usecase-driven-e2e`).
+
+Architecture follows DDD pragmatically: four layers
+(`interfaces / applications / domains / architectures`),
+contexts split only when concrete pressure demands it
+(`rules/PACKAGE_LAYOUT_COMMON_RULES.md`). Tests are paired
+with their subjects (`rules/TESTING_RULES.md`).
+
 ---
 
 # Boot sequence (absolute)
@@ -176,6 +191,7 @@ Then matching skills:
 | Producing UI / visual design               | `skills/frontend-design/`              |
 | Reviewing existing code                    | `skills/code-review/`                  |
 | Initializing a new project                 | `skills/bootstrap-project/`            |
+| Declaring user-facing flows (E2E + manual) | `skills/usecase-driven-e2e/`           |
 
 ---
 

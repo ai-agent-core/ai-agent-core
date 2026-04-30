@@ -58,15 +58,31 @@ Dependency inversion is mandatory at the `architectures/` boundary.
 
 ---
 
-# Bounded Context First
+# Bounded Context First (DDD, pragmatic)
 
 Within each layer, packages MUST be organized first by bounded
 context, and only within that context by technical concern.
+
+The four-layer convention IS the DDD posture (interfaces /
+applications / domains / architectures). Apply it pragmatically:
+
+- **Start small**. A new feature may begin as a single context
+  package per layer. Split only when concrete pressure (= shared
+  invariants, conflicting models, ownership boundaries) demands
+  it. Speculative subdivision is forbidden.
+- **Split when pain appears**, not before. Two contexts that
+  evolve together belong together; force-separating them
+  produces ceremony without insight.
+- **Names track the business**, not the framework. If the
+  product team would not recognize a context name, the boundary
+  is internal plumbing — not a real DDD context.
 
 FORBIDDEN:
 
 - flat `controllers/`, `services/`, `dtos/` at any layer root
 - technical folders at a higher level than domain folders
+- premature subdivision into too many contexts before any have
+  earned their boundary
 
 REQUIRED shape:
 

@@ -26,18 +26,28 @@ For every project / service:
   protobuf).
 - **Architecture overview** — bounded contexts, dependencies,
   flow of a typical request.
+- **Specifications & use cases** — for every feature, the WHY
+  (`docs/explanation/<feature>.md`), the WHAT
+  (`docs/reference/<feature>.md`), and the user-facing how-to
+  (`docs/how-to/<feature>.md` — generated from executable use
+  cases, see below).
 - **ADRs** — significant decisions with their context and
   consequences (skill `adr`).
 - **Runbooks** — for every alert, deploy, restore, on-call
   procedure.
 - **Postmortems** — for every meaningful incident.
 
+Click-by-click UI tutorials are NOT hand-written. They are
+generated from executable use cases (skill `usecase-driven-e2e`)
+so they cannot rot — when the UI changes, the test fails before
+the docs become a lie.
+
 What is NOT documented (defer to the code):
 
 - function-by-function inventories,
 - comments restating what a clear name already says,
-- step-by-step "click here, then here" tutorials that rot the
-  moment the UI changes.
+- hand-written click-by-click tutorials (use the usecase
+  pipeline instead).
 
 ---
 
@@ -93,6 +103,41 @@ ADR location: `docs/adr/NNNN-title.md` or equivalent. Numbered
 sequentially. Status: proposed → accepted → superseded.
 
 A decision without an ADR was not made; it was guessed.
+
+---
+
+# Specifications & Use Cases (Diátaxis layout)
+
+Each feature owns three doc artifacts under the project's
+`docs/` tree:
+
+- `docs/explanation/<feature>.md` — **WHY**: business intent,
+  constraints, design rationale.
+- `docs/reference/<feature>.md` — **WHAT**: schema, API surface,
+  invariants, contracts.
+- `docs/how-to/<feature>.html` (or `.md`) — **HOW**: end-user
+  procedure with screenshots. **Auto-generated** from the
+  executable use cases under `e2e/usecases/<feature>.yml`
+  (skill `usecase-driven-e2e`).
+
+Authorship rules:
+
+- Explanation & reference are hand-authored (or AI-drafted from
+  product requirements; human-reviewed before merge).
+- How-to is **generated** — never hand-edited. Editing the YAML
+  source updates both the E2E test and the manual.
+- Use cases are derived from the spec (= explanation +
+  reference). The spec is the single source of truth; the YAML
+  formalizes the spec into executable form.
+
+This makes the loop:
+
+```
+spec (WHY/WHAT) → use cases (YAML) → E2E tests + user manual
+```
+
+… and keeps the manual structurally synchronized with the
+implementation.
 
 ---
 

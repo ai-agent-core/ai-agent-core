@@ -20,6 +20,37 @@ Code defines HOW it happens.
 
 Never invert this relationship.
 
+The chain extends one step further: every test ultimately maps
+back to a section of the spec that lives under `docs/`. See
+`rules/WORKFLOW_RULES.md` (Spec-Driven Development) and
+`rules/DOCUMENTATION_RULES.md` (Specifications & Use Cases).
+
+---
+
+# Test Pair Structure
+
+Every production unit MUST have a paired test sibling. Forms by
+stack:
+
+- **JVM (Quarkus / Kotlin / Java)**: `src/main/...` and
+  `src/test/...` mirror trees. The Maven / Gradle convention.
+- **TypeScript (Workers / SvelteKit)**: a `<name>.test.ts`
+  colocated next to `<name>.ts`. Vitest discovers `.test.ts`
+  automatically.
+
+The principle is constant across stacks: **for every public
+unit there is a test pair, located so a reader finds it without
+search**. Hidden tests are not protection.
+
+What this rules out:
+
+- a single mega `tests/` folder disconnected from the layout —
+  forbidden,
+- production code with no companion test — forbidden (see
+  `Test-Driven Implementation`),
+- shared mutable test state outside the pair — forbidden (see
+  `Deterministic Tests Only`).
+
 ---
 
 # Test-Driven Implementation (Outside-In)
@@ -249,6 +280,37 @@ Domain behavior MUST be thoroughly specified.
 
 The domain is the highest-value layer.
 Protect it with strong tests.
+
+---
+
+# Usecase-Driven E2E (cross-cutting)
+
+For features whose value can only be observed end-to-end (= UI
++ API + DB together), agents MUST use the **executable use case**
+pattern (skill `usecase-driven-e2e`):
+
+- Each use case is declared in YAML (= the SoR for both test
+  and manual).
+- A Playwright runner generates and executes tests from the
+  YAML, recording screenshots with the next-to-be-clicked
+  element highlighted.
+- A docgen pass converts the same YAML + screenshots into the
+  user manual under `docs/how-to/<feature>.html`.
+
+Unit and integration tests still cover invariants and edge
+cases per the rules above. E2E covers the user-facing flow.
+The two layers MUST NOT duplicate coverage of the same
+behavior — pick the layer where the behavior is observable
+without ceremony.
+
+E2E runs MUST be **self-contained inside the developer's
+container or the CI runner**: no live payment provider, no
+production / staging DB, no real recipients of email / SMS /
+webhooks, no calls that mutate a third-party tenant. This
+extends the `Local-First Execution` rule above to the E2E
+layer; the full contract (= demo-mode boot, containerized
+data store, mocked external clients, identical command for
+local and CI) lives in the skill.
 
 ---
 
