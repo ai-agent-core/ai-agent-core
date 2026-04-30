@@ -1,22 +1,21 @@
 # ai-agent-core — dispatch manifest
 #
-# Maps host stack/profile/toggles (declared in
-# ai-agent-core/local/ai-agent-core.yml) to the rules and skills that
-# should apply for this project.
+# Maps host stack/profile/toggles (declared in <host>/.aiac/config.yml)
+# to the rules and skills that should apply for this project.
 #
 # Vendor-internal: this file ships with ai-agent-core and is NOT
-# host-edited. Hosts customize behavior by changing local/ai-agent-core.yml.
+# host-edited. Hosts customise behaviour by changing .aiac/config.yml.
 #
 # How agents use this:
-#   1. Read ai-agent-core/local/ai-agent-core.yml.
-#   2. Walk this manifest top-down; whenever a `match:` clause is
+#   1. Read <host>/.aiac/config.yml.
+#   2. Walk this manifest top-down; whenever a `when:` clause is
 #      satisfied, treat its `applies` rules and skills as active for
 #      the session.
 #   3. `always.applies` is unconditional baseline.
 #
 # A rule absent from any matched section is NOT inactive — it is
-# unscoped. Default behavior: apply unless explicitly excluded. This
-# keeps existing host installs (no local/ai-agent-core.yml) compatible.
+# unscoped. Default behaviour: apply unless explicitly excluded. This
+# keeps existing host installs (no .aiac/config.yml) compatible.
 
 schemaVersion: 1
 
@@ -50,7 +49,7 @@ always:
       - skills/architecture-guard
 
 # Stack-conditional rules. Each `when:` is an AND of fields against
-# the host's local/ai-agent-core.yml.
+# the host's .aiac/config.yml.
 profiles:
 
   # ---- Frontend ----

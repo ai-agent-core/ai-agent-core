@@ -12,10 +12,9 @@ Improvisation is not permitted.
 # Boot sequence
 
 1. **Open the runtime task surface.**
-   `ai-agent-core/generated/tasks/todo.md` and `…/lessons.md` are
-   the authoritative local plan and durable learnings. Do not
-   write them anywhere else. Skill:
-   `ai-agent-core/skills/task-tracking`.
+   `.aiac/tasks/todo.md` and `.aiac/tasks/lessons.md` are the
+   authoritative local plan and durable learnings. Do not write
+   them anywhere else. Skill: `ai-agent-core/skills/task-tracking`.
 
 2. **Read the project manifest.**
    `project.yml` (at host repo root) declares this project's docs
@@ -25,14 +24,14 @@ Improvisation is not permitted.
    (Project Manifest section).
 
 3. **Read the host stack profile and resolve active rules.**
-   `ai-agent-core/local/ai-agent-core.yml` declares this host's
-   stack / profile / toggles. Resolve which rules and skills apply
-   for this session by walking `ai-agent-core/init/dispatch.yml`:
-   apply `always.applies` plus every section whose `when:` clause
-   matches the host profile. Rules outside any matched section
-   default to active; do not silently exclude.
-   When `local/ai-agent-core.yml` is absent (older installs),
-   treat all rules as active.
+   `.aiac/config.yml` declares this host's stack / profile /
+   toggles. Resolve which rules and skills apply for this session
+   by walking `ai-agent-core/init/dispatch.yml`: apply
+   `always.applies` plus every section whose `when:` clause matches
+   the host profile. Rules outside any matched section default to
+   active; do not silently exclude.
+   When `.aiac/config.yml` is absent (older installs), treat all
+   rules as active.
 
 4. **Load AI Agent Core core context.**
    Read `ai-agent-core/INDEX.md` and follow it. INDEX is the routing
@@ -138,14 +137,12 @@ the skill as the playbook for that situation.
 
 # Runtime state location
 
-- `ai-agent-core/generated/tasks/todo.md` — current plan and
-  progress.
-- `ai-agent-core/generated/tasks/lessons.md` — durable lessons
-  across work units.
+- `.aiac/tasks/todo.md` — current plan and progress.
+- `.aiac/tasks/lessons.md` — durable lessons across work units.
 
-`ai-agent-core/generated/` is gitignored by ai-agent-core. The host
-project SHOULD also gitignore it if `ai-agent-core` is vendored
-rather than a git submodule.
+`.aiac/` is host-owned and committed by default so the live plan
+and lessons stay team-visible. Hosts that prefer per-developer
+task state may add `.aiac/tasks/` to their `.gitignore`.
 
 If `gh` is available, mirror state into a branch-linked Issue per
 `ai-agent-core/skills/task-tracking`. Without `gh`, the local files
@@ -153,36 +150,34 @@ are authoritative.
 
 ---
 
-# Host-project-specific assets (`ai-agent-core/local/`)
+# Host-project-specific assets (`.aiac/`)
 
-Anything **specific to this project** that an AI agent needs —
-custom skills, project prompts, tools, references — goes under
-`ai-agent-core/local/`. Examples:
+`<host>/.aiac/` is the host-owned directory for AI-agent state.
+The vendor tree (`ai-agent-core/`) stays read-only. Anything
+**specific to this project** — host stack profile, custom skills,
+prompts, tools, references — lives under `.aiac/`:
 
-- `ai-agent-core/local/skills/<name>/SKILL.md` — host-only skills.
-- `ai-agent-core/local/tools/` — host-only tooling notes / scripts
-  the agent may consult.
-- `ai-agent-core/local/references/` — fixtures, vendor docs, schema
-  snapshots the agent should read on demand.
+- `.aiac/config.yml` — host stack profile (drives dispatch).
+- `.aiac/tasks/` — runtime plan + durable lessons (committed by
+  default).
+- `.aiac/skills/<name>/SKILL.md` — host-only skills.
+- `.aiac/tools/` — host-only tooling notes / scripts the agent
+  may consult.
+- `.aiac/prompts/` — host-only prompts.
+- `.aiac/references/` — fixtures, vendor docs, schema snapshots
+  the agent should read on demand.
 
 Constraints:
 
-- `ai-agent-core/local/` is gitignored by ai-agent-core itself (only
-  `.gitkeep` is tracked upstream). To commit your project's
-  customizations, override the rule in your project's own
-  `.gitignore`, e.g.:
-
-  ```
-  !ai-agent-core/local/
-  ```
-
-- Content under `local/` MUST NOT contradict ai-agent-core principles,
-  rules, or AI control files. Higher layers win; surface conflicts
-  rather than silently overriding.
-- Skills under `ai-agent-core/local/skills/` follow the same load-on-
-  demand pattern as `ai-agent-core/skills/`. Prefer upstreaming a skill
-  to ai-agent-core if it generalizes beyond this project.
-- Runtime task state stays in `ai-agent-core/generated/`, not `local/`.
+- `.aiac/` is host-owned. The whole directory is committed by
+  default. Hosts may opt to gitignore `.aiac/tasks/` if they
+  prefer per-developer state.
+- Content under `.aiac/` MUST NOT contradict ai-agent-core
+  principles, rules, or AI control files. Higher layers win;
+  surface conflicts rather than silently overriding.
+- Skills under `.aiac/skills/` follow the same load-on-demand
+  pattern as `ai-agent-core/skills/`. Prefer upstreaming a skill
+  to ai-agent-core if it generalises beyond this project.
 
 ---
 

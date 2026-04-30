@@ -59,9 +59,9 @@ Initialize in this order. Lower layers MUST NOT override higher
 layers.
 
 0. **Host context** — read `<host>/project.yml` (docs / packages
-   map) and `local/ai-agent-core.yml` (stack / profile / toggles),
+   map) and `<host>/.aiac/config.yml` (stack / profile / toggles),
    then resolve active rules and skills via `init/dispatch.yml`.
-   When `local/ai-agent-core.yml` is absent, treat all rules as active.
+   When `.aiac/config.yml` is absent, treat all rules as active.
 1. **AI control** — load before any reasoning.
 2. **Principles** — anchor judgment.
 3. **Governance** — meta-rules resolve conflicts.

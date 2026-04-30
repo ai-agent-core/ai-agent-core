@@ -5,7 +5,7 @@
 # themselves without grepping the tree.
 #
 # This file is committed to the host repo. It is the team-wide "what
-# is here, and why" — different from local/ai-agent-core.yml which
+# is here, and why" — different from .aiac/config.yml which
 # captures the host's stack choice.
 #
 # Keep it honest: when packages or docs change, update this file in

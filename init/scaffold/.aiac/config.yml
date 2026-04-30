@@ -1,4 +1,4 @@
-# ai-agent-core — host-local stack profile
+# .aiac/config.yml — host stack profile
 #
 # This file is the single declarative source for which stack the host
 # project is built on. AI Agent Core uses it to scope which rules and
@@ -6,9 +6,9 @@
 #
 # - Edit values to match the project. Bootstrap shipped sensible
 #   defaults; change them when reality diverges.
-# - This file lives under ai-agent-core/local/ and is gitignored by
-#   ai-agent-core itself. To commit it for your team, add an inverse
-#   rule to your project's own .gitignore (e.g. !ai-agent-core/local/).
+# - This file lives under <host>/.aiac/, the host-owned directory for
+#   AI-agent state. The vendor tree (ai-agent-core/) stays read-only.
+#   .aiac/ is committed by default so the stack profile is reviewable.
 # - Higher-priority policies still win. This is configuration, not an
 #   override mechanism for principles or rules.
 #

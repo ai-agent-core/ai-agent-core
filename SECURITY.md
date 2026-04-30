@@ -56,7 +56,7 @@ When you vendor AI Agent Core into a host project:
 - Pin `ai-agent-core` by commit SHA or git submodule, not a floating tag.
 - Review the diff before upgrading.
 - Run the smoke tests in CI on a clean checkout.
-- Add `ai-agent-core/generated/` to your host `.gitignore` if vendoring
-  without a submodule (the migration script can do this for you).
+- `.aiac/` is host-owned and committed by default. If you prefer
+  per-developer task state, add `.aiac/tasks/` to your `.gitignore`.
 
 Thanks for helping keep AI Agent Core safe to adopt.

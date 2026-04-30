@@ -125,13 +125,13 @@ If the new project will use AI Agent Core, run:
 ./ai-agent-core/init/bootstrap.sh
 ```
 
-This writes only `AGENTS.md` and `CLAUDE.md` to the project root,
-and provisions `ai-agent-core/generated/tasks/todo.md` and
-`tasks/lessons.md` inside the ai-agent-core directory.
+This writes `AGENTS.md`, `CLAUDE.md`, `project.yml`, and the `docs/`
+scaffold to the project root, and provisions `<host>/.aiac/config.yml`
+plus `<host>/.aiac/tasks/{todo,lessons}.md` for runtime state.
 
-`ai-agent-core/generated/` is gitignored by ai-agent-core itself. If
-ai-agent-core is vendored (not a submodule), add the same line to the
-host project's `.gitignore`.
+`.aiac/` is host-owned and committed by default so the live plan and
+lessons stay team-visible. Hosts that prefer per-developer state may
+add `.aiac/tasks/` to their `.gitignore`.
 
 ---
 

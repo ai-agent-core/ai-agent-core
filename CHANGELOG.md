@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Bootstrap and migration adapt to the `<host>/.aiac/` layout (paired
+  with the earlier doc/skill updates that introduced it). Bootstrap
+  writes `.aiac/config.yml` and `.aiac/tasks/{todo,lessons}.md`. The
+  vendor tree (`ai-agent-core/`) is now strictly read-only — no
+  host state lives under it.
+- Migration adds Step 5 (relocate `ai-agent-core/local/` →
+  `.aiac/`, renaming `ai-agent-core.yml` → `config.yml`) and
+  Step 6 (relocate `ai-agent-core/generated/` → `.aiac/`,
+  dropping the `generated/` intermediate). Steps 1–4 now write to
+  `.aiac/tasks/` directly. Step 9 cleans stale
+  `ai-agent-core/generated/` entries from the host's `.gitignore`
+  (no new gitignore entries are added — `.aiac/` is committed by
+  default).
+- Smoke tests and docs (`README.md`, `SECURITY.md`, scaffold
+  `AGENTS.md`, `dispatch.yml` comments, vendor `.gitignore`)
+  updated to the new layout.
+
 ### Added
 
 - Default frontend stack: SvelteKit + TypeScript (strict) + Tailwind CSS +

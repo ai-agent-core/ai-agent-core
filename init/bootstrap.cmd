@@ -11,13 +11,14 @@ set SCAFFOLD_DIR=%SCRIPT_DIR%scaffold
 set TARGET_DIR=%cd%
 set CORE_JSON=%CORE_ROOT%\ai-agent-core.json
 
-set GENERATED_DIR=%CORE_ROOT%\generated
-set GENERATED_TASKS_DIR=%GENERATED_DIR%\tasks
+REM Host-owned state lives under <host>\.aiac\. The vendor tree
+REM (ai-agent-core\) stays read-only.
+set AIAC_DIR=%TARGET_DIR%\.aiac
+set AIAC_TASKS_DIR=%AIAC_DIR%\tasks
+set AIAC_CONFIG=%AIAC_DIR%\config.yml
 
-set LOCAL_DIR=%CORE_ROOT%\local
 set DOCS_DIR=%TARGET_DIR%\docs
 set PROJECT_YML=%TARGET_DIR%\project.yml
-set LOCAL_YML=%LOCAL_DIR%\ai-agent-core.yml
 
 REM ------------------------------------
 REM Validate
@@ -66,7 +67,7 @@ echo Schema version: %SCHEMA_VERSION%
 echo.
 
 REM ------------------------------------
-REM Prevent overwrite (parent only)
+REM Prevent overwrite (entrypoints only)
 REM ------------------------------------
 
 if exist "%TARGET_DIR%\AGENTS.md" (
@@ -103,28 +104,24 @@ if not exist "%DOCS_DIR%" mkdir "%DOCS_DIR%"
 xcopy "%SCAFFOLD_DIR%\docs" "%DOCS_DIR%" /E /I /Y /D >nul
 
 REM ------------------------------------
-REM Provision local/ai-agent-core.yml (host stack profile)
+REM Provision .aiac\ (host-owned AI agent state)
+REM .aiac\tasks\ is committed by default; hosts may gitignore it.
+REM Existing files are never overwritten.
 REM ------------------------------------
 
-if not exist "%LOCAL_DIR%" mkdir "%LOCAL_DIR%"
-if not exist "%LOCAL_YML%" (
-  copy "%SCAFFOLD_DIR%\local\ai-agent-core.yml" "%LOCAL_YML%" >nul
+if not exist "%AIAC_DIR%" mkdir "%AIAC_DIR%"
+if not exist "%AIAC_TASKS_DIR%" mkdir "%AIAC_TASKS_DIR%"
+
+if not exist "%AIAC_CONFIG%" (
+  copy "%SCAFFOLD_DIR%\.aiac\config.yml" "%AIAC_CONFIG%" >nul
 )
 
-REM ------------------------------------
-REM Provision runtime task surface inside ai-agent-core\generated\
-REM ------------------------------------
-
-if not exist "%GENERATED_TASKS_DIR%" (
-  mkdir "%GENERATED_TASKS_DIR%"
+if not exist "%AIAC_TASKS_DIR%\todo.md" (
+  copy "%SCAFFOLD_DIR%\tasks\todo.md" "%AIAC_TASKS_DIR%\todo.md" >nul
 )
 
-if not exist "%GENERATED_TASKS_DIR%\todo.md" (
-  copy "%SCAFFOLD_DIR%\tasks\todo.md" "%GENERATED_TASKS_DIR%\todo.md" >nul
-)
-
-if not exist "%GENERATED_TASKS_DIR%\lessons.md" (
-  copy "%SCAFFOLD_DIR%\tasks\lessons.md" "%GENERATED_TASKS_DIR%\lessons.md" >nul
+if not exist "%AIAC_TASKS_DIR%\lessons.md" (
+  copy "%SCAFFOLD_DIR%\tasks\lessons.md" "%AIAC_TASKS_DIR%\lessons.md" >nul
 )
 
 REM ------------------------------------
@@ -147,15 +144,14 @@ echo   %TARGET_DIR%\AGENTS.md
 echo   %TARGET_DIR%\CLAUDE.md
 echo   %PROJECT_YML%
 echo   %DOCS_DIR%\ (Diataxis-extended scaffold)
-echo   %LOCAL_YML%
-echo   %GENERATED_TASKS_DIR%\todo.md
-echo   %GENERATED_TASKS_DIR%\lessons.md
+echo   %AIAC_CONFIG%
+echo   %AIAC_TASKS_DIR%\todo.md
+echo   %AIAC_TASKS_DIR%\lessons.md
 echo.
 echo Next steps:
-echo   1. Commit AGENTS.md, CLAUDE.md, project.yml, and docs\.
-echo   2. Edit ai-agent-core\local\ai-agent-core.yml to match this project's stack.
-echo   3. ai-agent-core\generated\ and ai-agent-core\local\ are gitignored by
-echo      ai-agent-core; if you vendored ai-agent-core and want to commit local\,
-echo      add !ai-agent-core/local/ to your .gitignore.
+echo   1. Commit AGENTS.md, CLAUDE.md, project.yml, docs\, and .aiac\.
+echo   2. Edit .aiac\config.yml to match this project's stack.
+echo   3. .aiac\ is host-owned and committed by default. Hosts that prefer
+echo      per-developer task state may add '.aiac/tasks/' to .gitignore.
 echo   4. Read ai-agent-core\INDEX.md before any change.
 echo.
