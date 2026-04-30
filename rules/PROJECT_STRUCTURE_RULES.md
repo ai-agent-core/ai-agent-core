@@ -65,7 +65,7 @@ read-only library — host customizations live in `.aiac/`.
 <host-repo>/
 ├── .aiac/
 │   ├── config.yml          # stack / profile / toggles
-│   ├── tasks/              # todo.md, lessons.md (gitignored)
+│   ├── tasks/              # todo.md, lessons.md (committed by default)
 │   ├── skills/             # custom skills
 │   ├── tools/              # project-local tools / scripts
 │   ├── prompts/            # project-local prompts
@@ -74,8 +74,10 @@ read-only library — host customizations live in `.aiac/`.
 └── project.yml             # this file
 ```
 
-The host's `.gitignore` MUST list `.aiac/tasks/`. Other
-sub-directories under `.aiac/` are committed by default.
+All sub-directories under `.aiac/` are committed by default,
+including `tasks/` (= the live plan and durable lessons stay
+team-visible). Hosts may opt to gitignore `.aiac/tasks/` if they
+prefer per-developer state.
 
 See `INDEX.md` ("Host-project assets") for the canonical layout
 and rationale.

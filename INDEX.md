@@ -25,7 +25,7 @@ improvisation. Architecture always precedes implementation.
 | AI control   | Machine-readable reasoning guides           | `ai/`                         |
 | Glossary     | Shared vocabulary                           | `glossary/`                   |
 | Skills       | On-demand operational playbooks             | `skills/<name>/SKILL.md`      |
-| Runtime      | Plan, progress, lessons (host, gitignored)  | `<host>/.aiac/tasks/`         |
+| Runtime      | Plan, progress, lessons (host, committed)   | `<host>/.aiac/tasks/`         |
 | Host assets  | Custom skills / tools / prompts (host)      | `<host>/.aiac/`               |
 | Host profile | Stack / profile / toggles for this host     | `<host>/.aiac/config.yml`     |
 | Dispatch     | Stack → active rules/skills mapping (vendor)| `init/dispatch.yml`           |
@@ -273,8 +273,10 @@ What lives where:
 
 - **Runtime state** — `.aiac/tasks/todo.md` and
   `.aiac/tasks/lessons.md` are the live planning surface,
-  rewritten by agents during work. The host's `.gitignore` MUST
-  list `.aiac/tasks/`.
+  rewritten by agents during work. **Committed by default** so
+  the team can see the current plan and durable lessons. Hosts
+  may choose to gitignore `.aiac/tasks/` if they prefer
+  per-developer state, but the default is shared & visible.
 - **Custom skills** — `.aiac/skills/<name>/SKILL.md`. Loaded the
   same way as `agent-core/skills/` — only when the situation
   applies. Prefer upstreaming generalizable skills to
