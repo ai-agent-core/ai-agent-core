@@ -1,6 +1,6 @@
 # Frontend Demo Mode Rules
 
-Every Sealess frontend application MUST support two runtime modes:
+Every frontend application MUST support two runtime modes:
 
 - **demo** — external connections are mocked. The UI is fully usable
   without any backend, API key, or third-party service. A "log in as
@@ -19,7 +19,7 @@ consistent across apps and so demo mode never leaks into production.
 Mode MUST be driven by a single public environment variable:
 
 ```
-PUBLIC_SEALESS_MODE = demo | production
+PUBLIC_APP_MODE = demo | production
 ```
 
 The variable MUST be read through the framework's static-public env
@@ -30,7 +30,7 @@ entry point. This preserves tree-shaking of mock implementations.
 
 Default when unset: **demo**. Production deploys MUST set the
 variable explicitly; CI MUST fail if a production build is produced
-without `PUBLIC_SEALESS_MODE=production`.
+without `PUBLIC_APP_MODE=production`.
 
 ## Mode module
 
@@ -42,8 +42,8 @@ architectures/shared/mode.ts
 
 Exports:
 
-- `type SealessMode = 'demo' | 'production'`
-- `const MODE: SealessMode`
+- `type AppMode = 'demo' | 'production'`
+- `const MODE: AppMode`
 - `isDemoMode(): boolean`
 - `isProductionMode(): boolean`
 
@@ -175,7 +175,7 @@ Fixtures MUST be re-usable by:
 - branching business logic on `MODE` inside `applications/` or
   `domains/` — the swap MUST happen at `architectures/` only
 - placing a mock implementation inline in a UseCase file
-- storing demo data in `localStorage` without a `sealess.demo.` key
+- storing demo data in `localStorage` without a `demo.` key
   prefix — collisions with production state are prohibited
 - shipping a build where both Real and Mock clients are loaded at
   runtime when only one mode is active (dead-code elimination must

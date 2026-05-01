@@ -1,6 +1,6 @@
 ---
 name: usecase-driven-e2e
-description: Declare end-user flows as YAML use cases. One source produces both Playwright E2E tests (with red-box highlights) and the AsciiDoc/HTML user manual. The Sealess `e2e/` workspace is the model case.
+description: Declare end-user flows as YAML use cases. One source produces both Playwright E2E tests (with red-box highlights) and the AsciiDoc/HTML user manual.
 ---
 
 # Usecase-driven E2E
@@ -192,14 +192,13 @@ of pass/fail.
 
 ---
 
-## Model case
+## Reference shape
 
-The **Sealess** repo's `e2e/` workspace is the reference
-implementation:
+A minimal `e2e/` workspace looks like this:
 
 - 4 source files at top level (`schema.ts`, `runner.spec.ts`,
   `docgen.ts`, `playwright.config.ts`) — easy to read.
-- Brand CSS theme (= bitboxx) under `e2e/themes/`.
+- Brand CSS theme under `e2e/themes/`.
 - Single YAML per feature under `e2e/usecases/`.
 - 7 actions, 4 selector types, no numeric prefixes — the
   minimum that produces a complete manual.

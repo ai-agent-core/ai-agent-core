@@ -52,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   path (Postgres + Flyway + jeg).
 - New `rules/PACKAGE_LAYOUT_WORKERS_RULES.md` — Cloudflare Workers
   backend layout (TypeScript + Hono + Wrangler + D1 / R2 / KV / Queues
-  bindings, with the Sealess monorepo shape as the reference).
+  bindings, multi-app monorepo shape as the reference).
 - New `rules/NOTIFICATION_RULES.md` — outbound email / webhook /
   in-app / SMS rules. Resend is the default mailer on the Cloudflare
   path. Sender hygiene (DKIM / SPF / DMARC), idempotency on send,

@@ -149,7 +149,7 @@ depends on the path chosen in `rules/STACK_DEFAULTS_RULES.md`.
 
 ### Cloudflare path (default — TypeScript / Workers / D1)
 
-Typical monorepo layout (matches the Sealess reference):
+Typical monorepo layout:
 
 ```
 repo/

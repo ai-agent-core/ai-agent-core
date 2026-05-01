@@ -279,13 +279,13 @@ and minimal resets.
 
 # Demo Mode
 
-Every Sealess frontend app MUST be buildable in a self-contained
+Every frontend app MUST be buildable in a self-contained
 **demo mode** (no backend, no third-party keys) alongside its
 production mode.
 
 The DI swap between Real and Mock clients happens exclusively in
 `architectures/shared/bootstrapClients.ts`, driven by the
-`PUBLIC_SEALESS_MODE` environment variable.
+`PUBLIC_APP_MODE` environment variable.
 
 See `rules/FRONTEND_DEMO_MODE_RULES.md` for the full contract:
 mode source, DI boundary, fixture layout, UI banner / demo-login

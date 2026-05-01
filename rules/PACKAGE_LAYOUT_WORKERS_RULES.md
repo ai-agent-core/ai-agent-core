@@ -38,7 +38,7 @@ For the wider stack rationale, see `rules/STACK_DEFAULTS_RULES.md`.
 
 # Example layout
 
-A single Worker per business app (the Sealess pattern):
+A single Worker per business app:
 
 ```
 my-app-api/                         (single deployable Worker)
@@ -72,7 +72,7 @@ my-app-api/                         (single deployable Worker)
   vitest.config.ts
 ```
 
-For multi-app monorepos (Sealess-shaped):
+For multi-app monorepos:
 
 ```
 repo/
@@ -159,7 +159,7 @@ Accepts the secret via `env.<SECRET_NAME>`, never reads
 
 **bootstrapClients.ts** — The single place where DI swaps real
 ↔ mock implementations based on
-`PUBLIC_SEALESS_MODE` / equivalent flag. Required by
+`PUBLIC_APP_MODE` / equivalent flag. Required by
 `rules/FRONTEND_DEMO_MODE_RULES.md` and applied here on the
 backend symmetrically when the system supports demo mode.
 
