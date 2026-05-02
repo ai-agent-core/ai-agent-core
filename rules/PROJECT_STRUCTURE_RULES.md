@@ -23,8 +23,8 @@ be committed.
 
 ### `docs:`
 
-Declares the documentation root, layout preset, and active
-sections.
+Declares the **engineer-facing specification** root, layout
+preset, and active sections.
 
 - `root:` — directory under which docs sections live (default
   `docs/`).
@@ -38,7 +38,24 @@ The `diataxis-extended` preset is the Diátaxis framework
 `runbooks`. This is the structure used by Django, GitLab, and
 Cloudflare. Pick a different preset only with explicit reason.
 
+`docs/` is engineer-facing. The **end-user operation manual** is
+a separate top-level concern at `manual/` — see below.
+
 See `rules/DOCUMENTATION_RULES.md` for what goes in each section.
+
+### `manual:` (optional — present when the project ships a UI)
+
+Declares the **end-user-facing operation manual** root. The
+manual is **generated** from `usecases/<feature>.yml` by the
+`usecase-driven-e2e` skill — never hand-authored.
+
+- `root:` — directory under which the manual lives (default
+  `manual/`).
+- `usecases:` — directory of YAML use cases (default
+  `usecases/`). Shared with the e2e verifier.
+
+`manual/` and `docs/` are **MECE**: no feature artifact lives
+in both. `docs/` is for engineers; `manual/` is for end users.
 
 ### `packages:`
 

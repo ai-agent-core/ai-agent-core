@@ -26,11 +26,14 @@ For every project / service:
   protobuf).
 - **Architecture overview** — bounded contexts, dependencies,
   flow of a typical request.
-- **Specifications & use cases** — for every feature, the WHY
-  (`docs/explanation/<feature>.md`), the WHAT
-  (`docs/reference/<feature>.md`), and the user-facing how-to
-  (`docs/how-to/<feature>.md` — generated from executable use
-  cases, see below).
+- **Specifications** — for every feature, the WHY
+  (`docs/explanation/<feature>.md`) and the WHAT
+  (`docs/reference/<feature>.md`). `docs/` is engineer-facing
+  and hand-authored.
+- **Operation manual** — the end-user-facing how-to lives at
+  `manual/dist/<feature>.html` and is **generated** from
+  executable use cases (skill `usecase-driven-e2e`). `manual/`
+  is a separate top-level concern from `docs/`; see below.
 - **ADRs** — significant decisions with their context and
   consequences (skill `adr`).
 - **Runbooks** — for every alert, deploy, restore, on-call
@@ -39,8 +42,8 @@ For every project / service:
 
 Click-by-click UI tutorials are NOT hand-written. They are
 generated from executable use cases (skill `usecase-driven-e2e`)
-so they cannot rot — when the UI changes, the test fails before
-the docs become a lie.
+into `manual/`, so they cannot rot — when the UI changes, the
+verifier fails before the manual becomes a lie.
 
 What is NOT documented (defer to the code):
 
@@ -106,38 +109,81 @@ A decision without an ADR was not made; it was guessed.
 
 ---
 
-# Specifications & Use Cases (Diátaxis layout)
+# Specifications, Use Cases, and Operation Manual
 
-Each feature owns three doc artifacts under the project's
-`docs/` tree:
+The pipeline is split into three **independent** top-level
+concerns. Each has one responsibility and one audience.
+
+## `docs/` — specification (engineer-facing, hand-authored)
+
+Each feature owns two doc artifacts under `docs/`:
 
 - `docs/explanation/<feature>.md` — **WHY**: business intent,
   constraints, design rationale.
 - `docs/reference/<feature>.md` — **WHAT**: schema, API surface,
   invariants, contracts.
-- `docs/how-to/<feature>.html` (or `.md`) — **HOW**: end-user
-  procedure with screenshots. **Auto-generated** from the
-  executable use cases under `e2e/usecases/<feature>.yml`
-  (skill `usecase-driven-e2e`).
 
-Authorship rules:
+Plus the cross-cutting engineer-facing artifacts:
+`docs/adr/`, `docs/runbooks/`, etc.
 
-- Explanation & reference are hand-authored (or AI-drafted from
-  product requirements; human-reviewed before merge).
-- How-to is **generated** — never hand-edited. Editing the YAML
-  source updates both the E2E test and the manual.
-- Use cases are derived from the spec (= explanation +
-  reference). The spec is the single source of truth; the YAML
-  formalizes the spec into executable form.
+`docs/` is hand-authored (or AI-drafted from product
+requirements; human-reviewed before merge). It is **not** where
+end users go.
 
-This makes the loop:
+## `usecases/` — single source of truth (shared input)
+
+Each feature has one declarative YAML:
+
+- `usecases/<feature>.yml` — derived from the spec, formalizes
+  it into executable form.
+
+This file is the **only** input shared between the verifier and
+the documenter. See `skills/usecase-driven-e2e/SKILL.md` for the
+schema and verb semantics.
+
+## `manual/` — operation manual (end-user-facing, generated)
+
+The end-user-facing how-to lives in its own top-level root:
+
+- `manual/dist/<feature>.html` — **HOW**: end-user procedure
+  with screenshots. **Auto-generated** by the documenter
+  (`manual/generator/docgen.ts`) from `usecases/<feature>.yml`.
+- `manual/snapshots/<feature>/...` — figures with red-box
+  overlays showing "press here next".
+
+Manuals are committed (publication assets — shippable without
+rebuild). Hand-edits to `manual/dist/` are forbidden; edit the
+YAML source.
+
+## Why split `docs/` and `manual/`
+
+- **Audiences differ.** `docs/` is read by engineers; `manual/`
+  is read by end users. Mixing them produces docs full of
+  jargon and manuals full of internals.
+- **Lifecycles differ.** Specs are hand-authored and reviewed;
+  manuals are regenerated whenever the YAML changes.
+- **Authorship differs.** Specs are written; manuals are
+  produced.
+- **MECE.** A feature's WHY lives in `docs/explanation/`, its
+  WHAT in `docs/reference/`, its declarative flow in
+  `usecases/`, its verification in `e2e/`, its end-user
+  procedure in `manual/`. No artifact has two homes.
+
+## The loop
 
 ```
-spec (WHY/WHAT) → use cases (YAML) → E2E tests + user manual
+spec (docs/, hand-authored)
+   │
+   ▼
+usecases/<f>.yml (derived from spec)
+   │
+   ├─→ e2e/        (verifier — proves spec coverage; CI evidence)
+   └─→ manual/     (documenter — publishes end-user guide)
 ```
 
-… and keeps the manual structurally synchronized with the
-implementation.
+The verifier and the documenter never read each other's
+outputs. They share only the YAML and the runner-core (see
+skill `usecase-driven-e2e`).
 
 ---
 

@@ -35,9 +35,11 @@ The spec drives both layers of testing:
 
 - Unit / integration tests → derived from invariants &
   contracts in the spec.
-- End-to-end use cases → declared in `e2e/usecases/<feature>.yml`
-  (skill `usecase-driven-e2e`). Same YAML produces both the
-  Playwright tests and the user manual under `docs/how-to/`.
+- End-to-end use cases → declared in `usecases/<feature>.yml`
+  (skill `usecase-driven-e2e`). The same YAML feeds two
+  independent consumers: the verifier under `e2e/` (Playwright
+  assertions + evidence) and the documenter under `manual/`
+  (end-user operation manual at `manual/dist/<feature>.html`).
 
 Skip Phase 0 ONLY for fixes / refactors of an already-specified
 feature.

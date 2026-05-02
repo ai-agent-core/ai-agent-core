@@ -289,13 +289,19 @@ For features whose value can only be observed end-to-end (= UI
 + API + DB together), agents MUST use the **executable use case**
 pattern (skill `usecase-driven-e2e`):
 
-- Each use case is declared in YAML (= the SoR for both test
-  and manual).
-- A Playwright runner generates and executes tests from the
-  YAML, recording screenshots with the next-to-be-clicked
-  element highlighted.
-- A docgen pass converts the same YAML + screenshots into the
-  user manual under `docs/how-to/<feature>.html`.
+- Each use case is declared in YAML at `usecases/<feature>.yml`
+  (= the single source of truth — shared input to both
+  consumers).
+- The **verifier** (`e2e/`) runs the YAML through Playwright,
+  asserts every `expect` step, and records evidence to
+  `e2e/.output/` (gitignored).
+- The **documenter** (`manual/`) runs the same YAML through the
+  same runner-core, captures snapshots with red-box overlays,
+  and publishes the end-user manual to
+  `manual/dist/<feature>.html` (committed).
+- The two consumers share only the YAML and the runner-core.
+  Their outputs are independent — neither reads the other's
+  artifacts.
 
 Unit and integration tests still cover invariants and edge
 cases per the rules above. E2E covers the user-facing flow.
