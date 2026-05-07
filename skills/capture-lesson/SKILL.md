@@ -1,6 +1,6 @@
 ---
 name: capture-lesson
-description: After any user correction or any validated non-obvious approach, append a durable lesson to tasks/lessons.md so the same conversation does not happen twice.
+description: After any user correction or any validated non-obvious approach, append a durable lesson to .aiac/tasks/lessons.md so the same conversation does not happen twice.
 ---
 
 # Capture lesson
@@ -16,7 +16,7 @@ Trigger this skill when **any** of the following happens:
   the code alone.
 
 Lessons are written into
-`.aiac/tasks/lessons.md`. They survive across
+`.aiac/.aiac/tasks/lessons.md`. They survive across
 sessions, across agents, and across model upgrades.
 
 ---
@@ -44,7 +44,7 @@ If the lesson is not durable, do not write it.
 
 ## Format
 
-Append to `tasks/lessons.md`:
+Append to `.aiac/tasks/lessons.md`:
 
 ```
 ## <short rule, imperative if possible>

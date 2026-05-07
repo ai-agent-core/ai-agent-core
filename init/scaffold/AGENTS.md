@@ -38,6 +38,14 @@ Improvisation is not permitted.
    table for principles, governance, language, structure,
    boundaries, decisions, execution, and implementation.
 
+   Two always-on rules govern the *meta* of how you operate:
+   `ai-agent-core/rules/TOKEN_EFFICIENCY_RULES.md` (budget
+   context aggressively — narrow reads, subagents for breadth,
+   no narration) and
+   `ai-agent-core/rules/AUTONOMOUS_OPERATION_RULES.md` (overnight
+   / unattended work: default-deny on side effects, checkpoint
+   commits, end-of-shift summary in `.aiac/tasks/todo.md`).
+
 5. **Classify the task and load the matching context profile.**
    See `ai-agent-core/ai/context_profiles.yaml`. Prefer over-tagging
    to under-tagging; the loader deduplicates.
@@ -206,8 +214,8 @@ Pause and ask the user when:
 - a one-way decision lacks the information to make it safely
   (skill: `adr`).
 
-Reflect any clarification into `tasks/todo.md` (and the linked
-Issue, if connected) before resuming.
+Reflect any clarification into `.aiac/tasks/todo.md` (and the
+linked Issue, if connected) before resuming.
 
 Do not guess. Do not improvise.
 

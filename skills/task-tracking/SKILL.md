@@ -17,7 +17,7 @@ If `gh` is reachable, the branch-linked GitHub Issue is the
 cross-session source of truth. Without `gh`, the local files are
 authoritative; sync to a fresh Issue when connectivity returns.
 
-`tasks/todo.md` is short-lived: each new work unit replaces its
+`.aiac/tasks/todo.md` is short-lived: each new work unit replaces its
 contents. History lives in the Issue and in commits, not in
 `todo.md`.
 
@@ -25,17 +25,17 @@ contents. History lives in the Issue and in commits, not in
 
 ## On work start
 
-1. Open `tasks/todo.md`. If it still describes a finished work
+1. Open `.aiac/tasks/todo.md`. If it still describes a finished work
    unit, archive its Review section into the linked Issue, then
    replace the file's contents with the new objective and plan.
-2. Read `tasks/lessons.md`. Apply relevant prior lessons *before*
+2. Read `.aiac/tasks/lessons.md`. Apply relevant prior lessons *before*
    re-deciding the same things.
 3. If `gh` is available:
    - Find or create the branch-linked Issue.
    - Mirror the initial plan into the Issue body.
 4. Confirm scope and approach with the user before implementing.
 
-Required `tasks/todo.md` shape:
+Required `.aiac/tasks/todo.md` shape:
 
 ```
 # Objective
@@ -59,7 +59,7 @@ Required `tasks/todo.md` shape:
 
 ## During work
 
-- Tick items in `tasks/todo.md` as soon as each finishes — do not
+- Tick items in `.aiac/tasks/todo.md` as soon as each finishes — do not
   batch. Verifiable progress beats tidy final commits.
 - Add new items as scope reveals itself; never silently expand.
 - When connected: append an Issue comment when
@@ -74,7 +74,7 @@ Required `tasks/todo.md` shape:
 
 ## On work completion
 
-1. Populate the Review section of `tasks/todo.md`:
+1. Populate the Review section of `.aiac/tasks/todo.md`:
    - what changed,
    - what was verified,
    - what remains open.
@@ -90,7 +90,7 @@ Required `tasks/todo.md` shape:
 - Erasing prior plans without preserving outcomes in the Review or
   the Issue.
 - Marking items complete without verification.
-- Skipping `tasks/lessons.md` after a correction.
+- Skipping `.aiac/tasks/lessons.md` after a correction.
 - Treating the model's tool output as the durable record.
 
 Make continuation effortless. The next agent — human or AI —

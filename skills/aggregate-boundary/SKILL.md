@@ -77,7 +77,7 @@ both.
 
 ## After the decision
 
-- Reflect the confirmed boundary into `tasks/todo.md`.
+- Reflect the confirmed boundary into `.aiac/tasks/todo.md`.
 - If `gh` is available, mirror it into the Issue.
 - If the boundary will recur as a project rule, capture it via
   skill `capture-lesson` so the next agent does not re-debate it.

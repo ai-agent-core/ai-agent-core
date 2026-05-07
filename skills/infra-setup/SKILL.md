@@ -25,7 +25,7 @@ Before writing any IaC:
 - compliance regime (PCI, HIPAA, GDPR, ISO 27001)?
 - budget ceiling?
 
-Reflect the confirmed scope into `tasks/todo.md`. Where the
+Reflect the confirmed scope into `.aiac/tasks/todo.md`. Where the
 choice is one-way (vendor, region, tenancy model), write an ADR
 (skill `adr`).
 

@@ -98,6 +98,6 @@ weakens) and the smallest fix that would resolve it.
 - Any BLOCKER on Boundaries, Aggregates, or Tests.
 - Any change that weakens domain integrity for a faster path.
 - Any "we will fix it later" claim that is not already a tracked
-  task in `tasks/todo.md` or the Issue.
+  task in `.aiac/tasks/todo.md` or the Issue.
 
 Speed is temporary. Structural damage is permanent.

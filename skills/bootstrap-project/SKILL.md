@@ -33,7 +33,7 @@ Before creating a single file, confirm:
 - Initial bounded contexts and aggregates (see skill
   `aggregate-boundary` — bias toward fewer, larger aggregates).
 
-Reflect the confirmed scope into `tasks/todo.md`.
+Reflect the confirmed scope into `.aiac/tasks/todo.md`.
 
 ### Default stacks (unless overridden)
 

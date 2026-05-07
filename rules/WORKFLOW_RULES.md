@@ -45,42 +45,93 @@ Pushing through a broken plan amplifies damage.
 
 # Spec-Driven Development
 
-When new development is decided, the FIRST artifact agents produce
-is the specification — not the code, not the test, not the issue.
+For any feature change, fix that alters behavior, or refactor that
+crosses a public surface, the FIRST artifact agents produce is the
+**specification** — not the code, not the test, not the issue.
 
 The order is non-negotiable:
 
-1. **Specification** — write / update docs under `docs/`
-   (`docs/explanation/<feature>.adoc` for the WHY,
-   `docs/reference/<feature>.adoc` for the WHAT). All
-   engineer-facing specs are AsciiDoc. Split into focused
-   partials with `include::` rather than letting one file grow
-   unbounded — see `rules/DOCUMENTATION_RULES.md`. The spec
-   (`docs/`) is the single source of truth; tests and code are
-   its consequence.
-2. **Tests from the spec** — derive both fine-grained tests
-   (unit / integration, see `rules/TESTING_RULES.md`) and
-   end-to-end usecase scenarios (skill `usecase-driven-e2e`,
-   declared in `usecases/<feature>.yml`) directly from the
-   spec.
-3. **Implementation (TDD)** — write code TDD-style (skill
-   `tdd`) to make the failing tests green. No production line
-   of code is written without a failing test that demands it.
-4. **Update the operation-manual definition** — adjust
-   `usecases/<feature>.yml` so the documenter regenerates
-   `manual/dist/<feature>.html` to match the new spec. Hand
-   edits to `manual/dist/` are forbidden; the YAML is the
-   source.
-5. **Verify the spec is satisfied** — re-read the spec next to
-   the diff. If anything in the spec is not yet covered by a
-   test or by the manual definition, the work is not done.
+```
+  1. Spec (docs/, AsciiDoc)
+       │
+       │  (everything below derives from the spec, not from each other)
+       │
+       ├──► 2a. Unit / integration tests   (TESTING_RULES.md)
+       │         │
+       │         ▼
+       │   3. Implementation (TDD: red → green → refactor — skill `tdd`)
+       │
+       └──► 2b. usecases/<feature>.yml     (skill `usecase-driven-e2e`)
+                 │
+        ┌────────┴────────┐
+        ▼                 ▼
+  4a. e2e/ verifier    4b. manual/ documenter
+  (CI evidence)        (manual/dist/<feature>.html — committed)
+
+  5. Verify spec coverage: every claim in the spec is realized by a
+     test AND by a manual scenario — otherwise the work is not done.
+```
+
+## Per-step contract
+
+1. **Spec** — `docs/explanation/<feature>.adoc` (WHY) and
+   `docs/reference/<feature>.adoc` (WHAT). AsciiDoc by default;
+   split into focused partials with `include::` rather than
+   letting one file grow unbounded
+   (`rules/DOCUMENTATION_RULES.md`). The spec under `docs/` is
+   the single source of truth; tests, code, and manual are its
+   consequence.
+
+2. **Derive tests from the spec** — *both* layers are derived
+   directly from the spec, not from each other:
+   - **2a. Unit / integration** — fine-grained behavior and
+     invariants (`rules/TESTING_RULES.md`).
+   - **2b. Usecase YAML** — `usecases/<feature>.yml` declares
+     end-user scenarios. This **same file** drives both the
+     verifier (`e2e/`) AND the documenter (`manual/`); they
+     never read each other's output (skill
+     `usecase-driven-e2e`).
+
+3. **Implement (TDD)** — code is written red → green →
+   refactor (skill `tdd`). No production line exists without a
+   failing test that demands it.
+
+4. **Run the YAML through both consumers** — `pnpm verify` (or
+   the equivalent) executes the verifier (assertions, evidence)
+   and the documenter (snapshots, `manual/dist/<feature>.html`)
+   in parallel. Hand-edits to `manual/dist/` are forbidden; the
+   YAML is the source.
+
+5. **Verify spec coverage** — re-read the spec next to the
+   diff. Every claim in the spec MUST be realized by a test
+   *and* by a manual scenario. Anything uncovered is unfinished.
+
+## Test isolation (cross-cutting)
+
+Every layer above runs **locally and reproducibly with no external
+side effects** — no production / staging DB, no live third-party
+tenant, no real recipients of email / SMS / webhooks. The same
+command runs on the developer's laptop and in CI. See
+`rules/TESTING_RULES.md` (Local-First Execution) and
+`skills/usecase-driven-e2e/SKILL.md` (Isolation Contract) for the
+full contract.
+
+## When to skip
+
+- **Bug fix on already-specified behavior** — write the failing
+  test that reproduces the bug; spec already covers the
+  intended behavior.
+- **Pure rename / formatting / dead-code removal** — no
+  behavior change, skip the spec step but say so explicitly in
+  the plan.
+- Otherwise: spec first.
 
 The spec is short and disciplined — not a wall of text. Aim for
 the minimum that lets a stranger understand the feature, the
 scenarios, and the contract.
 
-Ambiguity discovered late is expensive.
-Ambiguity discovered early — at the spec — is cheap.
+Ambiguity discovered late is expensive. Ambiguity discovered
+early — at the spec — is cheap.
 
 If the spec cannot be written, the feature is not yet understood.
 STOP and clarify.
@@ -97,7 +148,11 @@ When the harness supports parallel or specialized subagents:
 
 One task per subagent.
 
-Subagents return findings — the main agent synthesizes and decides.
+Subagents return findings — the main agent synthesizes and
+decides. Subagent context dies on return; capture findings in
+your own message before the next batch of tool calls. See
+`rules/TOKEN_EFFICIENCY_RULES.md` for the full discipline around
+context budgeting.
 
 ---
 
@@ -105,7 +160,7 @@ Subagents return findings — the main agent synthesizes and decides.
 
 After ANY correction from the user:
 
-1. Append the pattern to `tasks/lessons.md`
+1. Append the pattern to `.aiac/tasks/lessons.md`
 2. Write rules for yourself that prevent the same mistake
 3. Iterate until the mistake stops recurring
 
@@ -114,7 +169,7 @@ Capture wins too:
 - When a non-obvious approach is validated, record it
 - A lessons file that only captures failures drifts toward over-caution
 
-Review `tasks/lessons.md` at the start of new work.
+Review `.aiac/tasks/lessons.md` at the start of new work.
 
 ---
 
@@ -193,6 +248,16 @@ Avoid:
 
 Small changes are reviewable.
 Large changes hide bugs.
+
+---
+
+# Unattended Work
+
+When working overnight, while the user is away, or whenever
+clarification is not available within minutes, the rules above
+still apply but the contract on side effects, checkpointing, and
+end-of-shift summaries tightens. See
+`rules/AUTONOMOUS_OPERATION_RULES.md`.
 
 ---
 

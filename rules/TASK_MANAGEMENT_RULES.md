@@ -12,16 +12,16 @@ higher-priority policy and report the conflict.
 
 # Surfaces (CRITICAL)
 
-Two local files at project root:
+Two local files under the host's `.aiac/` directory:
 
-- `tasks/todo.md` — current plan, progress, review section
-- `tasks/lessons.md` — durable learnings from corrections and validated approaches
+- `.aiac/tasks/todo.md` — current plan, progress, review section
+- `.aiac/tasks/lessons.md` — durable learnings from corrections and validated approaches
 
 One remote system (when available):
 
 - branch-linked GitHub Issue — persistent context shared across agents and humans
 
-`tasks/todo.md` is the primary local surface.
+`.aiac/tasks/todo.md` is the primary local surface.
 The GitHub Issue mirrors state and persists context across resets.
 
 ---
@@ -32,7 +32,7 @@ The GitHub Issue mirrors state and persists context across resets.
 
 Before starting non-trivial work:
 
-- Write a plan to `tasks/todo.md` with checkable items
+- Write a plan to `.aiac/tasks/todo.md` with checkable items
 - Items SHOULD be small, verifiable steps
 - Replace prior content when starting a new work unit
   (history lives in the Issue)
@@ -47,7 +47,7 @@ If clarification is needed, surface it now.
 
 As work proceeds:
 
-- mark items complete in `tasks/todo.md`
+- mark items complete in `.aiac/tasks/todo.md`
 - add new items as scope reveals itself
 - reflect blockers and open questions inline
 
@@ -59,7 +59,7 @@ Do NOT bury context in tool output.
 
 ## Step 5 — Document Results
 
-When the work unit is complete, add a Review section to `tasks/todo.md`:
+When the work unit is complete, add a Review section to `.aiac/tasks/todo.md`:
 
 - what was changed
 - what was verified
@@ -67,7 +67,7 @@ When the work unit is complete, add a Review section to `tasks/todo.md`:
 
 ## Step 6 — Capture Lessons
 
-After ANY user correction, append to `tasks/lessons.md`:
+After ANY user correction, append to `.aiac/tasks/lessons.md`:
 
 - the pattern (rule)
 - the reason (why)
@@ -84,7 +84,7 @@ When the repository is connected to GitHub (`gh` available):
 ## On Work Start
 
 - Identify or create a branch-linked Issue
-- Mirror the initial plan from `tasks/todo.md` into the Issue body
+- Mirror the initial plan from `.aiac/tasks/todo.md` into the Issue body
 - Treat the Issue as the authoritative cross-session state
 
 ## During Work
@@ -105,7 +105,7 @@ When the repository is connected to GitHub (`gh` available):
 
 If `gh` is unavailable, rate-limited, or Issue operations fail:
 
-- Continue working with `tasks/todo.md` alone
+- Continue working with `.aiac/tasks/todo.md` alone
 - Retry sync when connectivity returns
 - Do NOT block work on Issue sync
 
@@ -113,7 +113,7 @@ If `gh` is unavailable, rate-limited, or Issue operations fail:
 
 # When NOT Connected to GitHub
 
-`tasks/todo.md` and `tasks/lessons.md` ARE the authoritative state.
+`.aiac/tasks/todo.md` and `.aiac/tasks/lessons.md` ARE the authoritative state.
 
 Continue using them as the planning and learning surface.
 
@@ -129,7 +129,7 @@ Agents MUST NOT:
 - erase prior plans without preserving outcomes
   in the Issue or Review section
 - mark items complete without verification
-- skip `tasks/lessons.md` after a correction
+- skip `.aiac/tasks/lessons.md` after a correction
 - treat tool output as a substitute for plan tracking
 
 Transparency over tidiness.
@@ -142,8 +142,8 @@ If a project tracks state in legacy locations
 (for example, `agent-spec/WORK_STATE.md` or an `agent-works/` artifact tree),
 migrate the relevant content into:
 
-- the active plan → `tasks/todo.md`
-- durable learnings → `tasks/lessons.md`
+- the active plan → `.aiac/tasks/todo.md`
+- durable learnings → `.aiac/tasks/lessons.md`
 - handoff and decision context → the linked GitHub Issue
 
 The legacy files MAY be removed once migration is complete.
