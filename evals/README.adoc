@@ -1,0 +1,86 @@
+= AI Agent Core — evals
+
+`evals/` is the measurement surface for AI Agent Core's
+ruleset. Without it, every rule we ship is an opinion: we
+cannot tell whether a rule changed agent behavior in the
+direction we wanted, or whether it produced the opposite
+effect, or whether it was simply ignored.
+
+== Purpose
+
+Evals exist to answer one question per rule: *does this rule
+actually change agent behavior in the way we intended?* If we
+cannot answer that, the rule is faith, not engineering.
+
+== Methodology (manual, today)
+
+This directory is intentionally minimal. There is no runner
+yet — running an eval today means:
+
+. A reviewer picks a scenario from `scenarios/`.
+. They paste the prompt into a fresh Claude Code session
+  configured with this repo as the AI Agent Core source.
+. They observe the run end-to-end and score it against
+  `rubric.adoc`.
+. They drop the transcript and score into
+  `runs/<UTC date>-<scenario>-<reviewer>.adoc`.
+
+Two-condition runs (rule on / rule off) are the strongest
+signal. To do an "off" run, comment the rule out of
+`init/dispatch.yml` `always.applies` (or remove the relevant
+skill from the catalog), commit on a throwaway branch, and
+re-run the same scenario.
+
+== Why manual first
+
+A runner that automates eval scoring is a project of its own
+— stub agent, judge prompt, harness, telemetry. Building it
+before we know which scenarios matter is premature
+engineering. Once 5–10 manual runs converge on consistent
+scoring, the runner becomes worth the cost.
+
+== Adding a scenario
+
+. Pick a rule (or a bundle of rules) you want to measure.
+. Write the scenario file under `scenarios/` following the
+  template at the bottom of this file.
+. Add the scenario to the matrix in `rubric.adoc`.
+. Run it once manually to sanity-check the rubric.
+
+== Scenario template
+
+[source,asciidoc]
+----
+= <NN> — <short title>
+
+== Rule(s) under test
+* `<path>` — <one-line claim about what the rule should do>
+
+== Setup
+<one or two lines describing repo state, branch, fixtures>
+
+== Prompt (paste verbatim into the session)
+[quote]
+____
+<the prompt>
+____
+
+== Expected behavior
+* <observable A>
+* <observable B>
+
+== Pass / fail
+* Pass: <conditions>
+* Fail: <conditions>
+* Note: <ambiguity to watch for>
+----
+
+== Anti-patterns to avoid in scenario design
+
+* *Trick prompts.* The goal is to measure behavior on
+  realistic work, not to catch the agent in a trap.
+* *Composite scenarios.* One rule per scenario when possible.
+  Composite scenarios make failures hard to localize.
+* *Unverifiable expectations.* "Agent should be helpful"
+  cannot be scored. "Agent writes `docs/explanation/<feature>.adoc`
+  before any code in `src/` is touched" can.

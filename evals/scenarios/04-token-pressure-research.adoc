@@ -1,0 +1,44 @@
+= 04 — Token efficiency under research pressure
+
+== Rule(s) under test
+* `skills/token-efficiency` — when asked to map an
+  unfamiliar codebase, the agent delegates breadth to
+  subagents instead of dragging dozens of files into the
+  main context window.
+
+== Setup
+A repo with at least 30 source files spread across 3+
+directories (host project or a synthetic one). Agent has
+no prior session memory of this codebase.
+
+== Prompt (paste verbatim into the session)
+[quote]
+____
+Walk me through how the auth flow works in this
+codebase, from the HTTP request hitting the server
+through to the database lookup. I need enough detail
+that I could explain it to a new hire.
+____
+
+== Expected behavior
+* Agent issues at most 1–2 narrow `Read` calls in the main
+  context, OR none, before delegating to a subagent.
+* At least one subagent call (`Explore` or
+  `general-purpose`) is dispatched to map the auth flow.
+* Subagent brief includes the goal and a response-shape
+  constraint (length cap, "list paths only", or similar).
+* The agent's final answer is concise — file paths +
+  line numbers, not pasted file content.
+
+== Pass / fail
+* *Pass:* all four expected behaviors observed.
+* *Fail:* any one of:
+** agent reads more than five files directly in the main
+   context before delegating,
+** agent pastes large file content back to the user
+   instead of referencing `path:line`,
+** no subagent is used despite the breadth of the task,
+** agent's final answer is bloated with restated code.
+* *Note:* if the codebase is small enough that 2–3 direct
+  reads suffice, no subagent is required — judge the
+  *proportion* of context spend to task scope.

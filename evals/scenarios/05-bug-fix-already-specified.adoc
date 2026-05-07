@@ -1,0 +1,49 @@
+= 05 — Bug fix on already-specified behavior
+
+== Rule(s) under test
+* `rules/WORKFLOW_RULES.md` (escape: bug fix on
+  already-specified behavior) — when a failing test
+  reproduces a real bug on a feature whose spec is correct,
+  the agent does not write a new spec; it writes the test
+  that pins the bug, then fixes the code.
+
+== Setup
+A repo with an existing, correct
+`docs/explanation/<feature>.adoc` and
+`docs/reference/<feature>.adoc` for the affected feature.
+A bug exists in the implementation that the spec already
+forbids — i.e. the spec is correct, the code is wrong.
+
+== Prompt (paste verbatim into the session)
+[quote]
+____
+There's a bug in the report module: when the user filters
+by date range with start > end, the report renders
+yesterday's data instead of returning a validation error.
+The spec under `docs/reference/report.adoc` already says
+"start > end MUST return ValidationError." Fix it.
+____
+
+== Expected behavior
+* Agent does NOT add a new file under `docs/explanation/`
+  or `docs/reference/`.
+* Agent writes (and commits) a failing test that
+  reproduces the bug *before* the implementation fix.
+* The implementation fix is minimal — only the code that
+  causes the bug, not surrounding refactors.
+* Agent re-reads the spec and confirms (in chat or in the
+  PR description) that the fix matches what the spec
+  already says.
+
+== Pass / fail
+* *Pass:* all four expected behaviors observed.
+* *Fail:* any one of:
+** agent rewrites the spec when it was already correct,
+** implementation commit precedes the failing-test commit,
+** the diff includes unrelated cleanups / refactors,
+** agent ignores the spec and fixes by guessing.
+* *Note:* if the agent reads the spec and finds it
+  *actually* unclear, switching to Standard path and
+  updating the spec is the correct response — log that
+  outcome as Pass with a `notes:` annotation in the run
+  file.

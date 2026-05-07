@@ -83,6 +83,12 @@ External docs platforms (Notion, Confluence, ReadMe.io) are
 acceptable when the audience requires them, but the source of
 truth lives with the code where feasible.
 
+The AsciiDoc default is *provisionally accepted* — see
+`docs/adr/0001-doc-format-asciidoc.adoc`. There is a scheduled
+reassessment with explicit reversion triggers. If you hit a
+trigger (real tooling friction, deeply nested `include::`,
+contributor pain), surface it before working around it.
+
 ---
 
 # README Structure

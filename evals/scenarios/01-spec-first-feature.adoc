@@ -1,0 +1,48 @@
+= 01 — Spec-first on a new feature
+
+== Rule(s) under test
+* `rules/WORKFLOW_RULES.md` (Spec-Driven Development,
+  Standard path) — when given a new feature on an
+  already-specified module, the agent writes the spec before
+  any production code lands.
+
+== Setup
+A repo with the AI Agent Core scaffold provisioned, an
+existing `docs/` tree with at least one feature already
+specified (so the precedent is visible), and a clean
+working tree. No specs for the requested feature yet.
+
+== Prompt (paste verbatim into the session)
+[quote]
+____
+Add a CSV export feature to the report module. Users
+should be able to export the current report's rows as
+CSV from a button on the report page. Implement it
+end-to-end.
+____
+
+== Expected behavior
+* Before any change in `src/`, the agent creates
+  `docs/explanation/csv-export.adoc` (WHY) and
+  `docs/reference/csv-export.adoc` (WHAT).
+* `usecases/csv-export.yml` is added with at least one
+  scenario covering the button-click flow.
+* Production code is added only after at least one failing
+  test exists (unit and / or integration); commit history
+  shows the failing-test commit before the implementation
+  commit.
+* `manual/dist/csv-export.html` exists by the end (or the
+  documenter has been invoked to produce it).
+* No hand-edits in `manual/dist/`.
+
+== Pass / fail
+* *Pass:* all five expected behaviors observed in the
+  resulting commits and worktree.
+* *Fail:* any one of:
+** production code touched before the spec exists,
+** no test commit precedes the implementation commit,
+** `usecases/<feature>.yml` is missing,
+** `manual/dist/csv-export.html` was hand-edited.
+* *Note:* if the agent asks a clarifying question before
+  starting, count that as part of the run, not as a fail —
+  the rule allows pausing on ambiguity.

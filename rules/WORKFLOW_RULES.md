@@ -46,10 +46,11 @@ Pushing through a broken plan amplifies damage.
 # Spec-Driven Development
 
 For any feature change, fix that alters behavior, or refactor that
-crosses a public surface, the FIRST artifact agents produce is the
-**specification** — not the code, not the test, not the issue.
+crosses a public surface — *on the Standard or Heavy path*; see
+Path selection below — the FIRST artifact agents produce is the
+**specification**: not the code, not the test, not the issue.
 
-The order is non-negotiable:
+When the Standard path applies, the order is non-negotiable:
 
 ```
   1. Spec (docs/, AsciiDoc)
@@ -116,15 +117,43 @@ command runs on the developer's laptop and in CI. See
 `skills/usecase-driven-e2e/SKILL.md` (Isolation Contract) for the
 full contract.
 
-## When to skip
+## Path selection (right-size the discipline)
 
-- **Bug fix on already-specified behavior** — write the failing
-  test that reproduces the bug; spec already covers the
-  intended behavior.
+Spec-driven discipline is calibrated. Pick the path that fits
+the change; carrying heavy ceremony into a throwaway spike
+produces the same drift as skipping ceremony on a critical
+change.
+
+- **Light path** — prototypes, internal one-off scripts,
+  throwaway PoCs, exploratory spikes, time-boxed experiments.
+  No formal `docs/explanation/<f>.adoc` is required up front,
+  but: any code that ships still has tests, the work is
+  flagged as experimental in the commit / PR so future
+  readers see the discipline was relaxed deliberately, and the
+  moment the experiment graduates to a kept feature it
+  switches to the Standard path (write the spec retrospectively
+  before merging the graduation PR).
+- **Standard path** — most feature work and any behavior
+  change. Full pipeline above (spec → tests + YAML → TDD →
+  verifier + documenter → coverage check).
+- **Heavy path** — regulated / financial / security-critical
+  / public-API breaking changes. Standard + ADR (skill `adr`)
+  + named additional reviewer + rollback plan. The spec MUST
+  be linked from the PR description.
+
+Two narrower escapes apply across all paths:
+
+- **Bug fix on already-specified behavior** — write the
+  failing test that reproduces the bug; the spec is presumed
+  correct. If the fix reveals the spec was wrong, switch to
+  Standard or Heavy and update the spec.
 - **Pure rename / formatting / dead-code removal** — no
-  behavior change, skip the spec step but say so explicitly in
-  the plan.
-- Otherwise: spec first.
+  behavior change. State this explicitly in the plan and
+  proceed; no spec needed.
+
+When in doubt, escalate one level (Light → Standard, Standard
+→ Heavy) — the cost of over-disciplining a small change is
+lower than the cost of under-disciplining a critical one.
 
 The spec is short and disciplined — not a wall of text. Aim for
 the minimum that lets a stranger understand the feature, the
@@ -133,8 +162,10 @@ scenarios, and the contract.
 Ambiguity discovered late is expensive. Ambiguity discovered
 early — at the spec — is cheap.
 
-If the spec cannot be written, the feature is not yet understood.
-STOP and clarify.
+On Standard or Heavy paths: if the spec cannot be written, the
+feature is not yet understood. STOP and clarify. (On the Light
+path, an unwritable spec is sometimes the *point* of the spike
+— the spike itself is the clarifying activity.)
 
 ---
 
@@ -150,9 +181,11 @@ One task per subagent.
 
 Subagents return findings — the main agent synthesizes and
 decides. Subagent context dies on return; capture findings in
-your own message before the next batch of tool calls. See
-`rules/TOKEN_EFFICIENCY_RULES.md` for the full discipline around
-context budgeting.
+your own message before the next batch of tool calls. The full
+discipline (when to delegate, how to brief, batching parallel
+calls, capturing findings before compaction) lives in
+`skills/token-efficiency` — load it for research-heavy or
+long-horizon sessions.
 
 ---
 
@@ -253,11 +286,14 @@ Large changes hide bugs.
 
 # Unattended Work
 
-When working overnight, while the user is away, or whenever
-clarification is not available within minutes, the rules above
-still apply but the contract on side effects, checkpointing, and
-end-of-shift summaries tightens. See
-`rules/AUTONOMOUS_OPERATION_RULES.md`.
+When working overnight, while the user is away, on a hard
+deadline, or whenever clarification is not available within
+minutes, the rules above still apply but the contract on side
+effects, checkpointing, and end-of-shift summaries tightens.
+Load `skills/unattended-operation` at the start of any such
+run — it carries the briefing checklist (human side) and the
+execution discipline (agent side) plus the host pre-flight
+(`caffeinate` / `systemd-inhibit`).
 
 ---
 

@@ -31,8 +31,6 @@ always:
       - rules/ERROR_HANDLING_RULES.md
       - rules/TESTING_RULES.md
       - rules/WORKFLOW_RULES.md
-      - rules/TOKEN_EFFICIENCY_RULES.md
-      - rules/AUTONOMOUS_OPERATION_RULES.md
       - rules/TASK_MANAGEMENT_RULES.md
       - rules/PACKAGE_LAYOUT_COMMON_RULES.md
       - rules/PROJECT_STRUCTURE_RULES.md
@@ -49,6 +47,8 @@ always:
       - skills/code-review
       - skills/branching-and-commits
       - skills/architecture-guard
+      - skills/token-efficiency
+      - skills/unattended-operation
 
 # Stack-conditional rules. Each `when:` is an AND of fields against
 # the host's .aiac/config.yml.

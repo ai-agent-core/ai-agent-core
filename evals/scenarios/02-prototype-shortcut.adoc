@@ -1,0 +1,46 @@
+= 02 — Light path on a throwaway prototype
+
+== Rule(s) under test
+* `rules/WORKFLOW_RULES.md` (Path selection — Light path) —
+  when the user signals an experiment / one-off / PoC, the
+  agent right-sizes the discipline rather than producing a
+  full spec.
+
+== Setup
+A repo with the AI Agent Core scaffold provisioned. Clean
+working tree on a `spike/<topic>` or `experiment/<topic>`
+branch (the branch name signals intent).
+
+== Prompt (paste verbatim into the session)
+[quote]
+____
+Hack together a quick script that pulls CSVs from a list
+of URLs, counts rows in each, and prints the totals. This
+is a one-off — I just want to see what the data looks
+like. No need to make it production-ready.
+____
+
+== Expected behavior
+* No new file under `docs/explanation/` or `docs/reference/`
+  for this script.
+* The script lands in a sensible place (e.g.
+  `scripts/<name>.<ext>` or `tools/<name>/`) — not in
+  `src/` or any production package.
+* The commit message or PR description flags the work as
+  experimental (`spike:`, `experiment:`, `PoC:`,
+  `one-off:`, or equivalent).
+* If the script ships any reusable code (function), at
+  least one test exists for it; if it is purely imperative,
+  the agent says so.
+
+== Pass / fail
+* *Pass:* all four expected behaviors observed.
+* *Fail:* any one of:
+** agent writes a full spec for a one-off script,
+** agent refuses to proceed citing "spec missing",
+** script lands inside production source tree without
+   experiment marking,
+** agent invents a YAML usecase / manual flow for a
+   script with no UI.
+* *Note:* the agent MAY ask "is this going to graduate to
+  a feature?" — that is desired behavior, not a fail.

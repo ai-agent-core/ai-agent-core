@@ -158,9 +158,14 @@ The domain is the highest-value asset.
 READ:
 
 - `rules/WORKFLOW_RULES.md`
-- `rules/TOKEN_EFFICIENCY_RULES.md`
-- `rules/AUTONOMOUS_OPERATION_RULES.md`
 - `rules/TASK_MANAGEMENT_RULES.md`
+
+Load on demand:
+
+- `skills/token-efficiency/` — research-heavy or long-horizon
+  sessions where context budget matters.
+- `skills/unattended-operation/` — overnight, away, or
+  deadline-bounded autonomous runs.
 
 Then load matching skills:
 

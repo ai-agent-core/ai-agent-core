@@ -1,0 +1,131 @@
+= 1. Use AsciiDoc for engineer-facing docs/, with a 4-week reassessment
+
+* *Status:* accepted (provisional — reassessment 2026-06-05)
+* *Date:* 2026-05-08
+* *Authors:* Kakeru Kageshima, Claude (AI Agent Core review)
+* *Reviewers:* —
+
+== Context
+
+Until 2026-05-07, AI Agent Core's documentation rules used
+Markdown by default for everything under `docs/`. On 2026-05-07
+we switched the engineer-facing tree (`docs/explanation/`,
+`docs/reference/`, `docs/adr/`, `docs/runbooks/`) to AsciiDoc
+(`.adoc`), with `include::` cited as the lever that makes the
+"split into focused partials" rule actually enforceable. README
+files at the repo root and rules / skills under
+`ai-agent-core/` itself stayed Markdown.
+
+A senior review on 2026-05-08 raised real concerns:
+
+* AsciiDoc's ecosystem is smaller than Markdown's. GitHub
+  renders both, but AsciiDoc rendering is less battle-tested
+  (especially nested `include::`, attributes, conditionals).
+* IDE / editor tooling is uneven. VS Code and JetBrains have
+  AsciiDoc plugins, but the median engineer's "open and read"
+  experience is materially better in Markdown.
+* SaaS docs platforms, link checkers, dependabot,
+  GitHub Linguist all favor Markdown.
+* Markdown + a build step (MkDocs `--include`, Antora, simple
+  preprocessing) can give us most of what `include::` provides
+  without leaving the dominant ecosystem.
+
+Reverting overnight risks whiplash and breaks an in-flight
+migration. Locking AsciiDoc in without revisiting this risks
+compounding ecosystem cost on every host project that
+adopts AI Agent Core.
+
+== Options considered
+
+=== Option A — Stay on AsciiDoc, no reassessment
+Keep what we have, treat the choice as settled.
+
+* *Pros:* zero churn; the migration script and the rule
+  set already point at `.adoc`.
+* *Cons:* if the ecosystem cost shows up after several host
+  projects adopt, the cleanup gets exponentially more
+  expensive. Ignores legitimate concerns raised in review.
+
+=== Option B — Revert immediately to Markdown + build step
+Roll back the 2026-05-07 switch, adopt MkDocs / Antora /
+preprocessor for `include::` semantics.
+
+* *Pros:* re-aligns with the dominant ecosystem.
+* *Cons:* reverts work and the migration script that just
+  shipped; risks contradictory signals to host projects mid-
+  adoption; forces a build-tool decision we have not yet
+  scoped.
+
+=== Option C — Stay on AsciiDoc, set a 4-week reassessment
+with explicit triggers (chosen)
+Keep AsciiDoc as the default for now. Schedule a
+reassessment on *2026-06-05*. Earlier triggers also force a
+reassessment regardless of date (see Decision below).
+
+* *Pros:* preserves migration velocity; opens an explicit
+  exit ramp; turns a "decision" into a "hypothesis with a
+  test."
+* *Cons:* requires discipline to actually run the
+  reassessment; carries the ecosystem cost for at least four
+  weeks.
+
+=== Option D — Do nothing / status quo (= Option A)
+Same as A; called out per ADR convention.
+
+== Decision
+
+We choose *Option C — provisional acceptance of AsciiDoc
+with a hard 4-week reassessment.*
+
+The reassessment runs on *2026-06-05* and produces either an
+ADR superseding this one (status: superseded by ADR-NNNN) or
+a brief note re-confirming AsciiDoc with a fresh reassessment
+date.
+
+Earlier reassessment triggers (any one is sufficient):
+
+* a host project reports a concrete tooling failure (link
+  check, render, search index, dependabot, etc.) traced to
+  AsciiDoc,
+* `include::` resolution requires more than three layers of
+  nesting in a real spec — that is a sign we are using
+  AsciiDoc as a programming language and the readability win
+  has reversed,
+* GitHub or a major SaaS docs target degrades AsciiDoc
+  rendering further,
+* two or more contributors independently report friction
+  authoring `.adoc` that they would not have hit in
+  Markdown.
+
+== Consequences
+
+* AI Agent Core continues to recommend AsciiDoc under
+  `docs/`, `docs/adr/`, `docs/runbooks/` — for now.
+* `init/migration.sh`'s Step 8d and the scaffold conversion
+  shipped on 2026-05-07 stay in place.
+* `rules/DOCUMENTATION_RULES.md` and downstream skill
+  references remain unchanged, except this ADR is now
+  linked from the rule's "Format and Location" section.
+* On 2026-06-05 (or earlier per triggers above), a new ADR
+  decides to keep, narrow (e.g. AsciiDoc only for ADRs), or
+  revert.
+* If we revert, the migration story becomes
+  `.adoc` → `.md`, mirroring the Step 8d pattern with new
+  fingerprints.
+
+== Alternatives left open
+
+* *Narrow AsciiDoc to ADRs only.* If reassessment finds the
+  ecosystem cost real but ADRs benefit specifically from
+  `include::` and attributes, we may keep `.adoc` for ADRs
+  and revert the rest.
+* *Markdown + Antora-style builds.* Keep Markdown sources,
+  use a build tool to compose them. Lower author cost, higher
+  toolchain cost. On the table at reassessment.
+
+== References
+
+* `rules/DOCUMENTATION_RULES.md` (Format and Location)
+* `init/migration.sh` (Step 8d — legacy `.md` → `.adoc`
+  fingerprint migration, shipped 2026-05-07)
+* Senior review thread, 2026-05-08

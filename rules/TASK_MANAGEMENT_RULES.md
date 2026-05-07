@@ -75,6 +75,27 @@ After ANY user correction, append to `.aiac/tasks/lessons.md`:
 
 Capture validated non-obvious approaches too — not just failures.
 
+## Step 7 — Close Lessons
+
+A lessons file that only grows is, eventually, noise — and a
+token cost on every session that loads it. Close lessons
+deliberately:
+
+- **Retire on demonstration.** When the agent has avoided the
+  same mistake at least three times in distinct contexts
+  without lapse, mark the lesson `retired: <UTC date>` and
+  stop loading it by default. Keep it in the file for audit.
+- **Remove on obsolescence.** When the rule, file, dependency,
+  or workflow the lesson references no longer exists, delete
+  the lesson outright (git remembers it).
+- **Periodic review.** At least once a quarter (or whenever
+  the file passes ~50 active lessons), prune. Lessons that
+  contradict each other indicate the underlying rule is
+  unclear — fix the rule, then collapse the lessons.
+
+Without closure, the lessons file becomes a graveyard the
+agent re-reads forever.
+
 ---
 
 # GitHub Issue Sync

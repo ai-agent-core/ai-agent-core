@@ -38,13 +38,16 @@ Improvisation is not permitted.
    table for principles, governance, language, structure,
    boundaries, decisions, execution, and implementation.
 
-   Two always-on rules govern the *meta* of how you operate:
-   `ai-agent-core/rules/TOKEN_EFFICIENCY_RULES.md` (budget
-   context aggressively — narrow reads, subagents for breadth,
-   no narration) and
-   `ai-agent-core/rules/AUTONOMOUS_OPERATION_RULES.md` (overnight
-   / unattended work: default-deny on side effects, checkpoint
-   commits, end-of-shift summary in `.aiac/tasks/todo.md`).
+   Two skills govern the *meta* of how you operate and load on
+   demand (not by default — they pay for themselves only when
+   relevant):
+   - `ai-agent-core/skills/token-efficiency/` — open it for
+     research-heavy or long-horizon sessions where context
+     budget matters.
+   - `ai-agent-core/skills/unattended-operation/` — open it
+     at the start of any overnight / away / deadline-bounded
+     autonomous run; it carries the briefing checklist for
+     the human and the execution discipline for the agent.
 
 5. **Classify the task and load the matching context profile.**
    See `ai-agent-core/ai/context_profiles.yaml`. Prefer over-tagging
@@ -74,6 +77,8 @@ Architecture always precedes implementation.
 | Reviewing existing code                     | `ai-agent-core/skills/code-review`               |
 | Recording an architectural decision         | `ai-agent-core/skills/adr`                       |
 | Branching / commits / PR shape              | `ai-agent-core/skills/branching-and-commits`     |
+| Research-heavy / long-horizon / context tight | `ai-agent-core/skills/token-efficiency`          |
+| Overnight / away / deadline-bounded run     | `ai-agent-core/skills/unattended-operation`      |
 
 ### Architecture and design
 
