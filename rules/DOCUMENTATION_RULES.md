@@ -27,9 +27,9 @@ For every project / service:
 - **Architecture overview** — bounded contexts, dependencies,
   flow of a typical request.
 - **Specifications** — for every feature, the WHY
-  (`docs/explanation/<feature>.md`) and the WHAT
-  (`docs/reference/<feature>.md`). `docs/` is engineer-facing
-  and hand-authored.
+  (`docs/explanation/<feature>.adoc`) and the WHAT
+  (`docs/reference/<feature>.adoc`). `docs/` is engineer-facing,
+  hand-authored, and written in AsciiDoc.
 - **Operation manual** — the end-user-facing how-to lives at
   `manual/dist/<feature>.html` and is **generated** from
   executable use cases (skill `usecase-driven-e2e`). `manual/`
@@ -57,12 +57,27 @@ What is NOT documented (defer to the code):
 # Format and Location
 
 - Docs live in source control with the code they describe.
-- Markdown is the default; diagrams are versioned (Mermaid in MD
-  preferred over binary images, or accompanied by source).
-- Pages are short and linkable. A wall-of-text page that nobody
-  finishes serves no one.
-- The repo's top-level `README.md` is the front door; everything
-  else is reachable from it.
+- **AsciiDoc (`.adoc`) is the default for engineer-facing docs
+  under `docs/`** (explanation, reference, ADRs, runbooks).
+  AsciiDoc gives us first-class includes (`include::`),
+  attributes, and cross-references — which is what makes the
+  next rule (file splitting) actually work.
+- **Split docs into small, single-purpose files.** A spec is a
+  composition of focused fragments, not one long page. Use
+  AsciiDoc `include::` to assemble a top-level
+  `docs/<area>/<feature>.adoc` from per-section partials under
+  `docs/<area>/<feature>/` (e.g. `_overview.adoc`,
+  `_constraints.adoc`, `_api.adoc`). One file = one concern.
+  A wall-of-text page that nobody finishes serves no one.
+- Diagrams are versioned (Mermaid blocks inside AsciiDoc — i.e.
+  `[mermaid]\n----\n...\n----` — preferred over binary images,
+  or accompanied by source).
+- The repo's top-level `README.md` is the front door (Markdown
+  by GitHub convention); everything engineer-facing under
+  `docs/` is reachable from it.
+- `rules/*.md` and `skills/*/SKILL.md` remain Markdown — they
+  are tooling inputs (Claude Code consumes them as `.md`) and
+  are out of scope for the AsciiDoc default.
 
 External docs platforms (Notion, Confluence, ReadMe.io) are
 acceptable when the audience requires them, but the source of
@@ -102,7 +117,7 @@ A decision is significant when:
 - it locks in a vendor / technology / topology,
 - a year from now someone will ask "why did we do it this way?"
 
-ADR location: `docs/adr/NNNN-title.md` or equivalent. Numbered
+ADR location: `docs/adr/NNNN-title.adoc`. Numbered
 sequentially. Status: proposed → accepted → superseded.
 
 A decision without an ADR was not made; it was guessed.
@@ -116,15 +131,23 @@ concerns. Each has one responsibility and one audience.
 
 ## `docs/` — specification (engineer-facing, hand-authored)
 
-Each feature owns two doc artifacts under `docs/`:
+Each feature owns two doc artifacts under `docs/`, written in
+AsciiDoc:
 
-- `docs/explanation/<feature>.md` — **WHY**: business intent,
+- `docs/explanation/<feature>.adoc` — **WHY**: business intent,
   constraints, design rationale.
-- `docs/reference/<feature>.md` — **WHAT**: schema, API surface,
-  invariants, contracts.
+- `docs/reference/<feature>.adoc` — **WHAT**: schema, API
+  surface, invariants, contracts.
+
+Each of these is a composition root: when a section grows past
+a screen or two, split it into a partial under a sibling
+directory (`docs/explanation/<feature>/_<section>.adoc`) and
+pull it in with `include::`. The top-level file stays a table
+of contents over its own fragments.
 
 Plus the cross-cutting engineer-facing artifacts:
-`docs/adr/`, `docs/runbooks/`, etc.
+`docs/adr/<NNNN>-<title>.adoc`, `docs/runbooks/<name>.adoc`,
+etc. — all AsciiDoc.
 
 `docs/` is hand-authored (or AI-drafted from product
 requirements; human-reviewed before merge). It is **not** where
@@ -172,7 +195,7 @@ YAML source.
 ## The loop
 
 ```
-spec (docs/, hand-authored)
+spec (docs/<area>/<feature>.adoc, hand-authored AsciiDoc)
    │
    ▼
 usecases/<f>.yml (derived from spec)
@@ -390,7 +413,11 @@ When the doc and the code disagree, the doc is wrong by default
 - Multiple sources of truth for the same fact (drift guaranteed).
 - A README that describes the system as it was three rewrites
   ago.
-- Long Markdown documents that no one ever finishes.
+- Long single-file specs that no one ever finishes — split with
+  `include::` instead.
+- Hand-rolled `.md` under `docs/` when the project's spec
+  artifacts are supposed to be `.adoc` (mixed formats fragment
+  the toolchain).
 - Documentation that exists only to satisfy an audit.
 
 ---

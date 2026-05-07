@@ -39,22 +39,22 @@ When NOT required:
 ## Format
 
 ADRs are short — one page is the target, two pages is the
-ceiling. They are markdown, numbered sequentially, in
-`docs/adr/`.
+ceiling. They are AsciiDoc, numbered sequentially, in
+`docs/adr/` (per `rules/DOCUMENTATION_RULES.md`).
 
-Filename: `NNNN-short-title.md` (zero-padded, kebab-case).
+Filename: `NNNN-short-title.adoc` (zero-padded, kebab-case).
 
 Required structure:
 
-```markdown
-# NNNN. Short title
+```asciidoc
+= NNNN. Short title
 
-- **Status:** proposed | accepted | superseded by ADR-XXX
-- **Date:** YYYY-MM-DD
-- **Authors:** name <handle>, name <handle>
-- **Reviewers:** name <handle>
+* *Status:* proposed | accepted | superseded by ADR-XXX
+* *Date:* YYYY-MM-DD
+* *Authors:* name <handle>, name <handle>
+* *Reviewers:* name <handle>
 
-## Context
+== Context
 
 What problem are we solving? Why now? What constraints apply
 (business, regulatory, technical, team capability, deadline)?
@@ -63,53 +63,53 @@ What did we already try, if anything?
 Two short paragraphs. The reader should be able to recreate the
 problem space without context from elsewhere.
 
-## Options considered
+== Options considered
 
 For each realistic option (at least two; usually three):
 
-### Option A — short name
-- summary,
-- pros,
-- cons,
-- cost (implementation, runtime, operational, security,
+=== Option A — short name
+* summary,
+* pros,
+* cons,
+* cost (implementation, runtime, operational, security,
   reversibility, team-knowledge),
-- examples / prior art if relevant.
+* examples / prior art if relevant.
 
-### Option B — short name
+=== Option B — short name
 …
 
-### Option C — do nothing / status quo
-Always include. Many ADRs are correctly resolved by "we keep what
-we have."
+=== Option C — do nothing / status quo
+Always include. Many ADRs are correctly resolved by "we keep
+what we have."
 
-## Decision
+== Decision
 
-We choose **Option X** because **Y**.
+We choose *Option X* because *Y*.
 
 State the decision crisply. Bold the choice. Make the reasoning
 visible — the *why* matters more than the *what* in five years.
 
-## Consequences
+== Consequences
 
 What becomes true because of this decision?
 
-- positive consequences,
-- negative consequences (yes, list them — they are real),
-- what becomes harder,
-- what becomes easier,
-- what we are committing to maintain,
-- what we lose option-value on.
+* positive consequences,
+* negative consequences (yes, list them — they are real),
+* what becomes harder,
+* what becomes easier,
+* what we are committing to maintain,
+* what we lose option-value on.
 
-## Alternatives left open
+== Alternatives left open
 
-What we deliberately did **not** decide. What is reversible if
+What we deliberately did *not* decide. What is reversible if
 the constraints change. The conditions under which this ADR
 should be revisited.
 
-## References
+== References
 
-- links to specs, docs, prior incidents, prior ADRs,
-- links to vendor docs / RFCs.
+* links to specs, docs, prior incidents, prior ADRs,
+* links to vendor docs / RFCs.
 ```
 
 ---
@@ -199,10 +199,11 @@ alternative. Personal preference is not a constraint.
 
 ## Storage and discovery
 
-- ADRs live in `docs/adr/` (or equivalent) in source control,
+- ADRs live in `docs/adr/` in source control as `.adoc` files,
 - numbered sequentially across the project,
-- a top-level `docs/adr/README.md` lists them with one-line
-  summaries,
+- a top-level `docs/adr/README.adoc` lists them with one-line
+  summaries (use AsciiDoc `include::` to surface the index in
+  the project's onboarding doc),
 - ADR list is part of the onboarding doc.
 
 ---

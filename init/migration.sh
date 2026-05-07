@@ -139,6 +139,19 @@ dir_has_content () {
   [[ -d "$path" ]] && [[ -n "$(find "$path" -mindepth 1 -print -quit 2>/dev/null)" ]]
 }
 
+# Portable SHA-256: prefers sha256sum (Linux), falls back to `shasum -a 256` (macOS).
+# Echos the hex digest for the given file, or empty string if no tool is available.
+sha256_of () {
+  local path="$1"
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum "$path" | awk '{print $1}'
+  elif command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 "$path" | awk '{print $1}'
+  else
+    echo ""
+  fi
+}
+
 ########################################
 # Step 1 — legacy host/tasks/ → .aiac/tasks/
 ########################################
@@ -577,6 +590,88 @@ provision_new_scaffold () {
 }
 
 ########################################
+# Step 8d — migrate scaffold docs from legacy .md to .adoc
+########################################
+#
+# `docs/` is now AsciiDoc by default (rules/DOCUMENTATION_RULES.md).
+# Earlier scaffolds shipped Markdown files at well-known paths under
+# docs/. For each pair (legacy .md, new .adoc), we decide what to do
+# by SHA-256 fingerprint of the legacy scaffold:
+#
+#   - .md byte-matches the legacy scaffold (= host has not edited it)
+#     → safe to drop; ensure the new .adoc is in place from scaffold.
+#   - .md differs (= host edited it)
+#     → back it up to migration-backup-<UTC>/, leave the new .adoc
+#       (provisioned by Step 8b) alone, and advise the user to merge
+#       any custom content forward.
+#
+# Step 8b already provisioned the new .adoc files; this step's job is
+# to remove the now-stale .md companions.
+
+# legacy-md-relpath  expected-sha256  new-adoc-relpath
+LEGACY_MD_DOC_FINGERPRINTS=$(cat <<'FINGERPRINTS'
+docs/README.md 5bf3ba05a056bea7b9d348844a9fee201f534238702a7a26b4705e8d9aaaa970 docs/README.adoc
+docs/adr/README.md 9649c5f523ecf9bced5d21695fa00ec1e69d0937a94fb5599ade669b1da1d91a docs/adr/README.adoc
+docs/adr/0001-record-architecture-decisions.md e44b711aebf7076049da0dd9cb9717128783af2d6d7db70091e251fa8291ada8 docs/adr/0001-record-architecture-decisions.adoc
+docs/explanation/README.md 42f48aa56edcc2f49618bf3b574e742c7348f7bfeb0981e196b7712d839300a9 docs/explanation/README.adoc
+docs/runbooks/README.md 1cd795a223f488bb4faa769b64521562a54df053732b18ec3c3e673739daa69e docs/runbooks/README.adoc
+docs/how-to/README.md bbe99db19dd58974d3d70302247639b45602c5925a945864c60d7b9f2b308a0b docs/how-to/README.adoc
+docs/tutorials/README.md c9356beeeeccce8b4f26c2315a0c084e4508be1d7ee415e0725e13a2477e1fb9 docs/tutorials/README.adoc
+docs/reference/README.md 0bb19015618f9b0f39dc0a2f92480c94e302e2f5ab7c46e3ba01e60682c1b348 docs/reference/README.adoc
+FINGERPRINTS
+)
+
+migrate_legacy_md_docs () {
+  local announced=0
+  local md_rel sha_expected adoc_rel
+  while IFS=' ' read -r md_rel sha_expected adoc_rel; do
+    [[ -z "$md_rel" ]] && continue
+    local md_abs="$TARGET_DIR/$md_rel"
+    local adoc_abs="$TARGET_DIR/$adoc_rel"
+    [[ -f "$md_abs" ]] || continue
+
+    if [[ $announced -eq 0 ]]; then
+      say ""
+      say "[Step 8d] Legacy Markdown scaffold docs detected — migrating to AsciiDoc"
+      announced=1
+    fi
+
+    local sha_actual
+    sha_actual="$(sha256_of "$md_abs")"
+
+    if [[ -z "$sha_actual" ]]; then
+      advise "cannot compute SHA-256 (no sha256sum/shasum) — skipping $md_rel; remove it manually after merging into $adoc_rel"
+      continue
+    fi
+
+    if [[ "$sha_actual" == "$sha_expected" ]]; then
+      # Unmodified scaffold copy — safe to drop. The new .adoc must
+      # either already exist at the host or be present in the current
+      # scaffold (so Step 8b will / has provisioned it).
+      if [[ ! -e "$adoc_abs" && ! -f "$SCAFFOLD_DIR/$adoc_rel" ]]; then
+        advise "$adoc_rel is missing at host AND not present in scaffold — not removing $md_rel"
+        continue
+      fi
+      plan "remove unmodified legacy $md_rel (matches scaffold original; $adoc_rel will be in place)"
+      if [[ $DRY_RUN -eq 0 ]]; then
+        rm "$md_abs"
+      fi
+    else
+      # Host edited the .md. Preserve their work in the backup, but
+      # remove the live .md so the .adoc becomes the single source.
+      ensure_backup_dir
+      plan "back up edited $md_rel → $BACKUP_DIR/$md_rel; remove $md_rel"
+      advise "merge any custom content from $BACKUP_DIR/$md_rel into $adoc_rel"
+      if [[ $DRY_RUN -eq 0 ]]; then
+        mkdir -p "$(dirname "$BACKUP_DIR/$md_rel")"
+        cp "$md_abs" "$BACKUP_DIR/$md_rel"
+        rm "$md_abs"
+      fi
+    fi
+  done <<< "$LEGACY_MD_DOC_FINGERPRINTS"
+}
+
+########################################
 # Step 9 — clean stale .gitignore entries
 ########################################
 #
@@ -633,6 +728,7 @@ migrate_legacy_vendor_local
 migrate_legacy_vendor_generated
 check_entrypoints_staleness
 provision_new_scaffold
+migrate_legacy_md_docs
 clean_host_gitignore
 
 say ""

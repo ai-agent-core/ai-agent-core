@@ -21,12 +21,15 @@ variable renames. The diff fits in one sentence → just do it.
 
 When new development is decided (= not a fix or refactor on an
 existing feature), the FIRST artifact is the **specification** —
-written into `docs/`:
+written into `docs/` as AsciiDoc:
 
-- `docs/explanation/<feature>.md` — WHY (business intent,
+- `docs/explanation/<feature>.adoc` — WHY (business intent,
   constraints, design rationale).
-- `docs/reference/<feature>.md` — WHAT (data shape, API
+- `docs/reference/<feature>.adoc` — WHAT (data shape, API
   surface, invariants).
+
+Split each into focused partials with `include::` when a
+section grows past a screen or two; one file = one concern.
 
 Use cases are organized in the spec, with one section per
 end-user scenario.

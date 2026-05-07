@@ -51,19 +51,29 @@ is the specification — not the code, not the test, not the issue.
 The order is non-negotiable:
 
 1. **Specification** — write / update docs under `docs/`
-   (explanation + reference) so the WHY and the WHAT are
-   articulated. Use cases are organized here, with one section
-   per scenario the user can perform.
+   (`docs/explanation/<feature>.adoc` for the WHY,
+   `docs/reference/<feature>.adoc` for the WHAT). All
+   engineer-facing specs are AsciiDoc. Split into focused
+   partials with `include::` rather than letting one file grow
+   unbounded — see `rules/DOCUMENTATION_RULES.md`. The spec
+   (`docs/`) is the single source of truth; tests and code are
+   its consequence.
 2. **Tests from the spec** — derive both fine-grained tests
    (unit / integration, see `rules/TESTING_RULES.md`) and
-   end-to-end usecase scenarios (skill `usecase-driven-e2e`)
-   directly from the spec. The spec is the SoR; the tests are
-   its executable form.
-3. **Implementation** — write code TDD-style (skill `tdd`) to
-   make the failing tests green.
-4. **Verify the spec is satisfied** — re-read the spec next to
+   end-to-end usecase scenarios (skill `usecase-driven-e2e`,
+   declared in `usecases/<feature>.yml`) directly from the
+   spec.
+3. **Implementation (TDD)** — write code TDD-style (skill
+   `tdd`) to make the failing tests green. No production line
+   of code is written without a failing test that demands it.
+4. **Update the operation-manual definition** — adjust
+   `usecases/<feature>.yml` so the documenter regenerates
+   `manual/dist/<feature>.html` to match the new spec. Hand
+   edits to `manual/dist/` are forbidden; the YAML is the
+   source.
+5. **Verify the spec is satisfied** — re-read the spec next to
    the diff. If anything in the spec is not yet covered by a
-   test, the work is not done.
+   test or by the manual definition, the work is not done.
 
 The spec is short and disciplined — not a wall of text. Aim for
 the minimum that lets a stranger understand the feature, the

@@ -1,0 +1,38 @@
+= Architecture Decision Records
+
+ADRs capture significant, durable decisions: their context, the
+options considered, the choice, and the consequences.
+
+A decision is significant when:
+
+* it is a one-way door (hard to reverse),
+* it materially affects more than one team or service,
+* it sets a precedent the team will follow,
+* it locks in a vendor / technology / topology,
+* a year from now someone will ask "why did we do it this way?".
+
+A decision without an ADR was not made; it was guessed.
+
+== File naming
+
+`NNNN-short-title.adoc` — sequential, zero-padded.
+
+The first ADR is conventionally
+`0001-record-architecture-decisions.adoc`, which records the
+decision to record decisions.
+
+== Status lifecycle
+
+`proposed` → `accepted` → `superseded` (link the superseding
+ADR).
+
+Never delete an ADR. Mark it `superseded` and reference the new
+one.
+
+== Skill
+
+When recording a decision, load `skills/adr/SKILL.md` for the
+full template and review checklist.
+
+See also `ai-agent-core/rules/DOCUMENTATION_RULES.md` (ADR
+section).

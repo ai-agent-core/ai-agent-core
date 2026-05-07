@@ -48,7 +48,7 @@ is updated:
 If this is a one-way decision (vendor lock-in, breaking change to scaffold,
 new rule family), link to the ADR:
 
-<!-- docs/adr/NNNN-title.md or "n/a — reversible change" -->
+<!-- docs/adr/NNNN-title.adoc or "n/a — reversible change" -->
 
 ## Anything reviewers should focus on?
 

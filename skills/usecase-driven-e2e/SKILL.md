@@ -114,7 +114,7 @@ the assertions pass.
 ## Layered architecture
 
 ```
-Layer 1: spec                docs/explanation/<f>.md, docs/reference/<f>.md
+Layer 1: spec                docs/explanation/<f>.adoc, docs/reference/<f>.adoc
               │
               ▼
 Layer 2: usecases (SoR)      usecases/<f>.yml
@@ -150,8 +150,8 @@ title: 定期請求の使い方
 description: |
   Feature-level intro paragraph.
 implements:                       # spec back-references
-  - docs/explanation/invoice-schedules.md
-  - docs/reference/invoice-schedules.md
+  - docs/explanation/invoice-schedules.adoc
+  - docs/reference/invoice-schedules.adoc
 docs:
   category: 請求業務
   diataxis: how-to                # for engineer-facing index in docs/
