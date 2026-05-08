@@ -218,11 +218,96 @@ Verifier-only (`e2e/spec.ts`):
 Documenter-only (`manual/generator/docgen.ts`):
 
 - runs scenarios where `ignore_in_manual !== true`,
-- before each `snapshot`, draws a red box around the element
-  targeted by the next `click / fill / select / check` so the
-  manual visually shows "press here next",
+- draws the **red-box overlay** on every actionable target
+  (see "Manual content policy" below — required, not
+  optional),
 - writes PNGs to `manual/snapshots/<f>/<scenario>/<name>.png`
   and renders `manual/dist/<f>.html` from AsciiDoc + brand CSS.
+
+---
+
+## Manual content policy
+
+The manual at `manual/dist/<feature>.html` is a procedure for
+an **end user** trying to operate the feature. It MUST NOT
+carry engineering scaffolding. The reader does not care that
+the page was produced from a YAML, that an E2E suite shares
+the same source, what scenarios were skipped, or which spec
+the manual implements.
+
+### Goes IN
+
+- **Feature title** and a one-paragraph intro (from the
+  YAML's top-level `title:` and `description:`).
+- **Scenario sections** — each scenario's `title:` becomes a
+  section heading; its `description:` becomes the section
+  intro.
+- **Per-step prose** — short, imperative, second-person, in
+  the YAML's language. Generated from the verb plus the
+  selector's user-visible label (`text` / `label` /
+  `role+name`). Examples: 「『新規追加』をクリックします」 /
+  「『タイトル』に『月次サポート料』を入力します」.
+- **Snapshots with red-box overlays** (see below).
+- **Captions** — from `caption:` on `snapshot` steps,
+  rendered as figure captions.
+- **Generation timestamp footer** — exactly one line at the
+  bottom of the page in the form
+  `Generated: <UTC ISO-8601>` (e.g.
+  `Generated: 2026-05-08T22:14:00Z`). This is the *only*
+  permitted meta line. It serves the reader (freshness),
+  not the engineer.
+
+### Stays OUT (forbidden)
+
+- "Generated from E2E tests" / "Auto-produced from
+  `usecases/<f>.yml`" / any narration about the pipeline,
+  the YAML, the verifier, or the documenter.
+- Test result counts, pass/fail status, runner version
+  strings, scenario IDs, file paths.
+- YAML keys, schema annotations, the `implements:` array
+  (spec back-references). End users do not navigate to the
+  spec.
+- Scenarios whose `ignore_in_manual: true` — they do not
+  appear in any form, including the table of contents.
+- Step-level annotations meant for engineers (timeouts,
+  selectors that contain `data-testid`, etc.).
+- Comments restating the visible UI ("click the button to
+  continue" next to a button labeled "Continue").
+
+### Red-box overlay (required)
+
+For every `snapshot` step whose **next** step in the same
+scenario is one of `click`, `fill`, `select`, or `check`,
+the documenter MUST draw a red rectangle around the resolved
+target element of that next step. The semantic is "press /
+fill / select **here** next" — the reader sees the box on
+the snapshot, the prose immediately below tells them what
+to do.
+
+- Box stroke: brand-themed red (default `#E53935`,
+  overridable per `manual/generator/themes/<brand>.css`),
+  3 px solid.
+- Margin: 6 px outside the element's bounding box, so the
+  outline stays clear of the element's own border / label.
+- If the resolved element is outside the captured viewport,
+  the documenter fails the manual build for that scenario
+  (loud failure beats a silent boxless screenshot).
+- If the next step is `expect`, `visit`, or `snapshot`
+  (terminal observation, navigation, or a chained
+  snapshot), no box is drawn — there is nothing for the
+  reader to press.
+- The last snapshot of a scenario, if its next event is the
+  scenario ending, gets no box.
+
+### Voice and style
+
+- Imperative, second-person, present tense. The reader is
+  performing the action *now*.
+- Match the YAML's natural language. The `as:` alias on
+  `visit` is a hint for prose generation (e.g.
+  「定期請求の画面に移動します」), not a meta-tag.
+- No engineering vocabulary. "クリック" and "選択" are end-
+  user words; "ディスパッチ" and "セレクタ" are not.
 
 ---
 
